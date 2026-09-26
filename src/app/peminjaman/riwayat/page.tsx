@@ -418,14 +418,15 @@ export default function RiwayatPeminjamanPage() {
                       </Button>
 
                       {b.status_transaksi === 'Disetujui' && b.tiket_digital && (
-                        <Button
-                          size="sm"
-                          onClick={() => setSelectedDetail(b)}
-                          className="text-xs flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 h-8"
-                        >
-                          <QrCode className="h-3.5 w-3.5" />
-                          Tiket QR Pengambilan
-                        </Button>
+                        <Link href={`/peminjaman/${b.id_peminjaman}/tiket`}>
+                          <Button
+                            size="sm"
+                            className="text-xs flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 h-8"
+                          >
+                            <QrCode className="h-3.5 w-3.5" />
+                            Buka Tiket QR Resmi
+                          </Button>
+                        </Link>
                       )}
 
                       {canCancel && (
@@ -486,7 +487,7 @@ export default function RiwayatPeminjamanPage() {
 
               {/* Tiket Digital QR Box (If approved) */}
               {selectedDetail.status_transaksi === 'Disetujui' && selectedDetail.tiket_digital && (
-                <div className="rounded-xl border border-blue-200 bg-blue-50/60 p-4 text-center space-y-2">
+                <div className="rounded-xl border border-blue-200 bg-blue-50/60 p-4 text-center space-y-3">
                   <div className="text-xs font-bold text-blue-900 flex items-center justify-center gap-1.5">
                     <QrCode className="h-4 w-4 text-blue-700" />
                     TIKET DIGITAL PENGAMBILAN ASET RESMI
@@ -502,6 +503,14 @@ export default function RiwayatPeminjamanPage() {
                   <p className="text-[11px] text-blue-800">
                     Tunjukkan tiket ini kepada Petugas Staf Bagian Umum saat pengambilan kunci/fasilitas.
                   </p>
+                  <div>
+                    <Link href={`/peminjaman/${selectedDetail.id_peminjaman}/tiket`}>
+                      <Button size="sm" className="text-xs bg-[#034275] hover:bg-[#02335c] flex items-center gap-1.5 mx-auto">
+                        <QrCode className="h-3.5 w-3.5" />
+                        Tampilkan Kode QR Lengkap & Cetak Tiket
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               )}
 

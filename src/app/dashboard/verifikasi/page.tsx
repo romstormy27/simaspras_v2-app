@@ -23,6 +23,9 @@ import {
   ArrowRight,
   PackageCheck,
   Eye,
+  QrCode,
+  KeyRound,
+  CheckCheck,
 } from 'lucide-react';
 
 interface VerifikasiItem {
@@ -75,11 +78,19 @@ interface BookingTransaction {
 }
 
 export default function StafVerifikasiPage() {
-  const [activeTab, setActiveTab] = useState<'pra-approval' | 'pasca-pengembalian' | 'riwayat-inspeksi'>('pra-approval');
+  const [activeTab, setActiveTab] = useState<'pra-approval' | 'verifikasi-tiket' | 'pasca-pengembalian' | 'riwayat-inspeksi'>('pra-approval');
   const [transactions, setTransactions] = useState<BookingTransaction[]>([]);
   const [allVerifications, setAllVerifications] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+
+  // Ticket scan & verification states
+  const [scannedCode, setScannedCode] = useState('');
+  const [verifiedTicketResult, setVerifiedTicketResult] = useState<any | null>(null);
+  const [checkingTicket, setCheckingTicket] = useState(false);
+  const [ticketCheckError, setTicketCheckError] = useState('');
+  const [serahTerimaCatatan, setSerahTerimaCatatan] = useState('');
+  const [serahTerimaLoading, setSerahTerimaLoading] = useState(false);
 
   // Inspection modal states (UC-06 / SD-06)
   const [selectedBooking, setSelectedBooking] = useState<BookingTransaction | null>(null);
@@ -96,11 +107,9 @@ export default function StafVerifikasiPage() {
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
-      // Fetch all bookings
       const resBookings = await fetch('/api/peminjaman');
       const dataBookings = await resBookings.json();
 
-      // Fetch all verifications
       const resVerifications = await fetch('/api/verifikasi-fisik');
       const dataVerifications = await resVerifications.json();
 
@@ -110,8 +119,8 @@ export default function StafVerifikasiPage() {
       if (dataVerifications.success) {
         setAllVerifications(dataVerifications.data || []);
       }
-    } catch (err) {
-      console.error('Failed to fetch data for verification dashboard:', err);
+    } catch (_err) {
+      console.error('Failed to fetch data for verification dashboard:', _err);
     } finally {
       setLoading(false);
     }
@@ -120,6 +129,61 @@ export default function StafVerifikasiPage() {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  const handleCheckTicket = async (codeOverride?: string) => {
+    const code = (codeOverride || scannedCode).trim();
+    if (!code) {
+      setTicketCheckError('Masukkan kode tiket (mis. TIKET-TRX-...) atau kode transaksi untuk memeriksa.');
+      return;
+    }
+
+    try {
+      setCheckingTicket(true);
+      setTicketCheckError('');
+      const res = await fetch(`/api/verifikasi-fisik/tiket?kode=${encodeURIComponent(code)}`);
+      const data = await res.json();
+      if (!res.ok) {
+        setTicketCheckError(data.message || 'Tiket tidak ditemukan di sistem.');
+        setVerifiedTicketResult(null);
+        return;
+      }
+      setVerifiedTicketResult(data.data);
+      setScannedCode(code);
+    } catch (_err) {
+      setTicketCheckError('Terjadi kesalahan koneksi saat memeriksa tiket.');
+    } finally {
+      setCheckingTicket(false);
+    }
+  };
+
+  const handleConfirmSerahTerima = async (idTiket: string) => {
+    try {
+      setSerahTerimaLoading(true);
+      const res = await fetch('/api/verifikasi-fisik/tiket', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id_tiket: idTiket,
+          catatan_serah_terima: serahTerimaCatatan.trim(),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setTicketCheckError(data.message || 'Gagal memvalidasi serah terima tiket.');
+        return;
+      }
+      setFeedbackMessage(data.message || 'Fasilitas berhasil diserahterimakan.');
+      setVerifiedTicketResult(null);
+      setScannedCode('');
+      setSerahTerimaCatatan('');
+      fetchData();
+      setTimeout(() => setFeedbackMessage(''), 6000);
+    } catch (_err) {
+      setTicketCheckError('Terjadi kesalahan jaringan saat memvalidasi serah terima.');
+    } finally {
+      setSerahTerimaLoading(false);
+    }
+  };
 
   const handleOpenInspectModal = (booking: BookingTransaction, jenis: 'Pra_Approval' | 'Pasca_Pengembalian') => {
     setSelectedBooking(booking);
@@ -213,13 +277,12 @@ export default function StafVerifikasiPage() {
     );
   });
 
-  // Calculate statistics
   const countPendingVerif = pendingPraApproval.length;
+  const countApprovedReady = transactions.filter((b) => b.status_transaksi === 'Disetujui' && b.tiket_digital).length;
   const countReturnVerif = returnInspectionList.filter(
     (b) => !(b.verifikasi_fisik || []).some((v) => v.jenis_pemeriksaan === 'Pasca_Pengembalian')
   ).length;
   const countTotalInspeksi = allVerifications.length;
-  const countCatatanKhusus = allVerifications.filter((v) => v.kondisi_fisik === 'Ada_Catatan_Khusus').length;
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-6">
@@ -227,10 +290,10 @@ export default function StafVerifikasiPage() {
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2.5">
           <ClipboardCheck className="h-7 w-7 text-[#034275]" />
-          Dasbor Verifikasi Fisik & Jadwal Sarpras
+          Dasbor Verifikasi Fisik & Pindai Tiket Sarpras
         </h1>
         <p className="text-sm text-slate-500">
-          Staf Bagian Umum — Verifikasi kelayakan teknis pra-approval dan inspeksi kondisi fisik pasca-pengembalian fasilitas (PRD UC-06 / UI-06).
+          Staf Bagian Umum — Verifikasi kelayakan teknis pra-approval, pemindaian tiket QR serah terima aset, dan inspeksi fisik pasca-pengembalian (PRD UC-06 / UI-06).
         </p>
       </div>
 
@@ -260,10 +323,22 @@ export default function StafVerifikasiPage() {
         <Card className="border-slate-200">
           <CardContent className="p-4 flex items-center justify-between">
             <div>
-              <div className="text-xs text-slate-500 font-medium">Perlu Cek Pengembalian</div>
-              <div className="text-2xl font-bold text-blue-600 mt-1">{countReturnVerif}</div>
+              <div className="text-xs text-slate-500 font-medium">Siap Ambil (Tiket Aktif)</div>
+              <div className="text-2xl font-bold text-blue-600 mt-1">{countApprovedReady}</div>
             </div>
             <div className="p-2.5 rounded-xl bg-blue-50 text-blue-700">
+              <QrCode className="h-5 w-5" />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-slate-200">
+          <CardContent className="p-4 flex items-center justify-between">
+            <div>
+              <div className="text-xs text-slate-500 font-medium">Perlu Cek Pengembalian</div>
+              <div className="text-2xl font-bold text-indigo-600 mt-1">{countReturnVerif}</div>
+            </div>
+            <div className="p-2.5 rounded-xl bg-indigo-50 text-indigo-700">
               <PackageCheck className="h-5 w-5" />
             </div>
           </CardContent>
@@ -277,18 +352,6 @@ export default function StafVerifikasiPage() {
             </div>
             <div className="p-2.5 rounded-xl bg-emerald-50 text-emerald-700">
               <CheckCircle2 className="h-5 w-5" />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-slate-200">
-          <CardContent className="p-4 flex items-center justify-between">
-            <div>
-              <div className="text-xs text-slate-500 font-medium">Temuan Catatan Khusus</div>
-              <div className="text-2xl font-bold text-red-600 mt-1">{countCatatanKhusus}</div>
-            </div>
-            <div className="p-2.5 rounded-xl bg-red-50 text-red-700">
-              <AlertTriangle className="h-5 w-5" />
             </div>
           </CardContent>
         </Card>
@@ -308,6 +371,18 @@ export default function StafVerifikasiPage() {
           >
             <Clock className="h-3.5 w-3.5" />
             Verifikasi Pra-Approval ({pendingPraApproval.length})
+          </button>
+
+          <button
+            onClick={() => setActiveTab('verifikasi-tiket')}
+            className={`flex items-center gap-1.5 rounded-lg px-3.5 py-2 font-semibold transition-all ${
+              activeTab === 'verifikasi-tiket'
+                ? 'bg-[#034275] text-white shadow-sm'
+                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+            }`}
+          >
+            <QrCode className="h-3.5 w-3.5" />
+            Pindai & Verifikasi Tiket QR ({countApprovedReady})
           </button>
 
           <button
@@ -389,7 +464,6 @@ export default function StafVerifikasiPage() {
                       key={b.id_peminjaman}
                       className="p-4 sm:p-5 hover:bg-slate-50/80 transition-colors flex flex-col lg:flex-row lg:items-center justify-between gap-4"
                     >
-                      {/* Left: Transaction Info */}
                       <div className="space-y-2 flex-1">
                         <div className="flex flex-wrap items-center gap-2">
                           <span className="font-mono font-bold text-xs text-[#034275] bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
@@ -465,7 +539,6 @@ export default function StafVerifikasiPage() {
                         )}
                       </div>
 
-                      {/* Right: Actions */}
                       <div className="flex flex-row lg:flex-col items-center lg:items-end justify-end gap-2 shrink-0 border-t lg:border-t-0 pt-3 lg:pt-0 border-slate-100">
                         <Button
                           size="sm"
@@ -493,8 +566,220 @@ export default function StafVerifikasiPage() {
             )}
           </CardContent>
         </Card>
+      ) : activeTab === 'verifikasi-tiket' ? (
+        /* TAB 2: PINDAI & VERIFIKASI TIKET QR */
+        <div className="space-y-6">
+          <Card className="border-slate-200 shadow-sm overflow-hidden">
+            <CardHeader className="py-4 border-b border-slate-100 bg-slate-50/50">
+              <CardTitle className="text-base text-slate-800 flex items-center gap-2">
+                <QrCode className="h-5 w-5 text-[#034275]" />
+                Pindai & Verifikasi Tiket Digital Pengambilan Aset
+              </CardTitle>
+              <CardDescription className="text-xs">
+                Masukkan atau pindai Kode Tiket Digital QR dari pemohon untuk memverifikasi keabsahan izin dan menyerahkan fasilitas.
+              </CardDescription>
+            </CardHeader>
+
+            <CardContent className="p-6 space-y-5">
+              {/* Scan / Input Bar */}
+              <div className="flex flex-col sm:flex-row gap-3">
+                <div className="relative flex-1">
+                  <QrCode className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
+                  <Input
+                    type="text"
+                    placeholder="Contoh: TIKET-TRX-20260926-0001-... atau TRX-20260926-0001"
+                    value={scannedCode}
+                    onChange={(e) => setScannedCode(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') handleCheckTicket();
+                    }}
+                    className="pl-10 h-10 text-xs font-mono"
+                  />
+                </div>
+                <Button
+                  onClick={() => handleCheckTicket()}
+                  disabled={checkingTicket || !scannedCode.trim()}
+                  className="bg-[#034275] hover:bg-[#02335c] text-xs h-10 px-5 flex items-center gap-2 shrink-0"
+                >
+                  <Search className="h-4 w-4" />
+                  {checkingTicket ? 'Memeriksa...' : 'Periksa & Validasi Tiket'}
+                </Button>
+              </div>
+
+              {ticketCheckError && (
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertTitle>Pemeriksaan Gagal</AlertTitle>
+                  <AlertDescription className="text-xs">{ticketCheckError}</AlertDescription>
+                </Alert>
+              )}
+
+              {/* Verified Result Card */}
+              {verifiedTicketResult && (
+                <div className="rounded-2xl border-2 border-emerald-500 bg-emerald-50/30 p-6 space-y-5 animate-in fade-in">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-emerald-200 pb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2.5 rounded-xl bg-emerald-600 text-white shadow-sm">
+                        <CheckCheck className="h-6 w-6" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-emerald-900 uppercase tracking-wider">
+                          Hasil Validasi Tiket Digital
+                        </div>
+                        <h3 className="text-lg font-bold text-slate-900">
+                          {verifiedTicketResult.tiket.status_tiket === 'Aktif'
+                            ? 'TIKET SAH & RESMI (SIAP DISERAHKAN)'
+                            : `STATUS TIKET: ${verifiedTicketResult.tiket.status_tiket.toUpperCase()}`}
+                        </h3>
+                      </div>
+                    </div>
+
+                    <Badge
+                      variant={verifiedTicketResult.tiket.status_tiket === 'Aktif' ? 'success' : 'secondary'}
+                      className="text-xs py-1 px-3 self-start sm:self-auto font-mono"
+                    >
+                      {verifiedTicketResult.tiket.status_tiket}
+                    </Badge>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                    {/* Left: QR Code Preview */}
+                    <div className="md:col-span-4 flex flex-col items-center justify-center p-4 bg-white rounded-xl border border-emerald-200 text-center shadow-sm">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={verifiedTicketResult.qr_image}
+                        alt="QR Code"
+                        className="w-44 h-44 object-contain"
+                      />
+                      <span className="font-mono font-bold text-[11px] text-[#034275] bg-blue-50 px-2 py-0.5 rounded mt-2">
+                        {verifiedTicketResult.tiket.kode_qr}
+                      </span>
+                    </div>
+
+                    {/* Right: Booking Details */}
+                    <div className="md:col-span-8 space-y-3 text-xs text-slate-700">
+                      <div className="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
+                        <div className="text-[10px] font-bold text-slate-400 uppercase">Fasilitas Sarpras</div>
+                        <div className="text-sm font-bold text-slate-900">
+                          {verifiedTicketResult.booking.sarpras.nama_sarpras}
+                        </div>
+                        <div className="text-slate-500">
+                          Lokasi / Plat: {verifiedTicketResult.booking.sarpras.lokasi_plat} • BMN:{' '}
+                          {verifiedTicketResult.booking.sarpras.kode_aset}
+                        </div>
+                      </div>
+
+                      <div className="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
+                        <div className="text-[10px] font-bold text-slate-400 uppercase">Identitas Pemohon</div>
+                        <div className="font-bold text-slate-900">
+                          {verifiedTicketResult.booking.pemohon.nama_lengkap} ({verifiedTicketResult.booking.pemohon.role})
+                        </div>
+                        <div className="text-slate-500">
+                          WhatsApp: {verifiedTicketResult.booking.pemohon.no_hp} • Email:{' '}
+                          {verifiedTicketResult.booking.pemohon.email}
+                        </div>
+                      </div>
+
+                      <div className="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
+                        <div className="text-[10px] font-bold text-slate-400 uppercase">Jadwal Peminjaman</div>
+                        <div className="font-semibold text-slate-800">
+                          {formatDateTime(verifiedTicketResult.booking.tgl_mulai)} s/d{' '}
+                          {formatDateTime(verifiedTicketResult.booking.tgl_selesai)}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Form Serah Terima */}
+                  {verifiedTicketResult.tiket.status_tiket === 'Aktif' ? (
+                    <div className="bg-white p-4 rounded-xl border border-emerald-300 space-y-3">
+                      <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                        <KeyRound className="h-4 w-4 text-emerald-600" />
+                        Konfirmasi Penyerahan Kunci / Fasilitas:
+                      </div>
+                      <textarea
+                        rows={2}
+                        value={serahTerimaCatatan}
+                        onChange={(e) => setSerahTerimaCatatan(e.target.value)}
+                        placeholder="Contoh: Kunci kontak dan STNK diserahkan kepada pemohon. Bensin terisi penuh, kondisi bodi mulus."
+                        className="w-full rounded-lg border border-slate-300 p-2.5 text-xs focus:border-emerald-600 focus:outline-none"
+                      />
+                      <Button
+                        onClick={() => handleConfirmSerahTerima(verifiedTicketResult.tiket.id_tiket)}
+                        disabled={serahTerimaLoading}
+                        className="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs h-9 flex items-center justify-center gap-2"
+                      >
+                        <CheckCircle2 className="h-4 w-4" />
+                        {serahTerimaLoading ? 'Memproses...' : 'Konfirmasi Serah Terima Aset (Tandai Tiket Digunakan)'}
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="bg-amber-50 border border-amber-200 p-3 rounded-xl text-xs text-amber-900 flex items-center gap-2">
+                      <AlertTriangle className="h-4 w-4 text-amber-600 shrink-0" />
+                      <span>
+                        Tiket ini telah berstatus <strong>{verifiedTicketResult.tiket.status_tiket}</strong>. Penyerahan fasilitas telah selesai diproses sebelumnya.
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Quick List: Approved Bookings ready for pickup */}
+          <Card className="border-slate-200 shadow-sm overflow-hidden">
+            <CardHeader className="py-4 border-b border-slate-100 bg-slate-50/50">
+              <CardTitle className="text-sm text-slate-800">
+                Daftar Permohonan Disetujui (Siap Pengambilan Aset)
+              </CardTitle>
+              <CardDescription className="text-xs">
+                Klik tombol &quot;Verifikasi Tiket Ini&quot; untuk langsung memeriksa tiket tanpa mengetik manual.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-0">
+              {transactions.filter((b) => b.status_transaksi === 'Disetujui' && b.tiket_digital).length === 0 ? (
+                <div className="py-12 text-center text-slate-400 text-xs">
+                  Tidak ada permohonan disetujui yang aktif saat ini.
+                </div>
+              ) : (
+                <div className="divide-y divide-slate-100">
+                  {transactions
+                    .filter((b) => b.status_transaksi === 'Disetujui' && b.tiket_digital)
+                    .map((b) => (
+                      <div key={b.id_peminjaman} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono font-bold text-[#034275] bg-blue-50 px-2 py-0.5 rounded">
+                              {b.kode_transaksi}
+                            </span>
+                            <Badge variant={b.tiket_digital?.status_tiket === 'Aktif' ? 'success' : 'secondary'} className="text-[10px]">
+                              Tiket: {b.tiket_digital?.status_tiket}
+                            </Badge>
+                            <span className="font-mono text-slate-500 text-[11px]">{b.tiket_digital?.kode_qr}</span>
+                          </div>
+                          <div className="text-slate-900 font-semibold">{b.sarpras.nama_sarpras} ({b.sarpras.lokasi_plat})</div>
+                          <div className="text-slate-500">
+                            Peminjam: {b.pemohon.nama_lengkap} ({b.pemohon.role}) • Jadwal: {formatDateTime(b.tgl_mulai)} s/d {formatDateTime(b.tgl_selesai)}
+                          </div>
+                        </div>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleCheckTicket(b.tiket_digital?.kode_qr)}
+                          className="text-xs flex items-center gap-1.5 shrink-0 border-[#034275] text-[#034275] hover:bg-blue-50"
+                        >
+                          <QrCode className="h-3.5 w-3.5" />
+                          Verifikasi Tiket Ini
+                        </Button>
+                      </div>
+                    ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
       ) : activeTab === 'pasca-pengembalian' ? (
-        /* TAB 2: INSPEKSI PASCA-PENGEMBALIAN */
+        /* TAB 3: INSPEKSI PASCA-PENGEMBALIAN */
         <Card className="border-slate-200 shadow-sm overflow-hidden">
           <CardHeader className="py-4 border-b border-slate-100 bg-slate-50/50">
             <div className="flex items-center justify-between">
@@ -640,7 +925,7 @@ export default function StafVerifikasiPage() {
           </CardContent>
         </Card>
       ) : (
-        /* TAB 3: RIWAYAT SELURUH INSPEKSI STAF */
+        /* TAB 4: RIWAYAT SELURUH INSPEKSI STAF */
         <Card className="border-slate-200 shadow-sm overflow-hidden">
           <CardHeader className="py-4 border-b border-slate-100 bg-slate-50/50">
             <div className="flex items-center justify-between">

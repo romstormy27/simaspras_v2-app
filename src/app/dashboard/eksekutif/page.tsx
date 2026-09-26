@@ -1,7 +1,5 @@
-import { getSession } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { BarChart3, Building2, Car, Laptop, Users, CalendarCheck2 } from 'lucide-react';
 
 export default async function DashboardEksekutifPage() {

@@ -16,7 +16,6 @@ import {
   Edit2,
   Trash2,
   Wrench,
-  CheckCircle2,
   RefreshCw,
   X,
 } from 'lucide-react';
