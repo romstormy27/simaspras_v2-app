@@ -2,7 +2,7 @@
 
 import { useState, Suspense } from 'react';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,7 +10,6 @@ import { Alert } from '@/components/ui/alert';
 import { Building2, Lock, Mail, ArrowRight, ShieldCheck } from 'lucide-react';
 
 function LoginForm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -39,8 +38,7 @@ function LoginForm() {
 
       // Redirect ke dasbor sesuai peran
       const target = searchParams.get('from') || data.data.redirectUrl;
-      router.push(target);
-      router.refresh();
+      window.location.href = target;
     } catch (_err) {
       setError('Terjadi kesalahan jaringan. Coba lagi beberapa saat.');
       setLoading(false);
