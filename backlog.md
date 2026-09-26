@@ -276,7 +276,7 @@ Setiap tugas/item backlog dinyatakan **selesai (Done)** hanya jika memenuhi krit
 
 ### FASE 7: Monitoring Eksekutif & Laporan Digital (UC-08)
 
-- [ ] **TASK-7.1: Agregasi Data Okupansi & Endpoint Dasbor Eksekutif**
+- [x] **TASK-7.1: Agregasi Data Okupansi & Endpoint Dasbor Eksekutif**
   * **Deskripsi:** Membangun Route Handler GET `/api/dashboard/eksekutif` dengan proteksi peran `Kabag` (dan Kasubag/Admin read-only).
   * **Matriks Data yang Dihitung:**
     * Persentase okupansi ruangan berdasarkan jam/hari penggunaan vs kapasitas.
@@ -286,11 +286,11 @@ Setiap tugas/item backlog dinyatakan **selesai (Done)** hanya jika memenuhi krit
     * Filter fleksibel: Bulanan, Semesteran, Tahunan, dan Filter Kategori.
   * **Kriteria Keberhasilan:** Agregasi query cepat dan terindeks, memberikan metrik siap konsumsi untuk chart visual.
 
-- [ ] **TASK-7.2: Antarmuka Dashboard Monitoring Eksekutif (UI-08)**
+- [x] **TASK-7.2: Antarmuka Dashboard Monitoring Eksekutif (UI-08)**
   * **Deskripsi:** Membangun halaman `/dashboard/eksekutif` dengan kartu KPI modern, grafik tren penggunaan (Recharts Line/Bar Chart), dan donat chart distribusi kategori peminjam.
   * **Kriteria Keberhasilan:** Kabag Keuangan & Umum mendapatkan visualisasi komprehensif atas seluruh utilisasi sarpras kampus secara real-time.
 
-- [ ] **TASK-7.3: Engine Ekspor Laporan Eksekutif (PDF & Excel)**
+- [x] **TASK-7.3: Engine Ekspor Laporan Eksekutif (PDF & Excel)**
   * **Deskripsi:** Membangun endpoint `/api/dashboard/eksekutif/export` untuk menerbitkan laporan resmi berekstensi PDF (`@react-pdf/renderer`) dan Excel (`exceljs`).
   * **Spesifikasi Laporan:**
     * Versi PDF: format dokumen laporan manajemen berstempel digital politeknik, ringkasan okupansi, dan tabel rekapitulasi peminjaman.
