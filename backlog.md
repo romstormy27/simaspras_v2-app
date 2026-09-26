@@ -244,14 +244,14 @@ Setiap tugas/item backlog dinyatakan **selesai (Done)** hanya jika memenuhi krit
 
 ### FASE 6: Pengembalian Sarpras & Dokumen BAST Digital (UC-07)
 
-- [ ] **TASK-6.1: Alur Serah-Terima Pengembalian & Peninjauan Hasil Inspeksi**
+- [x] **TASK-6.1: Alur Serah-Terima Pengembalian & Peninjauan Hasil Inspeksi**
   * **Deskripsi:** Membangun halaman `/dashboard/bast` bagi Kasubag Umum untuk meninjau transaksi yang telah melewati inspeksi pasca-pengembalian oleh Staf Bagian Umum.
   * **Aturan Bisnis Kunci:**
     * Sesuai ketentuan PRD: **Tanpa pengenaan denda finansial**.
     * Jika ada temuan catatan fisik khusus: Kasubag dapat menyertakan catatan kondisi barang pada draf BAST tanpa klausul denda uang.
   * **Kriteria Keberhasilan:** BAST hanya dapat diproses setelah data inspeksi pasca-pengembalian dari Staf tersimpan di sistem.
 
-- [ ] **TASK-6.2: Engine Generator Dokumen BAST Digital PDF (@react-pdf/renderer)**
+- [x] **TASK-6.2: Engine Generator Dokumen BAST Digital PDF (@react-pdf/renderer)**
   * **Deskripsi:** Membangun template dokumen PDF resmi Berita Acara Serah Terima (BAST) menggunakan `@react-pdf/renderer` (kompatibel penuh dengan cPanel Node.js tanpa headless browser).
   * **Komponen Dokumen BAST:**
     * Kop Resmi Politeknik Imigrasi dan Pemasyarakatan Indonesia.
@@ -262,7 +262,7 @@ Setiap tugas/item backlog dinyatakan **selesai (Done)** hanya jika memenuhi krit
     * **QR Signature Kasubag Umum** sebagai tanda tangan digital resmi yang sah.
   * **Kriteria Keberhasilan:** Berkas PDF dapat digenerate secara in-process di server, tersimpan di direktori privat penyimpanan cPanel, dan dapat diunduh langsung.
 
-- [ ] **TASK-6.3: Endpoint Finalisasi BAST & Pengembalian Status Sarpras (UC-07)**
+- [x] **TASK-6.3: Endpoint Finalisasi BAST & Pengembalian Status Sarpras (UC-07)**
   * **Deskripsi:** Membangun endpoint POST `/api/peminjaman/:id/bast` untuk konfirmasi serah-terima pengembalian.
   * **Operasi Atomik:**
     * Verifikasi kredensial / passkey konfirmasi Kasubag Umum.
