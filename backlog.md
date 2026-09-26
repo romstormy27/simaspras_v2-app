@@ -195,14 +195,14 @@ Setiap tugas/item backlog dinyatakan **selesai (Done)** hanya jika memenuhi krit
 
 ### FASE 4: Alur Verifikasi Teknis & Inspeksi Lapangan (UC-06)
 
-- [ ] **TASK-4.1: Dasbor Tugas Verifikasi Staf Bagian Umum (UC-06, UI-06)**
+- [x] **TASK-4.1: Dasbor Tugas Verifikasi Staf Bagian Umum (UC-06, UI-06)**
   * **Deskripsi:** Membangun antarmuka `/dashboard/verifikasi` khusus peran `Staf` dengan 2 tab: **Verifikasi Kelayakan Pra-Approval** dan **Inspeksi Fisik Pasca-Pengembalian**.
   * **Spesifikasi Teknis:**
     * Tab 1 memuat daftar permohonan berstatus `Pending` yang memerlukan cek ketersediaan fisik & tidak bentrok jadwal riil.
     * Tab 2 memuat daftar transaksi `Disetujui` yang telah selesai digunakan dan diserahkan kembali oleh peminjam.
   * **Kriteria Keberhasilan:** Staf Bagian Umum dapat melihat antrean tugas inspeksi dengan data pemohon dan aset yang jelas.
 
-- [ ] **TASK-4.2: Formulir Inspeksi Fisik & Endpoint Verifikasi**
+- [x] **TASK-4.2: Formulir Inspeksi Fisik & Endpoint Verifikasi**
   * **Deskripsi:** Membangun formulir digital inspeksi teknis dan endpoint POST `/api/verifikasi-fisik`.
   * **Spesifikasi Teknis:**
     * Pilihan `jenis_pemeriksaan`: `Pra-Approval` atau `Pasca-Pengembalian`.
