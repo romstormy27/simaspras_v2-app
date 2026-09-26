@@ -32,3 +32,19 @@ export function Alert({ className, variant = 'default', children, ...props }: Al
     </div>
   );
 }
+
+export function AlertTitle({ className, children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) {
+  return (
+    <h5 className={cn('mb-1 font-semibold leading-none tracking-tight', className)} {...props}>
+      {children}
+    </h5>
+  );
+}
+
+export function AlertDescription({ className, children, ...props }: React.HTMLAttributes<HTMLParagraphElement>) {
+  return (
+    <div className={cn('text-xs [&_p]:leading-relaxed', className)} {...props}>
+      {children}
+    </div>
+  );
+}

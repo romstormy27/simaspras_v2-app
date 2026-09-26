@@ -68,6 +68,15 @@ export function Navbar({ user }: NavbarProps) {
                     Katalog & Kalender
                   </Link>
                   <Link
+                    href="/peminjaman/ajukan"
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                      pathname === '/peminjaman/ajukan' ? 'bg-slate-100 text-[#034275]' : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    <FileCheck className="h-4 w-4" />
+                    Ajukan Peminjaman
+                  </Link>
+                  <Link
                     href="/peminjaman/riwayat"
                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
                       pathname === '/peminjaman/riwayat' ? 'bg-slate-100 text-[#034275]' : 'text-slate-600 hover:text-slate-900'

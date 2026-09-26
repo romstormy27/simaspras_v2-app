@@ -129,7 +129,7 @@ Setiap tugas/item backlog dinyatakan **selesai (Done)** hanya jika memenuhi krit
 
 ### FASE 2: Master Data Sarpras & Katalog Kalender Real-Time (UC-02, UC-09)
 
-- [ ] **TASK-2.1: Modul Kelola Master Data Sarpras oleh Admin (UC-09, UI-09)**
+- [x] **TASK-2.1: Modul Kelola Master Data Sarpras oleh Admin (UC-09, UI-09)**
   * **Deskripsi:** Membangun halaman CRUD `/admin/sarpras` untuk 3 kategori: Ruangan, Mobil Operasional, dan Perangkat Kerja.
   * **Spesifikasi Teknis:**
     * DataTable (TanStack Table) dengan pencarian, filter kategori, dan status operasional (`Tersedia`, `Maintenance`, `Rusak`, `Non-Aktif`).
@@ -139,7 +139,7 @@ Setiap tugas/item backlog dinyatakan **selesai (Done)** hanya jika memenuhi krit
     * Setiap aksi mutasi mencatat entri ke `audit_log`.
   * **Kriteria Keberhasilan:** Administrator dapat menambah, mengedit spesifikasi, mengubah status maintenance, dan menghapus/menonaktifkan aset secara aman.
 
-- [ ] **TASK-2.2: Endpoint REST Katalog & Kalender Ketersediaan Sarpras**
+- [x] **TASK-2.2: Endpoint REST Katalog & Kalender Ketersediaan Sarpras**
   * **Deskripsi:** Membangun Route Handler `/api/sarpras` dan `/api/sarpras/:id/ketersediaan` (GET).
   * **Spesifikasi Teknis:**
     * Endpoint menyajikan daftar sarpras aktif (`status_operasional != 'Non-Aktif'`).
@@ -147,11 +147,11 @@ Setiap tugas/item backlog dinyatakan **selesai (Done)** hanya jika memenuhi krit
     * Mengembalikan slot waktu dengan penanda status: `Tersedia`, `Reserved` (Pending), `In Use` (Disetujui), atau `Maintenance`.
   * **Kriteria Keberhasilan:** Query ketersediaan jadwal memanfaatkan indeks komposit `idx_peminjaman_jadwal` dengan waktu respons < 500 ms.
 
-- [ ] **TASK-2.3: Antarmuka Katalog Sarpras & Kalender Ketersediaan Real-Time (UI-02)**
+- [x] **TASK-2.3: Antarmuka Katalog Sarpras & Kalender Ketersediaan Real-Time (UI-02)**
   * **Deskripsi:** Membangun halaman `/katalog` bagi pemohon dengan navigasi Tabs per kategori (Ruangan, Mobil, Perangkat).
   * **Spesifikasi Teknis:**
     * Kartu informasi aset menampilkan foto/ikon representatif, nama fasilitas, kode BMN, lokasi/lantai/plat, dan badge status ketersediaan.
-    * Tampilan Kalender Ketersediaan Interaktif (menggunakan `react-day-picker` atau `FullCalendar`) yang menampilkan visualisasi jadwal terisi.
+    * Tampilan Kalender Ketersediaan Interaktif (menggunakan modal kalender dan ringkasan jadwal per hari/rentang waktu) yang menampilkan visualisasi jadwal terisi.
     * Tombol aksi **"Lanjutkan Peminjaman"** yang meneruskan data sarpras terpilih ke formulir pengajuan peminjaman (UC-03).
   * **Kriteria Keberhasilan:** Pemohon dapat melihat jadwal ketersediaan tanpa full reload dan memilih unit yang berstatus tersedia.
 
@@ -159,7 +159,7 @@ Setiap tugas/item backlog dinyatakan **selesai (Done)** hanya jika memenuhi krit
 
 ### FASE 3: Pengajuan Peminjaman Digital & Pembatalan Mandiri (UC-03, UC-04)
 
-- [ ] **TASK-3.1: Form Pengajuan Peminjaman Digital & Pakta Integritas (UC-03, UI-03)**
+- [x] **TASK-3.1: Form Pengajuan Peminjaman Digital & Pakta Integritas (UC-03, UI-03)**
   * **Deskripsi:** Membangun antarmuka `/peminjaman/ajukan` bagi 5 peran pemohon (Dosen, Taruna, BPSDM, Kementerian, Alumni).
   * **Spesifikasi Teknis:**
     * Field formulir: Rentang Tanggal & Jam Peminjaman (`tgl_mulai` s/d `tgl_selesai`), Maksud/Agenda Kegiatan Operasional, Jumlah Unit / Catatan Teknis.
@@ -167,7 +167,7 @@ Setiap tugas/item backlog dinyatakan **selesai (Done)** hanya jika memenuhi krit
     * Validasi waktu pengajuan di masa depan (`tgl_mulai >= now()`) dan durasi minimum.
   * **Kriteria Keberhasilan:** Formulir tervalidasi Zod dengan feedback instan sebelum pengiriman data.
 
-- [ ] **TASK-3.2: Engine Penguncian Slot Jadwal & Pencegahan Bentrok Atomik (ACID Booking)**
+- [x] **TASK-3.2: Engine Penguncian Slot Jadwal & Pencegahan Bentrok Atomik (ACID Booking)**
   * **Deskripsi:** Membangun endpoint POST `/api/peminjaman` dengan transaksi database InnoDB terisolasi untuk mencegah *race condition*.
   * **Aturan Bisnis Kunci:**
     * Pengecekan overlap: `(tgl_mulai < existing.tgl_selesai) AND (tgl_selesai > existing.tgl_mulai)` untuk status `Pending` atau `Disetujui`.
@@ -175,14 +175,14 @@ Setiap tugas/item backlog dinyatakan **selesai (Done)** hanya jika memenuhi krit
     * Jika bebas: buat record peminjaman dengan `status_transaksi = 'Pending'`, `kode_transaksi = 'TRX-YYYYMMDD-XXXX'`, catat `audit_log`, dan kirim notifikasi ke dasbor Kasubag & Staf.
   * **Kriteria Keberhasilan:** Dua pengajuan bersamaan pada slot waktu yang sama dijamin hanya 1 yang berhasil mengunci slot; tidak terjadi double-booking.
 
-- [ ] **TASK-3.3: Modul Riwayat Peminjaman Pemohon (UC-04, UI-04)**
+- [x] **TASK-3.3: Modul Riwayat Peminjaman Pemohon (UC-04, UI-04)**
   * **Deskripsi:** Membangun halaman `/peminjaman/riwayat` yang memuat seluruh transaksi milik pemohon login (`idx_peminjaman_pemohon`).
   * **Spesifikasi Teknis:**
     * Kartu riwayat dengan badge status transaksi (`Pending`, `Disetujui`, `Ditolak`, `Dibatalkan`, `Selesai`).
     * Tampilan detail permohonan, jadwal peminjaman, serta akses tiket QR jika telah disetujui.
   * **Kriteria Keberhasilan:** Pemohon dapat memantau status pengajuannya secara transparan dan terurut kronologis.
 
-- [ ] **TASK-3.4: Fitur Pembatalan Peminjaman Mandiri oleh Pemohon (UC-04)**
+- [x] **TASK-3.4: Fitur Pembatalan Peminjaman Mandiri oleh Pemohon (UC-04)**
   * **Deskripsi:** Membangun endpoint PATCH `/api/peminjaman/:id/batalkan` dan komponen dialog pembatalan pada UI-04.
   * **Aturan Bisnis Kunci:**
     * Hanya diizinkan jika `status_transaksi IN ('Pending', 'Disetujui')` dan waktu mulai kegiatan belum lewat (`now() < tgl_mulai`).
@@ -428,7 +428,8 @@ Bagian ini diperbarui secara berkala setiap kali ada tugas yang dimulai, diseles
 | 2026-09-26 | - | Pembuatan dokumen backlog komprehensif berdasarkan PRD | **Selesai** | AI & User |
 | 2026-09-26 | FASE-0 | Setup Next.js Standalone, Tailwind CSS, shadcn/ui, skema Prisma MySQL, seeding akun awal & aset | **Selesai** | AI & User |
 | 2026-09-26 | FASE-1 | Implementasi JWT Auth, Login Gateway (UI-01), Registrasi Pemohon, Admin Aktivasi (UI-10 Tab 1), dan Middleware RBAC 9 Peran | **Selesai** | AI & User |
-| - | FASE-2 | Master Data Sarpras (UI-09) & Katalog Kalender Real-Time (UI-02) | *Selanjutnya* | - |
+| 2026-09-26 | FASE-2 | CRUD Master Sarpras Admin (UI-09), Soft-Delete Transaksi Aktif, Toggle Maintenance, API Ketersediaan & Katalog Real-Time (UI-02) | **Selesai** | AI & User |
+| - | FASE-3 | Form Pengajuan Digital, Pakta Integritas, Penguncian Slot Atomik (ACID) & Pembatalan Mandiri (UC-03, UC-04) | *Selanjutnya* | - |
 
 ---
 
