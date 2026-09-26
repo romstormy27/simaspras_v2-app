@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { formatDateTime } from '@/lib/utils';
+import dynamic from 'next/dynamic';
 import {
   ClipboardCheck,
   Building2,
@@ -26,7 +27,10 @@ import {
   QrCode,
   KeyRound,
   CheckCheck,
+  Camera,
 } from 'lucide-react';
+
+const CameraQrScanner = dynamic(() => import('@/components/camera-qr-scanner'), { ssr: false });
 
 interface VerifikasiItem {
   id_verifikasi: string;
@@ -91,6 +95,7 @@ export default function StafVerifikasiPage() {
   const [ticketCheckError, setTicketCheckError] = useState('');
   const [serahTerimaCatatan, setSerahTerimaCatatan] = useState('');
   const [serahTerimaLoading, setSerahTerimaLoading] = useState(false);
+  const [isCameraScannerOpen, setIsCameraScannerOpen] = useState(false);
 
   // Inspection modal states (UC-06 / SD-06)
   const [selectedBooking, setSelectedBooking] = useState<BookingTransaction | null>(null);
@@ -154,6 +159,11 @@ export default function StafVerifikasiPage() {
     } finally {
       setCheckingTicket(false);
     }
+  };
+
+  const handleCameraScanSuccess = (decodedText: string) => {
+    setScannedCode(decodedText);
+    handleCheckTicket(decodedText);
   };
 
   const handleConfirmSerahTerima = async (idTiket: string) => {
@@ -583,11 +593,19 @@ export default function StafVerifikasiPage() {
             <CardContent className="p-6 space-y-5">
               {/* Scan / Input Bar */}
               <div className="flex flex-col sm:flex-row gap-3">
+                <Button
+                  type="button"
+                  onClick={() => setIsCameraScannerOpen(true)}
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs h-10 px-4 flex items-center justify-center gap-2 shrink-0 shadow-sm"
+                >
+                  <Camera className="h-4 w-4" />
+                  Pindai via Kamera
+                </Button>
                 <div className="relative flex-1">
                   <QrCode className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
                   <Input
                     type="text"
-                    placeholder="Contoh: TIKET-TRX-20260926-0001-... atau TRX-20260926-0001"
+                    placeholder="Ketik/Paste atau gunakan Barcode Scanner (mis. TIKET-TRX-...)"
                     value={scannedCode}
                     onChange={(e) => setScannedCode(e.target.value)}
                     onKeyDown={(e) => {
@@ -599,10 +617,10 @@ export default function StafVerifikasiPage() {
                 <Button
                   onClick={() => handleCheckTicket()}
                   disabled={checkingTicket || !scannedCode.trim()}
-                  className="bg-[#034275] hover:bg-[#02335c] text-xs h-10 px-5 flex items-center gap-2 shrink-0"
+                  className="bg-[#034275] hover:bg-[#02335c] text-xs h-10 px-5 flex items-center justify-center gap-2 shrink-0"
                 >
                   <Search className="h-4 w-4" />
-                  {checkingTicket ? 'Memeriksa...' : 'Periksa & Validasi Tiket'}
+                  {checkingTicket ? 'Memeriksa...' : 'Cari & Validasi'}
                 </Button>
               </div>
 
@@ -1266,6 +1284,13 @@ export default function StafVerifikasiPage() {
           </div>
         </div>
       )}
+
+      {/* Live Camera QR Scanner Modal */}
+      <CameraQrScanner
+        isOpen={isCameraScannerOpen}
+        onClose={() => setIsCameraScannerOpen(false)}
+        onScanSuccess={handleCameraScanSuccess}
+      />
     </div>
   );
 }
