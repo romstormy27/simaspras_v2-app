@@ -3,6 +3,7 @@ import prisma from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
 import { z } from 'zod';
 import { sendEmail } from '@/lib/email';
+import { NotificationService } from '@/lib/notifications';
 import { formatDateTime } from '@/lib/utils';
 
 const cancelSchema = z.object({
@@ -123,24 +124,13 @@ export async function PATCH(
       });
     });
 
-    // Notify applicant and Kasubag / Staf
-    await sendEmail({
-      to: booking.pemohon.email,
-      subject: `[SIMASPRAS] Konfirmasi Pembatalan Peminjaman: ${booking.kode_transaksi}`,
-      html: `
-        <div style="font-family: sans-serif; padding: 16px;">
-          <h2 style="color: #034275;">Peminjaman Dibatalkan</h2>
-          <p>Yth. ${booking.pemohon.nama_lengkap},</p>
-          <p>Permohonan peminjaman sarana dan prasarana dengan kode <strong>${booking.kode_transaksi}</strong> telah berhasil dibatalkan.</p>
-          <ul>
-            <li><strong>Fasilitas:</strong> ${booking.sarpras.nama_sarpras}</li>
-            <li><strong>Jadwal Awal:</strong> ${formatDateTime(booking.tgl_mulai)} s/d ${formatDateTime(booking.tgl_selesai)}</li>
-            <li><strong>Alasan Pembatalan:</strong> ${alasan_pembatalan}</li>
-            <li><strong>Waktu Pembatalan:</strong> ${formatDateTime(now)}</li>
-          </ul>
-          <p>Slot jadwal tersebut telah dilepaskan dan dibuka kembali secara otomatis pada kalender ketersediaan.</p>
-        </div>
-      `,
+    // Notify applicant and Kasubag / Staf (Skenario 4 PRD §14)
+    await NotificationService.notifyBookingCancelled({
+      kode_transaksi: booking.kode_transaksi,
+      sarpras_nama: booking.sarpras.nama_sarpras,
+      pemohon_email: booking.pemohon.email,
+      pemohon_nama: booking.pemohon.nama_lengkap,
+      alasan: alasan_pembatalan.trim(),
     });
 
     return NextResponse.json({

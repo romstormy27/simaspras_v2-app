@@ -3,6 +3,7 @@ import prisma from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
 import { z } from 'zod';
 import { sendEmail } from '@/lib/email';
+import { NotificationService } from '@/lib/notifications';
 import { formatDateTime } from '@/lib/utils';
 import { JenisPemeriksaan, KondisiFisik } from '@prisma/client';
 
@@ -115,29 +116,14 @@ export async function POST(request: NextRequest) {
       return verifikasi;
     });
 
-    // Notify Kasubag Umum
-    const jenisText = jenis === JenisPemeriksaan.Pra_Approval ? 'Pra-Approval (Kesiapan Sarpras)' : 'Pasca-Pengembalian (Kondisi Barang)';
-    const kondisiBadgeText = kondisi === KondisiFisik.Baik_Sesuai ? 'Baik / Sesuai Standard' : 'Ada Catatan Khusus Fisik';
-
-    await sendEmail({
-      to: 'kasubag.umum@politeknik.ac.id',
-      subject: `[SIMASPRAS] Hasil Verifikasi Staf: ${booking.kode_transaksi} (${jenisText})`,
-      html: `
-        <div style="font-family: sans-serif; padding: 16px;">
-          <h2 style="color: #034275;">Laporan Hasil Verifikasi Teknis Sarpras</h2>
-          <p>Yth. Kasubag Bagian Umum,</p>
-          <p>Staf Verifikator <strong>${session.nama_lengkap}</strong> telah menyelesaikan inspeksi fisik untuk permohonan:</p>
-          <ul>
-            <li><strong>Kode Transaksi:</strong> ${booking.kode_transaksi}</li>
-            <li><strong>Fasilitas:</strong> ${booking.sarpras.nama_sarpras} (${booking.sarpras.lokasi_plat})</li>
-            <li><strong>Jenis Pemeriksaan:</strong> ${jenisText}</li>
-            <li><strong>Kondisi Fisik:</strong> <span style="font-weight: bold; color: ${kondisi === KondisiFisik.Baik_Sesuai ? 'green' : 'orange'};">${kondisiBadgeText}</span></li>
-            <li><strong>Catatan Lapangan:</strong> ${catatan_inspeksi.trim() || 'Tidak ada catatan khusus (kondisi fisik baik dan lengkap).'}</li>
-            <li><strong>Waktu Inspeksi:</strong> ${formatDateTime(new Date())}</li>
-          </ul>
-          <p>Rekomendasi ini siap digunakan untuk pertimbangan Keputusan Approval (UC-05) atau Penandatanganan BAST Digital (UC-07).</p>
-        </div>
-      `,
+    // Notify Kasubag Umum (Skenario 7 PRD §14)
+    await NotificationService.notifyInspectionCompleted({
+      kode_transaksi: booking.kode_transaksi,
+      sarpras_nama: booking.sarpras.nama_sarpras,
+      jenis: jenis,
+      kondisi: kondisi,
+      catatan: catatan_inspeksi.trim() || null,
+      staf_nama: session.nama_lengkap,
     });
 
     return NextResponse.json(

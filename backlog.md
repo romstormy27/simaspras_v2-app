@@ -301,7 +301,7 @@ Setiap tugas/item backlog dinyatakan **selesai (Done)** hanya jika memenuhi krit
 
 ### FASE 8: Tata Kelola Pengguna, Role RBAC & Audit Trail (UC-10, Seksi 14)
 
-- [ ] **TASK-8.1: Modul Manajemen Pengguna & Konfigurasi Role RBAC (UI-10 Tab 2)**
+- [x] **TASK-8.1: Modul Manajemen Pengguna & Konfigurasi Role RBAC (UI-10 Tab 2)**
   * **Deskripsi:** Membangun antarmuka Tab "Daftar User & Role" pada `/admin/users` dan endpoint PATCH `/api/admin/users/:id/role`.
   * **Spesifikasi Teknis:**
     * Menampilkan seluruh pengguna terdaftar, status aktivasi, dan role saat ini.
@@ -310,7 +310,7 @@ Setiap tugas/item backlog dinyatakan **selesai (Done)** hanya jika memenuhi krit
     * Pencatatan otomatis ke `audit_log` setiap terjadi perubahan kewenangan.
   * **Kriteria Keberhasilan:** Perubahan role langsung berdampak pada sesi dan hak akses API pengguna pada request berikutnya.
 
-- [ ] **TASK-8.2: Modul Pemantauan & Filter Audit Trail (UI-10 Tab 3)**
+- [x] **TASK-8.2: Modul Pemantauan & Filter Audit Trail (UI-10 Tab 3)**
   * **Deskripsi:** Membangun antarmuka Tab "Log Audit Trail" pada `/admin/users` dan endpoint GET `/api/admin/audit-log`.
   * **Spesifikasi Teknis:**
     * DataTable riwayat aktivitas memuat timestamp, nama user, role, deskripsi aksi (Login, Ajukan, Setujui, Tolak, Edit Sarpras, Ubah Role), dan alamat IP.
@@ -318,7 +318,7 @@ Setiap tugas/item backlog dinyatakan **selesai (Done)** hanya jika memenuhi krit
     * Fitur Ekspor Log Audit Trail ke format CSV/Excel via `exceljs`.
   * **Kriteria Keberhasilan:** Administrator dapat melakukan audit forensik terhadap seluruh aksi mutasi penting dalam sistem secara transparan.
 
-- [ ] **TASK-8.3: Integrasi Subtaks Notifikasi Email & Dashboard (Seksi 14 PRD)**
+- [x] **TASK-8.3: Integrasi Subtaks Notifikasi Email & Dashboard (Seksi 14 PRD)**
   * **Deskripsi:** Membangun layanan terpusat `NotificationService` yang mengonsolidasikan notifikasi in-app (tabel/toast) dan email transaksional (`nodemailer` via cPanel SMTP) untuk 9 skenario peristiwa sesuai PRD §14:
     1. Registrasi pengguna baru masuk (Admin).
     2. Keputusan aktivasi akun disetujui/ditolak (Pemohon).

@@ -3,6 +3,7 @@ import prisma from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
 import { z } from 'zod';
 import { sendEmail } from '@/lib/email';
+import { NotificationService } from '@/lib/notifications';
 import { formatDateTime } from '@/lib/utils';
 
 const createBookingSchema = z.object({
@@ -226,26 +227,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Trigger notification to Kasubag & Staf (Simulation / SMTP)
+    // Trigger notification to Kasubag & Staf (Skenario 3 PRD §14)
     const booking = result.booking!;
-    await sendEmail({
-      to: 'kasubag.umum@politeknik.ac.id',
-      subject: `[SIMASPRAS] Permohonan Peminjaman Baru: ${booking.kode_transaksi}`,
-      html: `
-        <div style="font-family: sans-serif; padding: 16px;">
-          <h2 style="color: #034275;">Permohonan Peminjaman Sarpras Baru</h2>
-          <p>Yth. Kasubag Bagian Umum & Staf Verifikator,</p>
-          <p>Telah diajukan permohonan peminjaman fasilitas baru yang memerlukan verifikasi teknis dan persetujuan:</p>
-          <ul>
-            <li><strong>Kode Transaksi:</strong> ${booking.kode_transaksi}</li>
-            <li><strong>Pemohon:</strong> ${session.nama_lengkap} (${session.role})</li>
-            <li><strong>Fasilitas:</strong> ${booking.sarpras.nama_sarpras} (${booking.sarpras.kategori})</li>
-            <li><strong>Waktu Peminjaman:</strong> ${formatDateTime(booking.tgl_mulai)} s/d ${formatDateTime(booking.tgl_selesai)}</li>
-            <li><strong>Agenda:</strong> ${booking.maksud_kegiatan}</li>
-          </ul>
-          <p>Silakan akses Dasbor Verifikasi Staf atau Dasbor Persetujuan Kasubag untuk memproses.</p>
-        </div>
-      `,
+    await NotificationService.notifyBookingCreated({
+      kode_transaksi: booking.kode_transaksi,
+      sarpras_nama: booking.sarpras.nama_sarpras,
+      pemohon_nama: session.nama_lengkap,
+      pemohon_role: session.role,
+      tgl_mulai: booking.tgl_mulai,
+      tgl_selesai: booking.tgl_selesai,
+      maksud_kegiatan: booking.maksud_kegiatan,
     });
 
     return NextResponse.json(

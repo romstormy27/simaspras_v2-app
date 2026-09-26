@@ -4,6 +4,7 @@ import prisma from '@/lib/prisma';
 import { hashPassword } from '@/lib/auth';
 import { logAudit } from '@/lib/audit';
 import { sendEmail } from '@/lib/email';
+import { NotificationService } from '@/lib/notifications';
 import { Role, StatusAktivasi } from '@prisma/client';
 
 const registerSchema = z.object({
@@ -88,6 +89,14 @@ export async function POST(request: NextRequest) {
         <br/>
         <p>Salam hangat,<br/>Bagian Keuangan dan Umum Poltekimipas</p>
       `,
+    });
+
+    // Kirim notifikasi ke Administrator terkait pendaftaran akun baru (Skenario 1)
+    await NotificationService.notifyUserRegistered({
+      id_user: newUser.id_user,
+      nama_lengkap: newUser.nama_lengkap,
+      email: newUser.email,
+      role: newUser.role,
     });
 
     return NextResponse.json(

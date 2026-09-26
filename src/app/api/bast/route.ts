@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
 import prisma from '@/lib/prisma';
-import nodemailer from 'nodemailer';
+import { NotificationService } from '@/lib/notifications';
 
 export async function GET(req: NextRequest) {
   try {
@@ -248,79 +248,14 @@ export async function POST(req: NextRequest) {
       return newBast;
     });
 
-    // 6. Asynchronous Notification Email to Pemohon
-    try {
-      const transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST || 'localhost',
-        port: Number(process.env.SMTP_PORT) || 587,
-        secure: process.env.SMTP_SECURE === 'true',
-        auth: {
-          user: process.env.SMTP_USER || '',
-          pass: process.env.SMTP_PASS || '',
-        },
-      });
-
-      const mailOptions = {
-        from: `"SIMASPRAS Poltekimipas" <${process.env.SMTP_FROM || 'no-reply@poltekimipas.ac.id'}>`,
-        to: booking.pemohon.email,
-        subject: `[SIMASPRAS] Berita Acara Serah Terima (BAST) Selesai - ${result.nomor_bast}`,
-        html: `
-          <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
-            <div style="background-color: #034275; color: #ffffff; padding: 20px; text-align: center;">
-              <h2 style="margin: 0; font-size: 20px;">SIMASPRAS POLTEKIMIPAS</h2>
-              <p style="margin: 5px 0 0 0; font-size: 13px;">Berita Acara Serah Terima (BAST) Digital</p>
-            </div>
-            <div style="padding: 24px;">
-              <p>Yth. <strong>${booking.pemohon.nama_lengkap}</strong>,</p>
-              <p>Pengembalian sarana dan prasarana Anda telah resmi diterima dan disetujui melalui penandatanganan elektronik dokumen BAST oleh Kasubag Umum:</p>
-              
-              <table style="width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px;">
-                <tr>
-                  <td style="padding: 6px 0; color: #64748b;">Nomor BAST:</td>
-                  <td style="padding: 6px 0; font-weight: bold; color: #034275;">${result.nomor_bast}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 6px 0; color: #64748b;">Kode Transaksi:</td>
-                  <td style="padding: 6px 0; font-weight: bold;">${booking.kode_transaksi}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 6px 0; color: #64748b;">Fasilitas:</td>
-                  <td style="padding: 6px 0;">${booking.sarpras.nama_sarpras}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 6px 0; color: #64748b;">Penandatangan:</td>
-                  <td style="padding: 6px 0;">${session.nama_lengkap} (Kasubag Umum)</td>
-                </tr>
-                <tr>
-                  <td style="padding: 6px 0; color: #64748b;">Status Transaksi:</td>
-                  <td style="padding: 6px 0; color: #16a34a; font-weight: bold;">Selesai (Tuntas)</td>
-                </tr>
-              </table>
-
-              <p style="font-size: 13px; color: #475569; background: #f8fafc; padding: 12px; border-radius: 6px; border: 1px solid #e2e8f0;">
-                Sesuai kebijakan SIMASPRAS Poltekimipas, penyelesaian pengembalian sarpras dikelola secara tertib tanpa pengenaan denda finansial. Anda dapat mengunduh dokumen BAST resmi berekstensi PDF langsung melalui akun Anda.
-              </p>
-
-              <div style="margin: 24px 0; text-align: center;">
-                <a href="${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/bast/${result.id_bast}/pdf"
-                   style="background-color: #034275; color: #ffffff; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: bold; display: inline-block;">
-                  Unduh Dokumen BAST PDF
-                </a>
-              </div>
-            </div>
-            <div style="background-color: #f1f5f9; padding: 12px; text-align: center; font-size: 11px; color: #64748b;">
-              © 2026 Politeknik Imigrasi dan Pemasyarakatan Indonesia. Sistem Informasi Manajemen Sarana dan Prasarana.
-            </div>
-          </div>
-        `,
-      };
-
-      transporter.sendMail(mailOptions).catch((mailErr) => {
-        console.warn('Failed to send BAST email (SMTP might be unconfigured):', mailErr.message);
-      });
-    } catch (_smtpError) {
-      // Ignore background email failure
-    }
+    // 6. Asynchronous Notification Email to Pemohon (Skenario 8 PRD §14)
+    await NotificationService.notifyBastIssued({
+      nomor_bast: result.nomor_bast,
+      kode_transaksi: booking.kode_transaksi,
+      pemohon_email: booking.pemohon.email,
+      pemohon_nama: booking.pemohon.nama_lengkap,
+      kasubag_nama: session.nama_lengkap,
+    });
 
     return NextResponse.json({
       success: true,

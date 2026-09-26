@@ -3,6 +3,7 @@ import prisma from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
 import { z } from 'zod';
 import { sendEmail } from '@/lib/email';
+import { NotificationService } from '@/lib/notifications';
 import { formatDateTime } from '@/lib/utils';
 
 const approvalSchema = z.object({
@@ -124,25 +125,15 @@ export async function PATCH(
         return { booking: resBooking, tiket };
       });
 
-      // Send email to Pemohon
-      await sendEmail({
-        to: booking.pemohon.email,
-        subject: `[SIMASPRAS] Permohonan Peminjaman Disetujui: ${booking.kode_transaksi}`,
-        html: `
-          <div style="font-family: sans-serif; padding: 16px;">
-            <h2 style="color: #034275;">Peminjaman Sarpras Disetujui!</h2>
-            <p>Yth. <strong>${booking.pemohon.nama_lengkap}</strong>,</p>
-            <p>Permohonan peminjaman sarana dan prasarana Anda telah <strong>DISETUJUI</strong> oleh Kasubag Bagian Umum.</p>
-            <ul>
-              <li><strong>Kode Transaksi:</strong> ${booking.kode_transaksi}</li>
-              <li><strong>Fasilitas:</strong> ${booking.sarpras.nama_sarpras} (${booking.sarpras.lokasi_plat})</li>
-              <li><strong>Jadwal:</strong> ${formatDateTime(booking.tgl_mulai)} s/d ${formatDateTime(booking.tgl_selesai)}</li>
-              <li><strong>Approver:</strong> ${session.nama_lengkap} (Kasubag Umum)</li>
-              <li><strong>Kode Tiket Digital:</strong> <code style="font-size: 14px; background: #e0f2fe; padding: 2px 6px;">${qrToken}</code></li>
-            </ul>
-            <p>Silakan buka menu <strong>Riwayat Peminjaman</strong> atau halaman Tiket Digital Anda untuk melihat Kode QR resmi pengambilan fasilitas kepada Petugas Staf Bagian Umum.</p>
-          </div>
-        `,
+      // Send email to Pemohon (Skenario 5 PRD §14)
+      await NotificationService.notifyBookingApproved({
+        kode_transaksi: booking.kode_transaksi,
+        sarpras_nama: booking.sarpras.nama_sarpras,
+        pemohon_email: booking.pemohon.email,
+        pemohon_nama: booking.pemohon.nama_lengkap,
+        kode_qr: qrToken,
+        tgl_mulai: booking.tgl_mulai,
+        tgl_selesai: booking.tgl_selesai,
       });
 
       return NextResponse.json({
@@ -175,24 +166,13 @@ export async function PATCH(
         return resBooking;
       });
 
-      // Send rejection notification email to Pemohon
-      await sendEmail({
-        to: booking.pemohon.email,
-        subject: `[SIMASPRAS] Permohonan Peminjaman Ditolak: ${booking.kode_transaksi}`,
-        html: `
-          <div style="font-family: sans-serif; padding: 16px;">
-            <h2 style="color: #b91c1c;">Pemberitahuan Penolakan Permohonan Sarpras</h2>
-            <p>Yth. <strong>${booking.pemohon.nama_lengkap}</strong>,</p>
-            <p>Mohon maaf, permohonan peminjaman sarana dan prasarana Anda tidak dapat disetujui oleh Kasubag Bagian Umum:</p>
-            <ul>
-              <li><strong>Kode Transaksi:</strong> ${booking.kode_transaksi}</li>
-              <li><strong>Fasilitas:</strong> ${booking.sarpras.nama_sarpras}</li>
-              <li><strong>Jadwal yang Diajukan:</strong> ${formatDateTime(booking.tgl_mulai)} s/d ${formatDateTime(booking.tgl_selesai)}</li>
-              <li><strong>Alasan Penolakan:</strong> ${alasan_penolakan.trim()}</li>
-            </ul>
-            <p>Kuncian slot jadwal telah dibebaskan. Anda dapat mengajukan permohonan ulang untuk fasilitas lain atau jadwal yang berbeda melalui katalog fasilitas.</p>
-          </div>
-        `,
+      // Send rejection notification email to Pemohon (Skenario 6 PRD §14)
+      await NotificationService.notifyBookingRejected({
+        kode_transaksi: booking.kode_transaksi,
+        sarpras_nama: booking.sarpras.nama_sarpras,
+        pemohon_email: booking.pemohon.email,
+        pemohon_nama: booking.pemohon.nama_lengkap,
+        alasan: alasan_penolakan.trim(),
       });
 
       return NextResponse.json({

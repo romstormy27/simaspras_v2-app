@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
 import { logAudit } from '@/lib/audit';
+import { NotificationService } from '@/lib/notifications';
 import { Role } from '@prisma/client';
 
 export async function PATCH(
@@ -29,6 +30,11 @@ export async function PATCH(
         where: { role: 'Admin', status_aktivasi: 'Aktif' },
       });
       if (adminCount <= 1) {
+        await NotificationService.notifySecurityEvent({
+          jenis_kejadian: 'Percobaan Pencabutan Role Admin Tunggal Dicegah',
+          deskripsi: `Pengguna ${admin.nama_lengkap} (${admin.email}) mencoba mencabut peran Admin dirinya sendiri padahal merupakan satu-satunya Admin aktif di sistem.`,
+          ip_address: request.headers.get('x-forwarded-for') || '127.0.0.1',
+        });
         return NextResponse.json(
           { success: false, message: 'Tidak dapat mencabut role Admin tunggal pada sistem' },
           { status: 400 }
