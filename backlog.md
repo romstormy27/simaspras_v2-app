@@ -216,14 +216,14 @@ Setiap tugas/item backlog dinyatakan **selesai (Done)** hanya jika memenuhi krit
 
 ### FASE 5: Alur Persetujuan & Penerbitan Tiket Digital QR (UC-05)
 
-- [ ] **TASK-5.1: Dasbor Persetujuan Kasubag Bagian Umum (UC-05, UI-05)**
+- [x] **TASK-5.1: Dasbor Persetujuan Kasubag Bagian Umum (UC-05, UI-05)**
   * **Deskripsi:** Membangun antarmuka `/dashboard/approval` khusus peran `Kasubag` untuk mengevaluasi antrean pengajuan berstatus `Pending Approval Kasubag`.
   * **Spesifikasi Teknis:**
     * Tabel antrean permohonan menampilkan urgensi agenda, identitas pemohon, jadwal, unit sarpras, dan **catatan hasil verifikasi pra-approval dari Staf Umum (UC-06)**.
     * Lembar evaluasi detail (Sheet/Dialog) untuk meninjau seluruh parameter sebelum memutuskan.
   * **Kriteria Keberhasilan:** Kasubag memiliki visibilitas lengkap terhadap hasil verifikasi staf teknis sebelum membuat keputusan.
 
-- [ ] **TASK-5.2: Logika Approval/Reject & Generator Kode QR Tiket**
+- [x] **TASK-5.2: Logika Approval/Reject & Generator Kode QR Tiket**
   * **Deskripsi:** Membangun endpoint PATCH `/api/peminjaman/:id/approval` dan modul utilitas QR Code (`qrcode`).
   * **Skenario Approval (Setuju):**
     * Update status peminjaman menjadi `Disetujui`, simpan `id_approver = kasubag.id_user`.
@@ -236,7 +236,7 @@ Setiap tugas/item backlog dinyatakan **selesai (Done)** hanya jika memenuhi krit
     * Kirim notifikasi email + dasbor ke pemohon memuat alasan resmi penolakan.
   * **Kriteria Keberhasilan:** Tiket QR unik berhasil diterbitkan saat disetujui; penolakan otomatis membebaskan jadwal; audit log tercatat rapi.
 
-- [ ] **TASK-5.3: Antarmuka Tampilan Tiket Digital & Scan Verifikasi**
+- [x] **TASK-5.3: Antarmuka Tampilan Tiket Digital & Scan Verifikasi**
   * **Deskripsi:** Membangun kartu Tiket Digital di halaman pemohon (`/peminjaman/[id]/tiket`) yang dapat diunduh/ditunjukkan ke Bagian Umum saat pengambilan fasilitas/kunci.
   * **Kriteria Keberhasilan:** Kode QR dapat dirender jelas di layar mobile dan memuat data validasi transaksi peminjaman.
 
