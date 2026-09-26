@@ -1,0 +1,187 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  Dosen
+  Taruna
+  BPSDM
+  Kementerian
+  Alumni
+  Kabag
+  Kasubag
+  Staf
+  Admin
+}
+
+enum StatusAktivasi {
+  Pending
+  Aktif
+  Ditolak
+}
+
+enum KategoriSarpras {
+  Ruangan
+  Mobil_Operasional @map("Mobil Operasional")
+  Perangkat_Kerja   @map("Perangkat Kerja")
+}
+
+enum StatusOperasional {
+  Tersedia
+  Maintenance
+  Rusak
+  Non_Aktif @map("Non-Aktif")
+}
+
+enum StatusTransaksi {
+  Pending
+  Disetujui
+  Ditolak
+  Dibatalkan
+  Selesai
+}
+
+enum StatusTiket {
+  Aktif
+  Digunakan
+  Kadaluarsa
+}
+
+enum JenisPemeriksaan {
+  Pra_Approval       @map("Pra-Approval")
+  Pasca_Pengembalian @map("Pasca-Pengembalian")
+}
+
+enum KondisiFisik {
+  Baik_Sesuai        @map("Baik/Sesuai")
+  Ada_Catatan_Khusus @map("Ada Catatan Khusus")
+}
+
+model User {
+  id_user         String         @id @default(uuid()) @db.VarChar(36)
+  nama_lengkap    String         @db.VarChar(100)
+  email           String         @unique(map: "uk_users_email") @db.VarChar(100)
+  password_hash   String         @db.VarChar(255)
+  no_hp           String         @db.VarChar(20)
+  role            Role
+  status_aktivasi StatusAktivasi @default(Pending)
+  created_at      DateTime       @default(now()) @db.Timestamp(0)
+
+  pemohon_detail    PemohonDetail?
+  peminjaman_dibuat Peminjaman[]      @relation("PeminjamanPemohon")
+  peminjaman_disetujui Peminjaman[]   @relation("PeminjamanApprover")
+  verifikasi_dibuat VerifikasiFisik[] @relation("VerifikasiStaf")
+  bast_dibuat       BASTDigital[]     @relation("BASTKasubag")
+  audit_logs        AuditLog[]        @relation("AuditUser")
+
+  @@index([role, status_aktivasi], name: "idx_users_role_status")
+  @@map("users")
+}
+
+model PemohonDetail {
+  id_pemohon        String @id @default(uuid()) @db.VarChar(36)
+  id_user           String @unique(map: "uk_pemohon_user") @db.VarChar(36)
+  nomor_identitas   String @db.VarChar(50)
+  instansi_kategori String @db.VarChar(100)
+
+  user User @relation(fields: [id_user], references: [id_user], onDelete: Cascade, onUpdate: Cascade, map: "fk_pemohon_users")
+
+  @@map("pemohon_detail")
+}
+
+model Sarpras {
+  id_sarpras         String            @id @default(uuid()) @db.VarChar(36)
+  kode_aset          String            @unique(map: "uk_sarpras_kode") @db.VarChar(30)
+  nama_sarpras       String            @db.VarChar(100)
+  kategori           KategoriSarpras
+  spesifikasi        String?           @db.Text
+  lokasi_plat        String            @db.VarChar(100)
+  status_operasional StatusOperasional @default(Tersedia)
+
+  daftar_peminjaman Peminjaman[]
+
+  @@map("sarpras")
+}
+
+model Peminjaman {
+  id_peminjaman    String          @id @default(uuid()) @db.VarChar(36)
+  kode_transaksi   String          @unique(map: "uk_peminjaman_kode") @db.VarChar(30)
+  id_pemohon       String          @db.VarChar(36)
+  id_sarpras       String          @db.VarChar(36)
+  id_approver      String?         @db.VarChar(36)
+  tgl_mulai        DateTime        @db.DateTime(0)
+  tgl_selesai      DateTime        @db.DateTime(0)
+  maksud_kegiatan  String          @db.Text
+  status_transaksi StatusTransaksi @default(Pending)
+  created_at       DateTime        @default(now()) @db.Timestamp(0)
+
+  pemohon  User    @relation("PeminjamanPemohon", fields: [id_pemohon], references: [id_user], onDelete: Restrict, onUpdate: Cascade, map: "fk_peminjaman_pemohon")
+  sarpras  Sarpras @relation(fields: [id_sarpras], references: [id_sarpras], onDelete: Restrict, onUpdate: Cascade, map: "fk_peminjaman_sarpras")
+  approver User?   @relation("PeminjamanApprover", fields: [id_approver], references: [id_user], onDelete: SetNull, onUpdate: Cascade, map: "fk_peminjaman_approver")
+
+  tiket_digital    TiketDigital?
+  verifikasi_fisik VerifikasiFisik[]
+  bast_digital     BASTDigital?
+
+  @@index([id_sarpras, tgl_mulai, tgl_selesai, status_transaksi], name: "idx_peminjaman_jadwal")
+  @@index([id_pemohon, status_transaksi], name: "idx_peminjaman_pemohon")
+  @@map("peminjaman")
+}
+
+model TiketDigital {
+  id_tiket      String      @id @default(uuid()) @db.VarChar(36)
+  id_peminjaman String      @unique(map: "uk_tiket_peminjaman") @db.VarChar(36)
+  kode_qr       String      @unique(map: "uk_tiket_kode_qr") @db.VarChar(255)
+  status_tiket  StatusTiket @default(Aktif)
+
+  peminjaman Peminjaman @relation(fields: [id_peminjaman], references: [id_peminjaman], onDelete: Cascade, onUpdate: Cascade, map: "fk_tiket_peminjaman")
+
+  @@map("tiket_digital")
+}
+
+model VerifikasiFisik {
+  id_verifikasi     String           @id @default(uuid()) @db.VarChar(36)
+  id_peminjaman     String           @db.VarChar(36)
+  id_staf           String           @db.VarChar(36)
+  jenis_pemeriksaan JenisPemeriksaan
+  kondisi_fisik     KondisiFisik
+  catatan_inspeksi  String?          @db.Text
+  created_at        DateTime         @default(now()) @db.Timestamp(0)
+
+  peminjaman Peminjaman @relation(fields: [id_peminjaman], references: [id_peminjaman], onDelete: Cascade, onUpdate: Cascade, map: "fk_verifikasi_peminjaman")
+  staf       User       @relation("VerifikasiStaf", fields: [id_staf], references: [id_user], onDelete: Restrict, onUpdate: Cascade, map: "fk_verifikasi_staf")
+
+  @@map("verifikasi_fisik")
+}
+
+model BASTDigital {
+  id_bast         String   @id @default(uuid()) @db.VarChar(36)
+  nomor_bast      String   @unique(map: "uk_bast_nomor") @db.VarChar(50)
+  id_peminjaman   String   @unique(map: "uk_bast_peminjaman") @db.VarChar(36)
+  id_kasubag      String   @db.VarChar(36)
+  qr_signature    String   @db.VarChar(255)
+  created_at      DateTime @default(now()) @db.Timestamp(0)
+
+  peminjaman Peminjaman @relation(fields: [id_peminjaman], references: [id_peminjaman], onDelete: Restrict, onUpdate: Cascade, map: "fk_bast_peminjaman")
+  kasubag    User       @relation("BASTKasubag", fields: [id_kasubag], references: [id_user], onDelete: Restrict, onUpdate: Cascade, map: "fk_bast_kasubag")
+
+  @@map("bast_digital")
+}
+
+model AuditLog {
+  id_log     BigInt   @id @default(autoincrement())
+  id_user    String?  @db.VarChar(36)
+  aktivitas  String   @db.VarChar(255)
+  ip_address String?  @db.VarChar(45)
+  timestamp  DateTime @default(now()) @db.Timestamp(0)
+
+  user User? @relation("AuditUser", fields: [id_user], references: [id_user], onDelete: SetNull, onUpdate: Cascade, map: "fk_audit_users")
+
+  @@index([timestamp, id_user], name: "idx_audit_log_timestamp")
+  @@map("audit_log")
+}
