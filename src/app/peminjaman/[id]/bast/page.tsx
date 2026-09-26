@@ -121,16 +121,16 @@ export default async function PemohonBastViewPage({
         {/* Kop Institusi */}
         <div className="border-b-2 border-[#034275] p-6 sm:p-8 text-center bg-slate-50/60 space-y-1">
           <div className="text-xs font-bold tracking-wider text-slate-600 uppercase">
-            Kementerian Hukum dan Hak Asasi Manusia RI
+            Kementerian Imigrasi dan Pemasyarakatan RI
           </div>
           <div className="text-xs font-medium text-slate-500 uppercase">
-            Badan Pengembangan Sumber Daya Manusia Hukum dan HAM
+            Badan Pengembangan Sumber Daya Manusia Imigrasi dan Pemasyarakatan
           </div>
           <h2 className="text-lg sm:text-xl font-bold text-[#034275] uppercase tracking-wide">
             Politeknik Imigrasi dan Pemasyarakatan (Poltekimipas)
           </h2>
           <p className="text-[11px] text-slate-400">
-            Jalan Raya Gandul No. 4, Cinere, Depok • Laman: poltekimipas.ac.id • SIMASPRAS Paperless
+            Jl. Satria - Sudirman, RT.001/RW.014, Tanah Tinggi, Kec. Tangerang, Kota Tangerang, Banten 15119 • Laman: poltekimipas.ac.id • SIMASPRAS Paperless
           </p>
         </div>
 

@@ -167,7 +167,7 @@ export default function TiketDigitalPage() {
             TIKET DIGITAL PENGAMBILAN ASET SARPRAS
           </h1>
           <p className="text-[11px] text-blue-200 mt-0.5">
-            Kementerian Hukum dan Hak Asasi Manusia Republik Indonesia
+            Kementerian Imigrasi dan Pemasyarakatan Republik Indonesia
           </p>
 
           <div className="mt-3 inline-block">

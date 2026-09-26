@@ -274,11 +274,11 @@ export function BastDocument({ data }: { data: BastData }) {
       <Page size="A4" style={styles.page}>
         {/* Kop Surat Resmi */}
         <View style={styles.kopContainer}>
-          <Text style={styles.kopLine1}>KEMENTERIAN HUKUM DAN HAK ASASI MANUSIA RI</Text>
-          <Text style={styles.kopLine2}>BADAN PENGEMBANGAN SUMBER DAYA MANUSIA HUKUM DAN HAM</Text>
+          <Text style={styles.kopLine1}>KEMENTERIAN IMIGRASI DAN PEMASYARAKATAN RI</Text>
+          <Text style={styles.kopLine2}>BADAN PENGEMBANGAN SUMBER DAYA MANUSIA IMIGRASI DAN PEMASYARAKATAN</Text>
           <Text style={styles.kopLine3}>POLITEKNIK IMIGRASI DAN PEMASYARAKATAN</Text>
           <Text style={styles.kopAddress}>
-            Kampus Poltekimipas: Jl. Raya Gandul No. 4, Gandul, Cinere, Depok, Jawa Barat 16512
+            Kampus Poltekimipas: Jl. Satria - Sudirman, RT.001/RW.014, Tanah Tinggi, Kec. Tangerang, Kota Tangerang, Banten 15119
           </Text>
           <Text style={styles.kopAddress}>
             Laman: https://poltekimipas.ac.id | Pos-el: info@poltekimipas.ac.id | SIMASPRAS Digital
