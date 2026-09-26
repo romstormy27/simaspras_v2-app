@@ -23,6 +23,8 @@ import {
   UserCheck,
   ShieldAlert,
   ArrowRight,
+  FileCheck,
+  Download,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -429,6 +431,33 @@ export default function RiwayatPeminjamanPage() {
                         </Link>
                       )}
 
+                      {b.status_transaksi === 'Selesai' && b.bast_digital && (
+                        <div className="flex items-center gap-1.5">
+                          <Link href={`/peminjaman/${b.id_peminjaman}/bast`}>
+                            <Button
+                              size="sm"
+                              className="text-xs flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 h-8 text-white shadow-sm"
+                            >
+                              <FileCheck className="h-3.5 w-3.5" />
+                              Buka BAST Digital
+                            </Button>
+                          </Link>
+                          <a
+                            href={`/api/bast/${b.bast_digital.id_bast}/pdf?download=true`}
+                          >
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="text-xs flex items-center gap-1 h-8 border-emerald-300 text-emerald-700 hover:bg-emerald-50 px-2.5"
+                              title="Unduh PDF Resmi"
+                            >
+                              <Download className="h-3.5 w-3.5" />
+                              PDF
+                            </Button>
+                          </a>
+                        </div>
+                      )}
+
                       {canCancel && (
                         <Button
                           size="sm"
@@ -510,6 +539,50 @@ export default function RiwayatPeminjamanPage() {
                         Tampilkan Kode QR Lengkap & Cetak Tiket
                       </Button>
                     </Link>
+                  </div>
+                </div>
+              )}
+
+              {/* BAST Digital Section (If Selesai) */}
+              {selectedDetail.status_transaksi === 'Selesai' && selectedDetail.bast_digital && (
+                <div className="rounded-xl border border-emerald-300 bg-emerald-50/70 p-4 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="p-1.5 rounded-lg bg-emerald-600 text-white">
+                        <FileCheck className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <div className="font-bold text-emerald-950 text-xs uppercase tracking-wider">
+                          Berita Acara Serah Terima (BAST) Digital
+                        </div>
+                        <div className="font-mono text-xs font-bold text-emerald-800">
+                          {selectedDetail.bast_digital.nomor_bast}
+                        </div>
+                      </div>
+                    </div>
+                    <Badge variant="success" className="text-[11px]">Sah & Selesai</Badge>
+                  </div>
+
+                  <p className="text-[11px] text-emerald-800">
+                    Pengembalian fasilitas telah diverifikasi staf dan ditandatangani secara elektronik oleh Kasubag Umum. Dokumen BAST resmi tersedia untuk diunduh.
+                  </p>
+
+                  <div className="flex items-center gap-2 pt-1">
+                    <Link href={`/peminjaman/${selectedDetail.id_peminjaman}/bast`} className="flex-1">
+                      <Button size="sm" className="w-full text-xs h-8 bg-emerald-700 hover:bg-emerald-800 text-white">
+                        <FileCheck className="h-3.5 w-3.5 mr-1.5" />
+                        Buka Sertifikat BAST
+                      </Button>
+                    </Link>
+                    <a
+                      href={`/api/bast/${selectedDetail.bast_digital.id_bast}/pdf?download=true`}
+                      className="flex-1"
+                    >
+                      <Button size="sm" variant="outline" className="w-full text-xs h-8 border-emerald-400 text-emerald-800 hover:bg-emerald-100">
+                        <Download className="h-3.5 w-3.5 mr-1.5" />
+                        Unduh PDF Resmi
+                      </Button>
+                    </a>
                   </div>
                 </div>
               )}
