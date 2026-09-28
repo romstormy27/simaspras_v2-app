@@ -1,213 +1,171 @@
 import Link from 'next/link';
-import { getSession } from '@/lib/auth';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
-  Building2,
-  Car,
-  Laptop,
+  CalendarCheck,
+  Wrench,
   ArrowRight,
   Sparkles,
-  CheckCircle,
+  MapPin,
+  CheckCircle2,
 } from 'lucide-react';
 
-export default async function HomePage() {
-  const user = await getSession();
+export const metadata = {
+  title: 'Portal Layanan SIMASPRAS - Politeknik Imigrasi dan Pemasyarakatan Indonesia',
+  description: 'Portal Layanan Peminjaman Sarpras dan Pengaduan Fasilitas Kampus Poltekimipas',
+};
 
+export default function HomePage() {
   return (
-    <div className="space-y-16 pb-16">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#034275] to-[#022b4d] text-white py-20 px-4 sm:px-6 lg:px-8 shadow-inner">
-        <div className="mx-auto max-w-5xl text-center space-y-6">
-          <Badge className="bg-white/10 text-white hover:bg-white/20 border-white/20 py-1 px-3 text-xs">
-            <Sparkles className="mr-1.5 h-3.5 w-3.5 text-amber-300" />
-            Sistem Informasi Resmi Poltekimipas
-          </Badge>
+    <div className="min-h-[calc(100vh-8.5rem)] flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-10">
+      {/* Header Identitas Institusi */}
+      <div className="text-center max-w-2xl mx-auto space-y-3">
+        <Badge
+          variant="outline"
+          className="border-blue-200 bg-blue-50/70 text-[#034275] text-xs py-1 px-3.5 font-semibold inline-flex items-center gap-1.5 shadow-xs"
+        >
+          <Sparkles className="h-3.5 w-3.5 text-amber-500" />
+          Kementerian Imigrasi dan Pemasyarakatan RI • BPSDM Imipas
+        </Badge>
 
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
-            Peminjaman Sarana dan Prasarana Kampus Berbasis Digital
-          </h1>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-slate-900 leading-tight">
+          SIMASPRAS <span className="text-[#034275]">POLTEKIMIPAS</span>
+        </h1>
 
-          <p className="mx-auto max-w-2xl text-base sm:text-lg text-slate-200">
-            Layanan peminjaman 100% *paperless* untuk Ruangan, Mobil Operasional, dan Perangkat Kerja
-            dengan jadwal real-time, verifikasi terstruktur, dan BAST Digital resmi.
-          </p>
+        <p className="text-sm sm:text-base text-slate-600 max-w-xl mx-auto leading-relaxed">
+          Pusat Layanan Terpadu Sarana dan Prasarana Kampus Politeknik Imigrasi dan Pemasyarakatan Indonesia.
+          Silakan pilih menu navigasi layanan yang Anda perlukan di bawah ini:
+        </p>
+      </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
-            {user ? (
-              <Link href="/katalog">
-                <Button size="lg" className="bg-white text-[#034275] hover:bg-slate-100 font-semibold shadow-md">
-                  Lihat Katalog & Kalender Sarpras
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-            ) : (
-              <>
-                <Link href="/login">
-                  <Button size="lg" className="bg-white text-[#034275] hover:bg-slate-100 font-semibold shadow-md">
-                    Masuk ke Sistem
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-                <Link href="/register">
-                  <Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10">
-                    Registrasi Pemohon Baru
-                  </Button>
-                </Link>
-              </>
-            )}
-          </div>
-        </div>
-      </section>
+      {/* Grid Dua Tombol Navigasi Utama */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl w-full mx-auto">
+        {/* Tombol Kiri: Peminjaman Sarpras -> /login */}
+        <Link href="/login" className="block group focus:outline-none">
+          <div className="h-full rounded-2xl border-2 border-slate-200 bg-white p-7 sm:p-8 shadow-sm hover:shadow-xl hover:border-[#034275] transition-all duration-300 relative overflow-hidden flex flex-col justify-between group-hover:-translate-y-1">
+            {/* Top Accent Strip */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#034275] opacity-90 group-hover:opacity-100 transition-opacity" />
 
-      {/* 3 Kategori Sarpras Utama */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center space-y-2 mb-10">
-          <h2 className="text-2xl font-bold tracking-tight text-slate-900">
-            Fasilitas Sarana dan Prasarana
-          </h2>
-          <p className="text-sm text-slate-500">
-            Tersedia untuk kegiatan akademik, kedinasan, kemahasiswaan, dan agenda resmi kementerian
-          </p>
-        </div>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="w-14 h-14 rounded-2xl bg-blue-50 text-[#034275] group-hover:bg-[#034275] group-hover:text-white transition-all flex items-center justify-center shadow-xs">
+                  <CalendarCheck className="h-7 w-7" />
+                </div>
+                <Badge className="bg-blue-50 text-[#034275] border-blue-200 text-[11px] font-semibold">
+                  Layanan Utama
+                </Badge>
+              </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="hover:shadow-md transition-shadow border-slate-200">
-            <CardHeader>
-              <div className="h-12 w-12 rounded-xl bg-blue-50 text-[#034275] flex items-center justify-center mb-2">
-                <Building2 className="h-6 w-6" />
+              <div>
+                <h2 className="text-2xl font-bold text-slate-900 group-hover:text-[#034275] transition-colors">
+                  Peminjaman Sarpras
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-500 mt-2 leading-relaxed">
+                  Layanan permohonan digital peminjaman Ruangan & Gedung, Mobil Operasional, serta Perangkat Kerja
+                  dengan jadwal real-time, verifikasi teknis, dan BAST resmi.
+                </p>
               </div>
-              <CardTitle className="text-xl">Ruangan & Gedung</CardTitle>
-              <CardDescription>
-                Auditorium utama, ruang kelas perkuliahan, laboratorium komputer, dan ruang rapat pimpinan.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="text-xs text-slate-600 space-y-2">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-emerald-600" />
-                <span>Kapasitas hingga 500 orang</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-emerald-600" />
-                <span>Dilengkapi Full AC, Audio, & Videotron</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-emerald-600" />
-                <span>Kalender ketersediaan real-time</span>
-              </div>
-            </CardContent>
-          </Card>
 
-          <Card className="hover:shadow-md transition-shadow border-slate-200">
-            <CardHeader>
-              <div className="h-12 w-12 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-2">
-                <Car className="h-6 w-6" />
+              {/* Fitur Utama */}
+              <div className="pt-2 space-y-1.5 text-xs text-slate-600 font-medium">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                  <span>Katalog Fasilitas & Kalender Real-Time</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                  <span>Penerbitan Tiket QR Serah Terima</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                  <span>Berita Acara Digital (BAST) Sah Paperless</span>
+                </div>
               </div>
-              <CardTitle className="text-xl">Mobil Operasional</CardTitle>
-              <CardDescription>
-                Armada kendaraan dinas, Bus Kampus, dan Toyota HiAce untuk perjalanan dinas resmi.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="text-xs text-slate-600 space-y-2">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-emerald-600" />
-                <span>Unit prima & pengemudi kedinasan</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-emerald-600" />
-                <span>Dilengkapi pelacak GPS terintegrasi</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-emerald-600" />
-                <span>Inspeksi fisik sebelum & sesudah jalan</span>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="hover:shadow-md transition-shadow border-slate-200">
-            <CardHeader>
-              <div className="h-12 w-12 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center mb-2">
-                <Laptop className="h-6 w-6" />
-              </div>
-              <CardTitle className="text-xl">Perangkat Kerja</CardTitle>
-              <CardDescription>
-                Proyektor lumens tinggi, portable screen, perlengkapan sound system, dan laptop kerja.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="text-xs text-slate-600 space-y-2">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-emerald-600" />
-                <span>Penerbitan Tiket QR pengambilan alat</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-emerald-600" />
-                <span>Pemeriksaan kondisi fisik terdata</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-emerald-600" />
-                <span>Pengembalian sah via BAST Digital</span>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* Alur Kerja 4 Langkah */}
-      <section className="bg-slate-100/70 py-12 border-y border-slate-200">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center space-y-2 mb-10">
-            <h2 className="text-2xl font-bold tracking-tight text-slate-900">
-              Alur Peminjaman Paperless
-            </h2>
-            <p className="text-sm text-slate-500">
-              Prosedur digital cepat tanpa formulir fisik dan bebas antrean manual
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="bg-white p-6 rounded-xl border border-slate-200 text-center space-y-2">
-              <div className="mx-auto h-10 w-10 rounded-full bg-[#034275] text-white flex items-center justify-center font-bold text-sm">
-                1
-              </div>
-              <h3 className="font-semibold text-slate-800 text-sm">Pilih & Kunci Jadwal</h3>
-              <p className="text-xs text-slate-500">
-                Pilih sarpras pada kalender real-time dan setujui Pakta Integritas digital.
-              </p>
             </div>
 
-            <div className="bg-white p-6 rounded-xl border border-slate-200 text-center space-y-2">
-              <div className="mx-auto h-10 w-10 rounded-full bg-[#034275] text-white flex items-center justify-center font-bold text-sm">
-                2
-              </div>
-              <h3 className="font-semibold text-slate-800 text-sm">Verifikasi Staf</h3>
-              <p className="text-xs text-slate-500">
-                Staf Bagian Umum memverifikasi kelayakan fisik dan kesiapan teknis fasilitas.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl border border-slate-200 text-center space-y-2">
-              <div className="mx-auto h-10 w-10 rounded-full bg-[#034275] text-white flex items-center justify-center font-bold text-sm">
-                3
-              </div>
-              <h3 className="font-semibold text-slate-800 text-sm">Persetujuan & Tiket QR</h3>
-              <p className="text-xs text-slate-500">
-                Kasubag Umum menyetujui permohonan dan menerbitkan Tiket Digital Kode QR.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-xl border border-slate-200 text-center space-y-2">
-              <div className="mx-auto h-10 w-10 rounded-full bg-[#034275] text-white flex items-center justify-center font-bold text-sm">
-                4
-              </div>
-              <h3 className="font-semibold text-slate-800 text-sm">BAST Digital</h3>
-              <p className="text-xs text-slate-500">
-                Konfirmasi serah-terima pengembalian resmi dengan dokumen BAST bertanda tangan QR.
-              </p>
+            {/* Tombol Aksi */}
+            <div className="mt-8 pt-5 border-t border-slate-100 flex items-center justify-between">
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider group-hover:text-[#034275] transition-colors">
+                Masuk Sistem
+              </span>
+              <Button className="bg-[#034275] hover:bg-[#022b4d] text-white rounded-xl px-4 py-2 text-sm flex items-center gap-2 shadow-sm font-semibold pointer-events-none">
+                Peminjaman Sarpras
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
             </div>
           </div>
+        </Link>
+
+        {/* Tombol Kanan: Pengaduan Sarpras Rusak -> /pengaduan */}
+        <Link href="/pengaduan" className="block group focus:outline-none">
+          <div className="h-full rounded-2xl border-2 border-slate-200 bg-white p-7 sm:p-8 shadow-sm hover:shadow-xl hover:border-amber-500 transition-all duration-300 relative overflow-hidden flex flex-col justify-between group-hover:-translate-y-1">
+            {/* Top Accent Strip */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-amber-500 opacity-90 group-hover:opacity-100 transition-opacity" />
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="w-14 h-14 rounded-2xl bg-amber-50 text-amber-700 group-hover:bg-amber-600 group-hover:text-white transition-all flex items-center justify-center shadow-xs">
+                  <Wrench className="h-7 w-7" />
+                </div>
+                <Badge variant="outline" className="border-amber-300 bg-amber-50 text-amber-800 text-[11px] font-semibold">
+                  Layanan Pengaduan
+                </Badge>
+              </div>
+
+              <div>
+                <h2 className="text-2xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors">
+                  Pengaduan Sarpras Rusak
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-500 mt-2 leading-relaxed">
+                  Layanan pelaporan kerusakan fasilitas fisik kampus, permohonan perbaikan darurat,
+                  dan penanganan pemeliharaan teknis oleh Staf Bagian Umum.
+                </p>
+              </div>
+
+              {/* Fitur Utama */}
+              <div className="pt-2 space-y-1.5 text-xs text-slate-600 font-medium">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-amber-600 shrink-0" />
+                  <span>Pelaporan Cepat Kendala Fasilitas</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-amber-600 shrink-0" />
+                  <span>Inspeksi Lapangan & Tindak Lanjut</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-amber-600 shrink-0" />
+                  <span>Pemantauan Progres Perbaikan Fisik</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Tombol Aksi */}
+            <div className="mt-8 pt-5 border-t border-slate-100 flex items-center justify-between">
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider group-hover:text-amber-700 transition-colors">
+                Lapor Kerusakan
+              </span>
+              <Button
+                variant="outline"
+                className="border-amber-300 bg-amber-50/50 text-amber-800 group-hover:bg-amber-600 group-hover:text-white group-hover:border-amber-600 rounded-xl px-4 py-2 text-sm flex items-center gap-2 shadow-sm font-semibold pointer-events-none transition-all"
+              >
+                Pengaduan Sarpras Rusak
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </div>
+          </div>
+        </Link>
+      </div>
+
+      {/* Footer Info Tambahan */}
+      <div className="text-center space-y-1 pt-2">
+        <div className="flex items-center justify-center gap-1.5 text-xs text-slate-500">
+          <MapPin className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+          <span>Kampus Poltekimipas: Jl. Satria - Sudirman, Tanah Tinggi, Tangerang, Banten 15119</span>
         </div>
-      </section>
+        <p className="text-[11px] text-slate-400">
+          Bagian Umum & Pengelolaan Fasilitas Kampus BPSDM Imipas
+        </p>
+      </div>
     </div>
   );
 }

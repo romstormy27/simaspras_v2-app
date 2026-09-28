@@ -33,6 +33,7 @@ export function middleware(request: NextRequest) {
     pathname === '/login' ||
     pathname === '/register' ||
     pathname === '/' ||
+    pathname === '/pengaduan' ||
     pathname.startsWith('/api/auth/login') ||
     pathname.startsWith('/api/auth/register');
 
