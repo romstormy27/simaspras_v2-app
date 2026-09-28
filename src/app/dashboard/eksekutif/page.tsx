@@ -114,19 +114,19 @@ export default function DashboardEksekutifPage() {
     : 1;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-6">
+    <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-5 sm:space-y-6">
       {/* Executive Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 border-b border-slate-200 pb-4 sm:pb-5">
         <div>
           <div className="flex items-center gap-2.5">
-            <div className="p-2.5 rounded-xl bg-[#034275] text-white shadow-sm">
-              <BarChart3 className="h-6 w-6" />
+            <div className="p-2 sm:p-2.5 rounded-xl bg-[#034275] text-white shadow-sm shrink-0">
+              <BarChart3 className="h-5 w-5 sm:h-6 sm:w-6" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
                 Executive Monitoring Dashboard
               </h1>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-500 mt-0.5">
                 Kepala Bagian Keuangan & Umum — Evaluasi utilisasi fasilitas, okupansi, dan laporan eksekutif.
               </p>
             </div>
@@ -135,7 +135,7 @@ export default function DashboardEksekutifPage() {
 
         {/* Action & Role Badges */}
         <div className="flex flex-wrap items-center gap-2">
-          <Badge variant="outline" className="border-blue-300 bg-blue-50 text-blue-900 text-xs px-3 py-1">
+          <Badge variant="outline" className="border-blue-300 bg-blue-50 text-blue-900 text-xs px-2.5 sm:px-3 py-1">
             Kabag Keuangan & Umum
           </Badge>
 
@@ -182,22 +182,22 @@ export default function DashboardEksekutifPage() {
       </div>
 
       {/* Filter Toolbar */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white p-3 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm">
         {/* Period Filter Buttons */}
-        <div className="flex items-center gap-1.5 overflow-x-auto text-xs">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:pb-0 text-xs">
           <span className="font-semibold text-slate-500 mr-1 shrink-0">Periode:</span>
           {(
             [
-              { key: 'semua', label: 'Semua Waktu' },
+              { key: 'semua', label: 'Semua' },
               { key: 'bulan_ini', label: 'Bulan Ini' },
-              { key: 'semester_ini', label: 'Semester Ini' },
+              { key: 'semester_ini', label: 'Semester' },
               { key: 'tahun_ini', label: 'Tahun Anggaran' },
             ] as const
           ).map((item) => (
             <button
               key={item.key}
               onClick={() => setPeriode(item.key)}
-              className={`rounded-lg px-3 py-1.5 font-medium whitespace-nowrap transition-colors ${
+              className={`rounded-lg px-3 py-1.5 font-medium whitespace-nowrap transition-colors min-h-[36px] ${
                 periode === item.key
                   ? 'bg-[#034275] text-white shadow-sm'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
@@ -214,7 +214,7 @@ export default function DashboardEksekutifPage() {
           <select
             value={kategori}
             onChange={(e) => setKategori(e.target.value)}
-            className="rounded-lg border border-slate-300 px-3 py-1.5 bg-white text-slate-800 text-xs focus:outline-none focus:ring-2 focus:ring-[#034275]"
+            className="rounded-lg border border-slate-300 px-3 py-1.5 bg-white text-slate-800 text-xs focus:outline-none focus:ring-2 focus:ring-[#034275] min-h-[36px]"
           >
             <option value="Semua">Semua Sarpras</option>
             <option value="Ruangan">Ruangan</option>
@@ -225,22 +225,22 @@ export default function DashboardEksekutifPage() {
       </div>
 
       {/* Executive KPI Stat Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
         {/* Card 1: Okupansi Ruangan */}
         <Card className="border-slate-200 shadow-sm overflow-hidden">
-          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 bg-slate-50/50">
-            <CardTitle className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-              Okupansi Ruangan Kampus
+          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 bg-slate-50/50 p-3 sm:p-4">
+            <CardTitle className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-slate-500 truncate">
+              Okupansi Ruangan
             </CardTitle>
-            <Building2 className="h-4 w-4 text-[#034275]" />
+            <Building2 className="h-4 w-4 text-[#034275] shrink-0" />
           </CardHeader>
-          <CardContent className="pt-4 space-y-3">
+          <CardContent className="p-3 sm:p-4 pt-2 sm:pt-4 space-y-2 sm:space-y-3">
             <div className="flex items-baseline justify-between">
-              <div className="text-3xl font-extrabold text-[#034275]">
+              <div className="text-xl sm:text-3xl font-extrabold text-[#034275]">
                 {data ? `${data.kpi.roomOccupancyRate}%` : '...'}
               </div>
-              <Badge variant="outline" className="text-[10px] border-blue-200 text-blue-700 bg-blue-50">
-                {data?.kpi.totalRuangan || 0} Unit Ruang
+              <Badge variant="outline" className="text-[9px] sm:text-[10px] border-blue-200 text-blue-700 bg-blue-50">
+                {data?.kpi.totalRuangan || 0} Ruang
               </Badge>
             </div>
             {/* Progress bar */}
@@ -250,27 +250,27 @@ export default function DashboardEksekutifPage() {
                 style={{ width: `${data?.kpi.roomOccupancyRate || 0}%` }}
               />
             </div>
-            <p className="text-[11px] text-slate-400">
-              Jam pemakaian vs kapasitas operasional kampus
+            <p className="text-[10px] sm:text-[11px] text-slate-400">
+              Jam pakai vs kapasitas
             </p>
           </CardContent>
         </Card>
 
         {/* Card 2: Utilisasi Mobil Operasional */}
         <Card className="border-slate-200 shadow-sm overflow-hidden">
-          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 bg-slate-50/50">
-            <CardTitle className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 bg-slate-50/50 p-3 sm:p-4">
+            <CardTitle className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-slate-500 truncate">
               Utilisasi Armada Mobil
             </CardTitle>
-            <Car className="h-4 w-4 text-emerald-600" />
+            <Car className="h-4 w-4 text-emerald-600 shrink-0" />
           </CardHeader>
-          <CardContent className="pt-4 space-y-3">
+          <CardContent className="p-3 sm:p-4 pt-2 sm:pt-4 space-y-2 sm:space-y-3">
             <div className="flex items-baseline justify-between">
-              <div className="text-3xl font-extrabold text-emerald-600">
+              <div className="text-xl sm:text-3xl font-extrabold text-emerald-600">
                 {data ? `${data.kpi.carUtilizationRate}%` : '...'}
               </div>
-              <Badge variant="outline" className="text-[10px] border-emerald-200 text-emerald-700 bg-emerald-50">
-                {data?.kpi.uniqueCarsUsed || 0}/{data?.kpi.totalMobil || 0} Mobil Aktif
+              <Badge variant="outline" className="text-[9px] sm:text-[10px] border-emerald-200 text-emerald-700 bg-emerald-50">
+                {data?.kpi.uniqueCarsUsed || 0}/{data?.kpi.totalMobil || 0} Aktif
               </Badge>
             </div>
             <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
@@ -279,27 +279,27 @@ export default function DashboardEksekutifPage() {
                 style={{ width: `${data?.kpi.carUtilizationRate || 0}%` }}
               />
             </div>
-            <p className="text-[11px] text-slate-400">
-              Rasio armada kedinasan terpakai pada periode
+            <p className="text-[10px] sm:text-[11px] text-slate-400">
+              Rasio armada terpakai
             </p>
           </CardContent>
         </Card>
 
         {/* Card 3: Perputaran Perangkat Kerja */}
         <Card className="border-slate-200 shadow-sm overflow-hidden">
-          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 bg-slate-50/50">
-            <CardTitle className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-              Perputaran Perangkat Kerja
+          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 bg-slate-50/50 p-3 sm:p-4">
+            <CardTitle className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-slate-500 truncate">
+              Perputaran Alat
             </CardTitle>
-            <Laptop className="h-4 w-4 text-amber-600" />
+            <Laptop className="h-4 w-4 text-amber-600 shrink-0" />
           </CardHeader>
-          <CardContent className="pt-4 space-y-3">
+          <CardContent className="p-3 sm:p-4 pt-2 sm:pt-4 space-y-2 sm:space-y-3">
             <div className="flex items-baseline justify-between">
-              <div className="text-3xl font-extrabold text-amber-600">
+              <div className="text-xl sm:text-3xl font-extrabold text-amber-600">
                 {data ? `${data.kpi.deviceTurnoverRate}%` : '...'}
               </div>
-              <Badge variant="outline" className="text-[10px] border-amber-200 text-amber-700 bg-amber-50">
-                {data?.kpi.deviceBookingsCount || 0} Peminjaman
+              <Badge variant="outline" className="text-[9px] sm:text-[10px] border-amber-200 text-amber-700 bg-amber-50">
+                {data?.kpi.deviceBookingsCount || 0} Pinjam
               </Badge>
             </div>
             <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
@@ -308,8 +308,8 @@ export default function DashboardEksekutifPage() {
                 style={{ width: `${Math.min(100, data?.kpi.deviceTurnoverRate || 0)}%` }}
               />
             </div>
-            <p className="text-[11px] text-slate-400">
-              Frekuensi pemakaian proyektor, laptop, dan audio
+            <p className="text-[10px] sm:text-[11px] text-slate-400">
+              Frekuensi pemakaian IT/Audio
             </p>
           </CardContent>
         </Card>
@@ -355,19 +355,19 @@ export default function DashboardEksekutifPage() {
         {/* Column 1 & 2: Monthly Trend Chart */}
         <Card className="lg:col-span-2 border-slate-200 shadow-sm">
           <CardHeader className="pb-3 border-b border-slate-100">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <CardTitle className="text-base text-slate-800 flex items-center gap-2">
-                  <TrendingUp className="h-4 w-4 text-[#034275]" />
-                  Tren Utilisasi Sarpras Bulanan (6 Bulan Terakhir)
+                <CardTitle className="text-sm sm:text-base text-slate-800 flex items-center gap-2">
+                  <TrendingUp className="h-4 w-4 text-[#034275] shrink-0" />
+                  <span>Tren Utilisasi Sarpras Bulanan (6 Bulan Terakhir)</span>
                 </CardTitle>
-                <CardDescription className="text-xs">
+                <CardDescription className="text-xs mt-0.5">
                   Frekuensi peminjaman aset Politeknik per bulan berdasarkan kategori fasilitas
                 </CardDescription>
               </div>
 
               {/* Legend */}
-              <div className="flex items-center gap-3 text-[11px]">
+              <div className="flex flex-wrap items-center gap-3 text-[11px]">
                 <span className="flex items-center gap-1">
                   <span className="h-2.5 w-2.5 rounded-full bg-[#034275]" /> Ruangan
                 </span>
@@ -381,10 +381,10 @@ export default function DashboardEksekutifPage() {
             </div>
           </CardHeader>
 
-          <CardContent className="p-6">
+          <CardContent className="p-4 sm:p-6">
             {data && data.monthlyTrend.length > 0 ? (
-              <div className="space-y-4">
-                <div className="h-56 flex items-end justify-between gap-4 pt-4 px-2">
+              <div className="overflow-x-auto no-scrollbar pb-2">
+                <div className="h-56 flex items-end justify-between gap-4 pt-4 px-2 min-w-[340px]">
                   {data.monthlyTrend.map((m) => {
                     const totalH = Math.max(15, Math.round((m.total / maxMonthlyCount) * 180));
                     const roomH = m.total > 0 ? Math.round((m.ruangan / m.total) * totalH) : 0;

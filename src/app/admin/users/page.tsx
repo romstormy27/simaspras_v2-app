@@ -183,26 +183,26 @@ export default function AdminUsersPage() {
   });
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-6">
+    <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-5 sm:space-y-6">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-5">
         <div>
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-[#034275] text-white">
+            <div className="p-2 rounded-xl bg-[#034275] text-white shrink-0">
               <Shield className="h-6 w-6" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
                 Manajemen Pengguna, Hak Akses RBAC & Audit Trail
               </h1>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
                 Tata kelola 9 peran RBAC, persetujuan aktivasi akun, dan pemantauan forensik keamanan.
               </p>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Badge variant="outline" className="border-blue-300 bg-blue-50 text-blue-900 text-xs px-3 py-1">
             Administrator Sistem
           </Badge>
@@ -214,7 +214,7 @@ export default function AdminUsersPage() {
               fetchAuditLogs();
             }}
             disabled={loading || auditLoading}
-            className="flex items-center gap-1.5 text-xs h-8"
+            className="flex items-center gap-1.5 text-xs min-h-[36px]"
           >
             <RefreshCw className={`h-3.5 w-3.5 ${loading || auditLoading ? 'animate-spin' : ''}`} />
             Segarkan Data
@@ -227,7 +227,7 @@ export default function AdminUsersPage() {
           <span>{message.text}</span>
           <button
             onClick={() => setMessage(null)}
-            className="text-xs underline ml-4 hover:opacity-80"
+            className="text-xs underline ml-4 hover:opacity-80 p-1"
           >
             Tutup
           </button>
@@ -235,17 +235,17 @@ export default function AdminUsersPage() {
       )}
 
       {/* Tabs Layout */}
-      <div className="border-b border-slate-200">
-        <nav className="flex space-x-6" aria-label="Tabs">
+      <div className="border-b border-slate-200 overflow-x-auto no-scrollbar">
+        <nav className="flex space-x-4 sm:space-x-6 min-w-max pb-px" aria-label="Tabs">
           <button
             onClick={() => setActiveTab('pending')}
-            className={`flex items-center gap-2 py-3 px-1 border-b-2 font-medium text-sm transition-colors ${
+            className={`flex items-center gap-2 py-3 px-1 border-b-2 font-medium text-xs sm:text-sm transition-colors whitespace-nowrap min-h-[44px] ${
               activeTab === 'pending'
                 ? 'border-[#034275] text-[#034275]'
                 : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
             }`}
           >
-            <Clock className="h-4 w-4" />
+            <Clock className="h-4 w-4 shrink-0" />
             Pending Aktivasi
             {pendingUsers.length > 0 && (
               <span className="ml-1 rounded-full bg-amber-500 text-white text-[11px] font-bold px-2 py-0.5">
@@ -256,13 +256,13 @@ export default function AdminUsersPage() {
 
           <button
             onClick={() => setActiveTab('users')}
-            className={`flex items-center gap-2 py-3 px-1 border-b-2 font-medium text-sm transition-colors ${
+            className={`flex items-center gap-2 py-3 px-1 border-b-2 font-medium text-xs sm:text-sm transition-colors whitespace-nowrap min-h-[44px] ${
               activeTab === 'users'
                 ? 'border-[#034275] text-[#034275]'
                 : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
             }`}
           >
-            <UserCheck className="h-4 w-4" />
+            <UserCheck className="h-4 w-4 shrink-0" />
             Daftar User & Role RBAC
             <span className="ml-1 rounded-full bg-slate-200 text-slate-700 text-[11px] px-2 py-0.5 font-mono">
               {users.length}
@@ -271,13 +271,13 @@ export default function AdminUsersPage() {
 
           <button
             onClick={() => setActiveTab('audit')}
-            className={`flex items-center gap-2 py-3 px-1 border-b-2 font-medium text-sm transition-colors ${
+            className={`flex items-center gap-2 py-3 px-1 border-b-2 font-medium text-xs sm:text-sm transition-colors whitespace-nowrap min-h-[44px] ${
               activeTab === 'audit'
                 ? 'border-[#034275] text-[#034275]'
                 : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
             }`}
           >
-            <History className="h-4 w-4" />
+            <History className="h-4 w-4 shrink-0" />
             Log Audit Trail Keamanan
             <span className="ml-1 rounded-full bg-slate-200 text-slate-700 text-[11px] px-2 py-0.5 font-mono">
               {auditLogs.length}
@@ -289,7 +289,7 @@ export default function AdminUsersPage() {
       {/* Tab 1: Pending Aktivasi */}
       {activeTab === 'pending' && (
         <Card className="border-slate-200 shadow-sm overflow-hidden">
-          <CardHeader className="py-4 border-b border-slate-100 bg-slate-50/50">
+          <CardHeader className="p-4 sm:p-6 border-b border-slate-100 bg-slate-50/50">
             <CardTitle className="text-base text-slate-800">Antrean Persetujuan Aktivasi Akun</CardTitle>
             <CardDescription className="text-xs">
               Tinjau identitas calon pemohon sarpras sebelum mengaktifkan hak akses login ke sistem.
@@ -303,8 +303,8 @@ export default function AdminUsersPage() {
                 <p className="text-xs text-slate-400">Seluruh permohonan pendaftaran telah selesai diproses.</p>
               </div>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs text-slate-700">
+              <div className="overflow-x-auto no-scrollbar">
+                <table className="w-full text-left text-xs text-slate-700 min-w-[620px]">
                   <thead className="border-b border-slate-200 bg-slate-50 text-[11px] uppercase tracking-wider text-slate-500">
                     <tr>
                       <th className="px-4 py-3">Nama Lengkap & Kontak</th>
@@ -331,10 +331,10 @@ export default function AdminUsersPage() {
                         <td className="px-4 py-3 font-mono">{u.nomor_identitas || '-'}</td>
                         <td className="px-4 py-3">{u.instansi_kategori || '-'}</td>
                         <td className="px-4 py-3 text-slate-500">{formatDateTime(u.created_at)}</td>
-                        <td className="px-4 py-3 text-right space-x-2">
+                        <td className="px-4 py-3 text-right space-x-2 whitespace-nowrap">
                           <Button
                             size="sm"
-                            className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs h-8"
+                            className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs min-h-[36px]"
                             disabled={actionLoading === u.id_user}
                             onClick={() => handleActivation(u.id_user, 'Setujui')}
                           >
@@ -344,7 +344,7 @@ export default function AdminUsersPage() {
                           <Button
                             size="sm"
                             variant="destructive"
-                            className="text-xs h-8"
+                            className="text-xs min-h-[36px]"
                             disabled={actionLoading === u.id_user}
                             onClick={() => handleActivation(u.id_user, 'Tolak')}
                           >
@@ -365,23 +365,23 @@ export default function AdminUsersPage() {
       {/* Tab 2: Daftar User & Konfigurasi Role RBAC */}
       {activeTab === 'users' && (
         <Card className="border-slate-200 shadow-sm overflow-hidden">
-          <CardHeader className="py-4 border-b border-slate-100 bg-slate-50/50">
+          <CardHeader className="p-4 sm:p-6 border-b border-slate-100 bg-slate-50/50">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <CardTitle className="text-base text-slate-800">
                   Daftar Pengguna & Konfigurasi Hak Akses (9 Peran RBAC)
                 </CardTitle>
-                <CardDescription className="text-xs">
+                <CardDescription className="text-xs mt-0.5">
                   Kelola peran otorisasi RBAC (Dosen, Taruna, BPSDM, Kementerian, Alumni, Staf, Kasubag, Kabag, Admin) secara instan.
                 </CardDescription>
               </div>
 
               {/* Filter controls */}
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
                 <select
                   value={userStatusFilter}
                   onChange={(e) => setUserStatusFilter(e.target.value)}
-                  className="h-8 rounded-lg border border-slate-300 bg-white px-2.5 text-xs text-slate-700 focus:outline-none focus:ring-1 focus:ring-[#034275]"
+                  className="h-10 sm:h-8 rounded-lg border border-slate-300 bg-white px-2.5 text-xs text-slate-700 focus:outline-none focus:ring-1 focus:ring-[#034275] w-full sm:w-auto"
                 >
                   <option value="Semua">Semua Status</option>
                   <option value="Aktif">Status: Aktif</option>
@@ -392,7 +392,7 @@ export default function AdminUsersPage() {
                 <select
                   value={userRoleFilter}
                   onChange={(e) => setUserRoleFilter(e.target.value)}
-                  className="h-8 rounded-lg border border-slate-300 bg-white px-2.5 text-xs text-slate-700 focus:outline-none focus:ring-1 focus:ring-[#034275]"
+                  className="h-10 sm:h-8 rounded-lg border border-slate-300 bg-white px-2.5 text-xs text-slate-700 focus:outline-none focus:ring-1 focus:ring-[#034275] w-full sm:w-auto"
                 >
                   <option value="Semua">Semua Peran</option>
                   <option value="Dosen">Dosen</option>
@@ -406,22 +406,22 @@ export default function AdminUsersPage() {
                   <option value="Admin">Administrator</option>
                 </select>
 
-                <div className="relative w-48">
-                  <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-slate-400" />
+                <div className="relative w-full sm:w-48">
+                  <Search className="absolute left-2.5 top-3 sm:top-2.5 h-3.5 w-3.5 text-slate-400" />
                   <Input
                     type="text"
                     placeholder="Cari pengguna..."
                     value={userSearch}
                     onChange={(e) => setUserSearch(e.target.value)}
-                    className="h-8 pl-8 text-xs"
+                    className="h-10 sm:h-8 pl-8 text-xs w-full"
                   />
                 </div>
               </div>
             </div>
           </CardHeader>
           <CardContent className="p-0">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs text-slate-700">
+            <div className="overflow-x-auto no-scrollbar">
+              <table className="w-full text-left text-xs text-slate-700 min-w-[620px]">
                 <thead className="border-b border-slate-200 bg-slate-50 text-[11px] uppercase tracking-wider text-slate-500">
                   <tr>
                     <th className="px-4 py-3">Nama Lengkap & Email</th>
@@ -468,9 +468,9 @@ export default function AdminUsersPage() {
                           <div className="font-mono text-slate-800">{u.nomor_identitas || '-'}</div>
                           <div className="text-slate-500 truncate max-w-[200px]">{u.instansi_kategori || '-'}</div>
                         </td>
-                        <td className="px-4 py-3 text-right">
+                        <td className="px-4 py-3 text-right whitespace-nowrap">
                           <select
-                            className="h-8 rounded-lg border border-slate-300 bg-white px-2.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#034275]"
+                            className="h-9 sm:h-8 rounded-lg border border-slate-300 bg-white px-2.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#034275]"
                             value={u.role}
                             disabled={actionLoading === u.id_user}
                             onChange={(e) => handleRoleChange(u.id_user, e.target.value)}
@@ -499,14 +499,14 @@ export default function AdminUsersPage() {
       {/* Tab 3: Log Audit Trail */}
       {activeTab === 'audit' && (
         <Card className="border-slate-200 shadow-sm overflow-hidden">
-          <CardHeader className="py-4 border-b border-slate-100 bg-slate-50/50">
+          <CardHeader className="p-4 sm:p-6 border-b border-slate-100 bg-slate-50/50">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div>
                 <CardTitle className="text-base text-slate-800 flex items-center gap-2">
-                  <History className="h-5 w-5 text-[#034275]" />
-                  Rekam Jejak Keamanan & Log Audit Trail
+                  <History className="h-5 w-5 text-[#034275] shrink-0" />
+                  <span>Rekam Jejak Keamanan & Log Audit Trail</span>
                 </CardTitle>
-                <CardDescription className="text-xs">
+                <CardDescription className="text-xs mt-0.5">
                   Seluruh mutasi data penting (Login, Aktivasi Akun, Perubahan Role RBAC, Peminjaman, BAST) tercatat permanen.
                 </CardDescription>
               </div>
@@ -515,10 +515,11 @@ export default function AdminUsersPage() {
               <div className="flex items-center gap-2">
                 <a
                   href={`/api/admin/audit-log?export=excel&search=${encodeURIComponent(auditSearch)}&role=${encodeURIComponent(auditRoleFilter)}&start_date=${encodeURIComponent(auditStartDate)}&end_date=${encodeURIComponent(auditEndDate)}`}
+                  className="w-full sm:w-auto"
                 >
                   <Button
                     size="sm"
-                    className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs h-8 flex items-center gap-1.5 shadow-sm"
+                    className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white text-xs min-h-[38px] flex items-center justify-center gap-1.5 shadow-sm"
                   >
                     <FileSpreadsheet className="h-3.5 w-3.5" />
                     Ekspor Audit Trail (.xlsx)
@@ -528,15 +529,15 @@ export default function AdminUsersPage() {
             </div>
 
             {/* Filter Bar for Audit Trail */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 pt-3 border-t border-slate-200/60 mt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 pt-3 border-t border-slate-200/60 mt-3">
               <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-slate-400" />
+                <Search className="absolute left-2.5 top-3 sm:top-2.5 h-3.5 w-3.5 text-slate-400" />
                 <Input
                   type="text"
                   placeholder="Cari aktivitas / aktor / IP..."
                   value={auditSearch}
                   onChange={(e) => setAuditSearch(e.target.value)}
-                  className="h-8 pl-8 text-xs"
+                  className="h-10 sm:h-8 pl-8 text-xs w-full"
                 />
               </div>
 
@@ -544,7 +545,7 @@ export default function AdminUsersPage() {
                 <select
                   value={auditRoleFilter}
                   onChange={(e) => setAuditRoleFilter(e.target.value)}
-                  className="h-8 w-full rounded-lg border border-slate-300 bg-white px-2.5 text-xs text-slate-700 focus:outline-none focus:ring-1 focus:ring-[#034275]"
+                  className="h-10 sm:h-8 w-full rounded-lg border border-slate-300 bg-white px-2.5 text-xs text-slate-700 focus:outline-none focus:ring-1 focus:ring-[#034275]"
                 >
                   <option value="Semua">Semua Peran Aktor</option>
                   <option value="Admin">Admin</option>
@@ -565,7 +566,7 @@ export default function AdminUsersPage() {
                   value={auditStartDate}
                   onChange={(e) => setAuditStartDate(e.target.value)}
                   placeholder="Tanggal Mulai"
-                  className="h-8 text-xs text-slate-600"
+                  className="h-10 sm:h-8 text-xs text-slate-600 w-full"
                 />
               </div>
 
@@ -575,7 +576,7 @@ export default function AdminUsersPage() {
                   value={auditEndDate}
                   onChange={(e) => setAuditEndDate(e.target.value)}
                   placeholder="Tanggal Akhir"
-                  className="h-8 text-xs text-slate-600 flex-1"
+                  className="h-10 sm:h-8 text-xs text-slate-600 flex-1"
                 />
                 <Button
                   size="sm"
@@ -586,7 +587,7 @@ export default function AdminUsersPage() {
                     setAuditStartDate('');
                     setAuditEndDate('');
                   }}
-                  className="h-8 px-2 text-[11px]"
+                  className="h-10 sm:h-8 px-3 text-[11px]"
                   title="Reset Filter"
                 >
                   Reset
@@ -595,8 +596,8 @@ export default function AdminUsersPage() {
             </div>
           </CardHeader>
           <CardContent className="p-0">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs text-slate-700">
+            <div className="overflow-x-auto no-scrollbar">
+              <table className="w-full text-left text-xs text-slate-700 min-w-[620px]">
                 <thead className="border-b border-slate-200 bg-slate-50 text-[11px] uppercase tracking-wider text-slate-500">
                   <tr>
                     <th className="px-4 py-3">Waktu (WIB)</th>

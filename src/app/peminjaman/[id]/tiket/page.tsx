@@ -123,22 +123,22 @@ export default function TiketDigitalPage() {
   const p = ticket.peminjaman;
 
   return (
-    <div className="mx-auto max-w-xl px-4 py-8 sm:px-6 space-y-5 print:p-0 print:max-w-full">
+    <div className="mx-auto max-w-xl px-3 sm:px-6 py-5 sm:py-8 space-y-4 sm:space-y-5 print:p-0 print:max-w-full">
       {/* Top Back & Print Actions (Hidden on Print) */}
-      <div className="flex items-center justify-between print:hidden">
-        <Link href="/peminjaman/riwayat">
-          <Button variant="ghost" size="sm" className="text-xs text-slate-600 hover:text-slate-900">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-4 print:hidden">
+        <Link href="/peminjaman/riwayat" className="w-full sm:w-auto">
+          <Button variant="ghost" size="sm" className="text-xs text-slate-600 hover:text-slate-900 w-full sm:w-auto justify-center sm:justify-start h-9">
             <ArrowLeft className="h-3.5 w-3.5 mr-1" />
-            Kembali
+            Kembali ke Riwayat
           </Button>
         </Link>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-full sm:w-auto">
           <Button
             size="sm"
             variant="outline"
             onClick={handleDownloadQr}
-            className="text-xs flex items-center gap-1.5"
+            className="text-xs flex items-center justify-center gap-1.5 flex-1 sm:flex-initial h-9"
           >
             <Download className="h-3.5 w-3.5" />
             Unduh QR
@@ -147,7 +147,7 @@ export default function TiketDigitalPage() {
           <Button
             size="sm"
             onClick={handlePrint}
-            className="text-xs flex items-center gap-1.5 bg-[#034275] hover:bg-[#02335c]"
+            className="text-xs flex items-center justify-center gap-1.5 bg-[#034275] hover:bg-[#02335c] flex-1 sm:flex-initial h-9"
           >
             <Printer className="h-3.5 w-3.5" />
             Cetak Tiket
@@ -158,34 +158,34 @@ export default function TiketDigitalPage() {
       {/* Official Digital Ticket Card */}
       <Card className="border-slate-300 shadow-xl overflow-hidden rounded-2xl bg-white print:border-none print:shadow-none">
         {/* Ticket Header Banner */}
-        <div className="bg-[#034275] text-white p-5 text-center relative border-b border-[#02335c]">
+        <div className="bg-[#034275] text-white p-4 sm:p-5 text-center relative border-b border-[#02335c]">
           <div className="flex items-center justify-center gap-2 text-blue-200 text-[11px] font-semibold tracking-wider uppercase">
             <ShieldCheck className="h-4 w-4 text-emerald-400" />
             Politeknik Imigrasi dan Pemasyarakatan
           </div>
-          <h1 className="text-lg font-bold mt-1 tracking-tight">
+          <h1 className="text-base sm:text-lg font-bold mt-1 tracking-tight">
             TIKET DIGITAL PENGAMBILAN ASET SARPRAS
           </h1>
           <p className="text-[11px] text-blue-200 mt-0.5">
             Kementerian Imigrasi dan Pemasyarakatan Republik Indonesia
           </p>
 
-          <div className="mt-3 inline-block">
+          <div className="mt-2.5 sm:mt-3 inline-block">
             <Badge variant="success" className="text-xs py-0.5 px-3 font-mono">
               STATUS TIKET: {ticket.status_tiket.toUpperCase()}
             </Badge>
           </div>
         </div>
 
-        <CardContent className="p-6 space-y-6">
+        <CardContent className="p-4 sm:p-6 space-y-4 sm:space-y-6">
           {/* QR Code Centerpiece */}
-          <div className="flex flex-col items-center justify-center p-4 bg-slate-50 rounded-2xl border border-slate-200 text-center">
-            <div className="bg-white p-3 rounded-xl shadow-sm border border-slate-200">
+          <div className="flex flex-col items-center justify-center p-3 sm:p-4 bg-slate-50 rounded-2xl border border-slate-200 text-center">
+            <div className="bg-white p-2.5 sm:p-3 rounded-xl shadow-sm border border-slate-200">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={ticket.qr_image}
                 alt="Kode QR Tiket Digital"
-                className="w-56 h-56 object-contain mx-auto"
+                className="w-44 sm:w-56 h-44 sm:h-56 object-contain mx-auto"
               />
             </div>
             <div className="mt-3 font-mono font-bold text-xs text-[#034275] bg-blue-100/60 px-3 py-1 rounded-full border border-blue-200">

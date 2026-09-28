@@ -18,12 +18,12 @@ export const metadata = {
 
 export default function PengaduanPage() {
   return (
-    <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
-      <div className="w-full max-w-xl space-y-6 animate-in fade-in zoom-in-95 duration-300">
+    <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center px-3 py-8 sm:px-6 lg:px-8">
+      <div className="w-full max-w-xl space-y-5 sm:space-y-6 animate-in fade-in zoom-in-95 duration-300">
         <Card className="border-slate-200 shadow-xl overflow-hidden text-center">
           <div className="h-2.5 bg-gradient-to-r from-amber-500 via-orange-500 to-[#034275]" />
           
-          <CardContent className="p-8 sm:p-10 space-y-6">
+          <CardContent className="p-5 sm:p-10 space-y-5 sm:space-y-6">
             {/* Icon Banner */}
             <div className="relative mx-auto w-24 h-24 flex items-center justify-center">
               <div className="absolute inset-0 rounded-3xl bg-amber-100/70 rotate-6" />

@@ -37,4 +37,36 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
+
+/* Mobile-First touch & input optimization */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  touch-action: manipulation;
+}
+
+@media (max-width: 640px) {
+  input[type='text'],
+  input[type='email'],
+  input[type='password'],
+  input[type='tel'],
+  input[type='number'],
+  input[type='datetime-local'],
+  input[type='date'],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+

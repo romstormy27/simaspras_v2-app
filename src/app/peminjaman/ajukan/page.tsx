@@ -235,33 +235,33 @@ function FormPengajuanContent() {
 
   if (successData) {
     return (
-      <div className="mx-auto max-w-2xl px-4 py-12">
+      <div className="mx-auto max-w-2xl px-3 sm:px-4 py-6 sm:py-12">
         <Card className="border-emerald-200 bg-white shadow-xl overflow-hidden">
-          <div className="bg-emerald-600 p-6 text-center text-white">
-            <CheckCircle2 className="mx-auto h-16 w-16 text-white mb-3" />
-            <h2 className="text-2xl font-bold">Pengajuan Peminjaman Berhasil!</h2>
-            <p className="text-emerald-100 text-sm mt-1">
+          <div className="bg-emerald-600 p-5 sm:p-6 text-center text-white">
+            <CheckCircle2 className="mx-auto h-12 w-12 sm:h-16 sm:w-16 text-white mb-2 sm:mb-3" />
+            <h2 className="text-xl sm:text-2xl font-bold">Pengajuan Peminjaman Berhasil!</h2>
+            <p className="text-emerald-100 text-xs sm:text-sm mt-1">
               Slot jadwal telah terkunci secara atomik (Pending Approval Kasubag).
             </p>
           </div>
 
-          <CardContent className="p-6 space-y-5">
-            <div className="rounded-xl bg-slate-50 p-4 border border-slate-200 space-y-2.5 text-sm">
+          <CardContent className="p-4 sm:p-6 space-y-4 sm:space-y-5">
+            <div className="rounded-xl bg-slate-50 p-3.5 sm:p-4 border border-slate-200 space-y-2.5 text-xs sm:text-sm">
               <div className="flex justify-between border-b pb-2 border-slate-200">
                 <span className="text-slate-500 font-medium">Nomor Kode Transaksi</span>
                 <span className="font-mono font-bold text-[#034275]">{successData.kode_transaksi}</span>
               </div>
               <div className="flex justify-between border-b pb-2 border-slate-200">
                 <span className="text-slate-500 font-medium">Fasilitas / Sarpras</span>
-                <span className="font-semibold text-slate-800">{successData.sarpras?.nama_sarpras}</span>
+                <span className="font-semibold text-slate-800 text-right">{successData.sarpras?.nama_sarpras}</span>
               </div>
               <div className="flex justify-between border-b pb-2 border-slate-200">
                 <span className="text-slate-500 font-medium">Waktu Mulai</span>
-                <span className="text-slate-700">{formatDateTime(successData.tgl_mulai)}</span>
+                <span className="text-slate-700 text-right">{formatDateTime(successData.tgl_mulai)}</span>
               </div>
               <div className="flex justify-between border-b pb-2 border-slate-200">
                 <span className="text-slate-500 font-medium">Waktu Selesai</span>
-                <span className="text-slate-700">{formatDateTime(successData.tgl_selesai)}</span>
+                <span className="text-slate-700 text-right">{formatDateTime(successData.tgl_selesai)}</span>
               </div>
               <div className="flex justify-between items-center pt-1">
                 <span className="text-slate-500 font-medium">Status Peminjaman</span>
@@ -271,9 +271,9 @@ function FormPengajuanContent() {
               </div>
             </div>
 
-            <div className="rounded-lg bg-blue-50 border border-blue-200 p-4 text-xs text-blue-800 space-y-1">
+            <div className="rounded-lg bg-blue-50 border border-blue-200 p-3 sm:p-4 text-xs text-blue-800 space-y-1">
               <div className="font-semibold flex items-center gap-1.5 text-blue-900">
-                <Info className="h-4 w-4" />
+                <Info className="h-4 w-4 shrink-0" />
                 Langkah Selanjutnya:
               </div>
               <p>
@@ -288,15 +288,15 @@ function FormPengajuanContent() {
             </div>
           </CardContent>
 
-          <CardFooter className="bg-slate-50 p-6 flex flex-col sm:flex-row gap-3 border-t border-slate-200">
+          <CardFooter className="bg-slate-50 p-4 sm:p-6 flex flex-col sm:flex-row gap-3 border-t border-slate-200">
             <Link href="/peminjaman/riwayat" className="w-full">
-              <Button className="w-full flex items-center justify-center gap-2">
+              <Button className="w-full h-11 sm:h-10 flex items-center justify-center gap-2">
                 <FileCheck2 className="h-4 w-4" />
                 Lihat Riwayat Peminjaman
               </Button>
             </Link>
             <Link href="/katalog" className="w-full sm:w-auto">
-              <Button variant="outline" className="w-full">
+              <Button variant="outline" className="w-full h-11 sm:h-10">
                 Kembali ke Katalog
               </Button>
             </Link>
@@ -307,9 +307,9 @@ function FormPengajuanContent() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8 space-y-6">
+    <div className="mx-auto max-w-5xl px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-5 sm:space-y-6">
       {/* Header Breadcrumb & Title */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
           <div className="flex items-center gap-2 text-xs text-slate-500 mb-1">
             <Link href="/katalog" className="hover:text-[#034275] flex items-center gap-1">
@@ -318,32 +318,32 @@ function FormPengajuanContent() {
             <span>/</span>
             <span className="text-slate-800 font-medium">Form Pengajuan Peminjaman</span>
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2.5">
-            <CalendarCheck className="h-7 w-7 text-[#034275]" />
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2 sm:gap-2.5">
+            <CalendarCheck className="h-6 w-6 sm:h-7 sm:w-7 text-[#034275] shrink-0" />
             Formulir Pengajuan Peminjaman Digital
           </h1>
-          <p className="text-sm text-slate-500">
+          <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
             Layanan peminjaman fasilitas sarana & prasarana Poltekim / Poltekip 100% paperless.
           </p>
         </div>
       </div>
 
       {/* Main Grid: Form Left, Facility & Schedule Info Right */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
         {/* Form Column (7 cols) */}
-        <div className="lg:col-span-7 space-y-6">
+        <div className="lg:col-span-7 space-y-5 sm:space-y-6">
           <Card className="border-slate-200 shadow-sm">
-            <CardHeader className="pb-4">
+            <CardHeader className="p-4 sm:p-6 pb-2 sm:pb-4">
               <CardTitle className="text-base flex items-center gap-2 text-[#034275]">
-                <FileCheck2 className="h-5 w-5" />
+                <FileCheck2 className="h-5 w-5 shrink-0" />
                 Rincian Permohonan Peminjaman
               </CardTitle>
-              <CardDescription>
+              <CardDescription className="text-xs">
                 Isi data jadwal operasional dan maksud agenda dengan lengkap dan akurat.
               </CardDescription>
             </CardHeader>
 
-            <CardContent>
+            <CardContent className="p-4 sm:p-6 pt-2 sm:pt-2">
               <form onSubmit={handleSubmit} id="booking-form" className="space-y-5">
                 {/* Error Banner (hanya jika bukan kasus bentrok yang sudah ditangani card khusus) */}
                 {errorMessage && conflicts.length === 0 && (
@@ -437,7 +437,7 @@ function FormPengajuanContent() {
                         type="datetime-local"
                         value={tglMulai}
                         onChange={(e) => setTglMulai(e.target.value)}
-                        className="text-xs h-10"
+                        className="text-sm sm:text-xs h-11 sm:h-10"
                         required
                       />
                     </div>
@@ -452,7 +452,7 @@ function FormPengajuanContent() {
                         type="datetime-local"
                         value={tglSelesai}
                         onChange={(e) => setTglSelesai(e.target.value)}
-                        className="text-xs h-10"
+                        className="text-sm sm:text-xs h-11 sm:h-10"
                         required
                       />
                     </div>
@@ -469,7 +469,7 @@ function FormPengajuanContent() {
                     value={maksudKegiatan}
                     onChange={(e) => setMaksudKegiatan(e.target.value)}
                     placeholder="Contoh: Kuliah Umum Manajemen Keimigrasian & Pemasyarakatan bersama Taruna Tingkat III. Diperlukan sound system dan proyektor aktif."
-                    className="w-full rounded-lg border border-slate-300 p-3 text-xs text-slate-900 focus:border-[#034275] focus:outline-none focus:ring-1 focus:ring-[#034275] placeholder:text-slate-400"
+                    className="w-full rounded-lg border border-slate-300 p-3 text-sm sm:text-xs text-slate-900 focus:border-[#034275] focus:outline-none focus:ring-1 focus:ring-[#034275] placeholder:text-slate-400"
                     required
                     minLength={5}
                   />
@@ -490,7 +490,7 @@ function FormPengajuanContent() {
                       max={10}
                       value={jumlahUnit}
                       onChange={(e) => setJumlahUnit(Number(e.target.value))}
-                      className="text-xs h-10"
+                      className="text-sm sm:text-xs h-11 sm:h-10"
                     />
                   </div>
 
@@ -503,15 +503,15 @@ function FormPengajuanContent() {
                       placeholder="Contoh: Butuh kabel HDMI panjang / mic wireless 2 unit"
                       value={catatanTeknis}
                       onChange={(e) => setCatatanTeknis(e.target.value)}
-                      className="text-xs h-10"
+                      className="text-sm sm:text-xs h-11 sm:h-10"
                     />
                   </div>
                 </div>
 
                 {/* Pakta Integritas Peminjaman Digital */}
-                <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-4 space-y-3">
+                <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-3.5 sm:p-4 space-y-3">
                   <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider">
-                    <ShieldAlert className="h-4 w-4 text-[#034275]" />
+                    <ShieldAlert className="h-4 w-4 text-[#034275] shrink-0" />
                     Pakta Integritas Peminjaman Digital Poltekimipas
                   </div>
 
@@ -538,15 +538,15 @@ function FormPengajuanContent() {
                     </ol>
                   </div>
 
-                  <label className="flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer pt-1">
+                  <label className="flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer pt-1 min-h-[44px]">
                     <input
                       type="checkbox"
                       checked={paktaIntegritas}
                       onChange={(e) => setPaktaIntegritas(e.target.checked)}
-                      className="mt-0.5 rounded border-slate-300 text-[#034275] focus:ring-[#034275] h-4 w-4"
+                      className="mt-0.5 rounded border-slate-300 text-[#034275] focus:ring-[#034275] h-5 w-5 sm:h-4 sm:w-4 shrink-0"
                       required
                     />
-                    <span className="font-medium">
+                    <span className="font-medium text-xs leading-relaxed">
                       Saya telah membaca, memahami, dan menyetujui seluruh ketentuan dalam{' '}
                       <strong>Pakta Integritas Peminjaman Fasilitas</strong> di atas secara sadar dan bertanggung jawab.
                     </span>
@@ -555,9 +555,9 @@ function FormPengajuanContent() {
               </form>
             </CardContent>
 
-            <CardFooter className="bg-slate-50 border-t border-slate-200 p-4 flex items-center justify-between">
-              <Link href="/katalog">
-                <Button variant="outline" size="sm" type="button">
+            <CardFooter className="bg-slate-50 border-t border-slate-200 p-4 sm:p-5 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
+              <Link href="/katalog" className="w-full sm:w-auto">
+                <Button variant="outline" size="sm" type="button" className="w-full sm:w-auto h-11 sm:h-9">
                   Batal
                 </Button>
               </Link>
@@ -566,7 +566,7 @@ function FormPengajuanContent() {
                 type="submit"
                 size="sm"
                 disabled={loading || !selectedSarprasId || !paktaIntegritas}
-                className="flex items-center gap-2"
+                className="w-full sm:w-auto h-11 sm:h-9 flex items-center justify-center gap-2"
               >
                 {loading ? 'Mengunci Slot Jadwal...' : 'Kirim Pengajuan Digital'}
                 {!loading && <ArrowRight className="h-4 w-4" />}

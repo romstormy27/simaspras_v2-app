@@ -75,72 +75,74 @@ export default async function PemohonBastViewPage({
   });
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8 space-y-6">
+    <div className="mx-auto max-w-4xl px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-4 sm:space-y-6">
       {/* Top Navigation */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
         <Link
           href="/peminjaman/riwayat"
-          className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-slate-800 transition-colors"
+          className="inline-flex items-center justify-center sm:justify-start gap-1.5 text-xs font-medium text-slate-500 hover:text-slate-800 transition-colors h-9"
         >
           <ArrowLeft className="h-4 w-4" />
           Kembali ke Riwayat Peminjaman
         </Link>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-full sm:w-auto">
           <a
             href={`/api/bast/${bast.id_bast}/pdf`}
             target="_blank"
             rel="noreferrer"
+            className="flex-1 sm:flex-initial"
           >
             <Button
               size="sm"
               variant="outline"
-              className="text-xs h-8 flex items-center gap-1.5 border-slate-300"
+              className="text-xs h-9 sm:h-8 flex items-center justify-center gap-1.5 border-slate-300 w-full sm:w-auto"
             >
               <Printer className="h-3.5 w-3.5" />
-              Cetak / Buka PDF
+              Cetak PDF
             </Button>
           </a>
 
           <a
             href={`/api/bast/${bast.id_bast}/pdf?download=true`}
+            className="flex-1 sm:flex-initial"
           >
             <Button
               size="sm"
-              className="text-xs h-8 flex items-center gap-1.5 bg-[#034275] hover:bg-[#02335c] text-white"
+              className="text-xs h-9 sm:h-8 flex items-center justify-center gap-1.5 bg-[#034275] hover:bg-[#02335c] text-white w-full sm:w-auto"
             >
               <Download className="h-3.5 w-3.5" />
-              Unduh PDF Resmi
+              Unduh PDF
             </Button>
           </a>
         </div>
       </div>
 
       {/* Main Certificate / BAST Sheet */}
-      <div className="bg-white rounded-3xl border-2 border-slate-200 shadow-xl overflow-hidden print:border-none print:shadow-none">
+      <div className="bg-white rounded-2xl sm:rounded-3xl border-2 border-slate-200 shadow-xl overflow-hidden print:border-none print:shadow-none">
         {/* Kop Institusi */}
-        <div className="border-b-2 border-[#034275] p-6 sm:p-8 text-center bg-slate-50/60 space-y-1">
-          <div className="text-xs font-bold tracking-wider text-slate-600 uppercase">
+        <div className="border-b-2 border-[#034275] p-4 sm:p-8 text-center bg-slate-50/60 space-y-1">
+          <div className="text-[10px] sm:text-xs font-bold tracking-wider text-slate-600 uppercase">
             Kementerian Imigrasi dan Pemasyarakatan RI
           </div>
-          <div className="text-xs font-medium text-slate-500 uppercase">
+          <div className="text-[10px] sm:text-xs font-medium text-slate-500 uppercase">
             Badan Pengembangan Sumber Daya Manusia Imigrasi dan Pemasyarakatan
           </div>
-          <h2 className="text-lg sm:text-xl font-bold text-[#034275] uppercase tracking-wide">
+          <h2 className="text-base sm:text-xl font-bold text-[#034275] uppercase tracking-wide">
             Politeknik Imigrasi dan Pemasyarakatan (Poltekimipas)
           </h2>
-          <p className="text-[11px] text-slate-400">
+          <p className="text-[10px] sm:text-[11px] text-slate-400">
             Jl. Satria - Sudirman, RT.001/RW.014, Tanah Tinggi, Kec. Tangerang, Kota Tangerang, Banten 15119 • Laman: poltekimipas.ac.id • SIMASPRAS Paperless
           </p>
         </div>
 
         {/* Certificate Title */}
-        <div className="p-6 sm:p-8 space-y-6">
-          <div className="text-center space-y-1 border-b border-slate-100 pb-5">
+        <div className="p-4 sm:p-8 space-y-5 sm:space-y-6">
+          <div className="text-center space-y-1 border-b border-slate-100 pb-4 sm:pb-5">
             <Badge variant="selesai" className="px-3 py-1 text-xs">
               ✓ Serah Terima Sah & Selesai
             </Badge>
-            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight mt-2">
+            <h1 className="text-lg sm:text-2xl font-bold text-slate-900 tracking-tight mt-2">
               BERITA ACARA SERAH TERIMA PENGEMBALIAN SARPRAS
             </h1>
             <p className="font-mono text-xs sm:text-sm font-bold text-[#034275]">

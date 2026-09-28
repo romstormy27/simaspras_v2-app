@@ -53,8 +53,8 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-8rem)] items-center justify-center p-4 py-8">
-      <div className="w-full max-w-lg space-y-6">
+    <div className="flex min-h-[calc(100vh-8rem)] items-center justify-center p-3 sm:p-4 py-6 sm:py-8">
+      <div className="w-full max-w-lg space-y-5 sm:space-y-6">
         <div className="text-center space-y-2">
           <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-[#034275] text-white shadow-md">
             <Building2 className="h-6 w-6" />
@@ -158,7 +158,7 @@ export default function RegisterPage() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-3 text-slate-400 hover:text-slate-600 focus:outline-none transition-colors"
+                      className="absolute right-1 top-1 h-8 w-8 flex items-center justify-center text-slate-400 hover:text-slate-600 focus:outline-none transition-colors"
                       aria-label={showPassword ? 'Sembunyikan password' : 'Lihat password'}
                     >
                       {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -166,7 +166,7 @@ export default function RegisterPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="text-xs font-semibold uppercase tracking-wider text-slate-700">
                       Kategori Pemohon <span className="text-red-500">*</span>
@@ -214,7 +214,7 @@ export default function RegisterPage() {
               </CardContent>
 
               <CardFooter className="flex flex-col space-y-4">
-                <Button type="submit" className="w-full" disabled={loading}>
+                <Button type="submit" className="w-full h-11 text-sm font-semibold" disabled={loading}>
                   {loading ? 'Mendaftarkan Akun...' : 'Kirim Pendaftaran'}
                   {!loading && <ArrowRight className="ml-2 h-4 w-4" />}
                 </Button>

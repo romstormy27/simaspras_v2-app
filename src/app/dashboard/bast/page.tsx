@@ -246,27 +246,27 @@ export default function KasubagBastDashboardPage() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-6">
+    <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-5 sm:space-y-6">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 border-b border-slate-200 pb-4 sm:pb-5">
         <div>
           <div className="flex items-center gap-2">
-            <span className="rounded-lg bg-[#034275] p-2 text-white">
-              <FileCheck className="h-6 w-6" />
+            <span className="rounded-lg bg-[#034275] p-1.5 sm:p-2 text-white shrink-0">
+              <FileCheck className="h-5 w-5 sm:h-6 sm:w-6" />
             </span>
             <div>
-              <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-                Penerbitan Berita Acara Serah Terima (BAST) Digital
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+                Penerbitan BAST Digital
               </h1>
               <p className="text-xs text-slate-500">
-                Konfirmasi serah-terima pengembalian fasilitas kampus dengan penandatanganan elektronik QR Signature.
+                Konfirmasi serah-terima pengembalian fasilitas dengan tanda tangan digital QR.
               </p>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <Badge variant="outline" className="border-blue-300 bg-blue-50 text-blue-800 text-xs px-3 py-1">
+        <div className="flex items-center gap-2 self-start sm:self-auto">
+          <Badge variant="outline" className="border-blue-300 bg-blue-50 text-blue-800 text-xs px-2.5 sm:px-3 py-1">
             Kasubag Bagian Umum
           </Badge>
           <Button
@@ -298,42 +298,42 @@ export default function KasubagBastDashboardPage() {
       )}
 
       {/* KPI Overview Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-4">
         <Card className={`border-slate-200 cursor-pointer transition-all ${activeTab === 'siap-bast' ? 'ring-2 ring-[#034275] bg-blue-50/20' : 'hover:border-slate-300'}`} onClick={() => setActiveTab('siap-bast')}>
-          <CardContent className="p-4 flex items-center justify-between">
+          <CardContent className="p-3 sm:p-4 flex items-center justify-between">
             <div>
-              <div className="text-xs text-slate-500 font-medium">Siap Diterbitkan BAST</div>
-              <div className="text-2xl font-bold text-[#034275] mt-1">{readyForBastBookings.length}</div>
-              <p className="text-[11px] text-slate-400 mt-0.5">Inspeksi fisik staf selesai</p>
+              <div className="text-[11px] sm:text-xs text-slate-500 font-medium">Siap Diterbitkan BAST</div>
+              <div className="text-xl sm:text-2xl font-bold text-[#034275] mt-0.5 sm:mt-1">{readyForBastBookings.length}</div>
+              <p className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5">Inspeksi fisik staf selesai</p>
             </div>
-            <div className="p-2.5 rounded-xl bg-blue-100 text-[#034275]">
-              <FileCheck className="h-6 w-6" />
+            <div className="p-2 sm:p-2.5 rounded-xl bg-blue-100 text-[#034275] shrink-0">
+              <FileCheck className="h-5 w-5 sm:h-6 sm:w-6" />
             </div>
           </CardContent>
         </Card>
 
         <Card className={`border-slate-200 cursor-pointer transition-all ${activeTab === 'dalam-pemakaian' ? 'ring-2 ring-amber-500 bg-amber-50/20' : 'hover:border-slate-300'}`} onClick={() => setActiveTab('dalam-pemakaian')}>
-          <CardContent className="p-4 flex items-center justify-between">
+          <CardContent className="p-3 sm:p-4 flex items-center justify-between">
             <div>
-              <div className="text-xs text-slate-500 font-medium">Dalam Pemakaian / Belum Inspeksi</div>
-              <div className="text-2xl font-bold text-amber-600 mt-1">{inUseBookings.length}</div>
-              <p className="text-[11px] text-slate-400 mt-0.5">Menunggu verifikasi kembali staf</p>
+              <div className="text-[11px] sm:text-xs text-slate-500 font-medium">Belum Diinspeksi</div>
+              <div className="text-xl sm:text-2xl font-bold text-amber-600 mt-0.5 sm:mt-1">{inUseBookings.length}</div>
+              <p className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5">Menunggu verifikasi staf</p>
             </div>
-            <div className="p-2.5 rounded-xl bg-amber-100 text-amber-700">
-              <Clock className="h-6 w-6" />
+            <div className="p-2 sm:p-2.5 rounded-xl bg-amber-100 text-amber-700 shrink-0">
+              <Clock className="h-5 w-5 sm:h-6 sm:w-6" />
             </div>
           </CardContent>
         </Card>
 
         <Card className={`border-slate-200 cursor-pointer transition-all ${activeTab === 'arsip-bast' ? 'ring-2 ring-emerald-500 bg-emerald-50/20' : 'hover:border-slate-300'}`} onClick={() => setActiveTab('arsip-bast')}>
-          <CardContent className="p-4 flex items-center justify-between">
+          <CardContent className="p-3 sm:p-4 flex items-center justify-between">
             <div>
-              <div className="text-xs text-slate-500 font-medium">Total BAST Diterbitkan</div>
-              <div className="text-2xl font-bold text-emerald-600 mt-1">{bastList.length}</div>
-              <p className="text-[11px] text-slate-400 mt-0.5">Dokumen resmi tuntas (PDF)</p>
+              <div className="text-[11px] sm:text-xs text-slate-500 font-medium">Total BAST Terbit</div>
+              <div className="text-xl sm:text-2xl font-bold text-emerald-600 mt-0.5 sm:mt-1">{bastList.length}</div>
+              <p className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5">Dokumen resmi tuntas (PDF)</p>
             </div>
-            <div className="p-2.5 rounded-xl bg-emerald-100 text-emerald-700">
-              <CheckCircle2 className="h-6 w-6" />
+            <div className="p-2 sm:p-2.5 rounded-xl bg-emerald-100 text-emerald-700 shrink-0">
+              <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6" />
             </div>
           </CardContent>
         </Card>
@@ -341,50 +341,50 @@ export default function KasubagBastDashboardPage() {
 
       {/* Tabs & Search Filter */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
-        <div className="flex items-center gap-1.5 overflow-x-auto text-xs">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:pb-0 text-xs">
           <button
             onClick={() => setActiveTab('siap-bast')}
-            className={`rounded-lg px-3.5 py-2 font-medium flex items-center gap-1.5 transition-colors ${
+            className={`rounded-lg px-3 sm:px-3.5 py-2 font-medium flex items-center gap-1.5 transition-colors whitespace-nowrap min-h-[36px] ${
               activeTab === 'siap-bast'
                 ? 'bg-[#034275] text-white shadow-sm'
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
-            <FileCheck className="h-4 w-4" />
-            Siap Penerbitan BAST ({readyForBastBookings.length})
+            <FileCheck className="h-3.5 w-3.5" />
+            Siap BAST ({readyForBastBookings.length})
           </button>
           <button
             onClick={() => setActiveTab('dalam-pemakaian')}
-            className={`rounded-lg px-3.5 py-2 font-medium flex items-center gap-1.5 transition-colors ${
+            className={`rounded-lg px-3 sm:px-3.5 py-2 font-medium flex items-center gap-1.5 transition-colors whitespace-nowrap min-h-[36px] ${
               activeTab === 'dalam-pemakaian'
                 ? 'bg-[#034275] text-white shadow-sm'
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
-            <Clock className="h-4 w-4" />
-            Menunggu Inspeksi Staf ({inUseBookings.length})
+            <Clock className="h-3.5 w-3.5" />
+            Menunggu Inspeksi ({inUseBookings.length})
           </button>
           <button
             onClick={() => setActiveTab('arsip-bast')}
-            className={`rounded-lg px-3.5 py-2 font-medium flex items-center gap-1.5 transition-colors ${
+            className={`rounded-lg px-3 sm:px-3.5 py-2 font-medium flex items-center gap-1.5 transition-colors whitespace-nowrap min-h-[36px] ${
               activeTab === 'arsip-bast'
                 ? 'bg-[#034275] text-white shadow-sm'
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
-            <FileText className="h-4 w-4" />
-            Arsip Dokumen BAST ({bastList.length})
+            <FileText className="h-3.5 w-3.5" />
+            Arsip BAST ({bastList.length})
           </button>
         </div>
 
-        <div className="relative sm:w-72">
+        <div className="relative w-full sm:w-72">
           <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
           <Input
             type="text"
             placeholder="Cari transaksi, BAST, peminjam..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="h-9 pl-9 text-xs"
+            className="h-10 sm:h-9 pl-9 text-xs"
           />
         </div>
       </div>
@@ -488,10 +488,10 @@ export default function KasubagBastDashboardPage() {
                         )}
                       </div>
 
-                      <div className="flex flex-row lg:flex-col items-center lg:items-end justify-end gap-2 shrink-0 border-t lg:border-t-0 pt-3 lg:pt-0 border-slate-100">
+                      <div className="flex flex-col sm:flex-row lg:flex-col items-stretch sm:items-center lg:items-end justify-end gap-2 shrink-0 border-t lg:border-t-0 pt-3 lg:pt-0 border-slate-100 w-full lg:w-auto">
                         <Button
                           onClick={() => handleOpenIssueModal(b)}
-                          className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs h-9 px-4 flex items-center gap-1.5 shadow-sm"
+                          className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs h-10 sm:h-9 px-4 flex items-center justify-center gap-1.5 shadow-sm w-full sm:w-auto"
                         >
                           <FileCheck className="h-4 w-4" />
                           Terbitkan & Tandatangani BAST
@@ -687,31 +687,31 @@ export default function KasubagBastDashboardPage() {
 
       {/* Modal Dialog: Konfirmasi Penerbitan BAST */}
       {selectedBookingForBast && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-3 sm:p-4 animate-in fade-in">
           <div className="w-full max-w-2xl rounded-2xl bg-white shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]">
-            <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4 bg-slate-50">
-              <div className="flex items-center gap-2.5">
-                <div className="p-2 rounded-xl bg-emerald-600 text-white">
+            <div className="flex items-center justify-between border-b border-slate-200 px-4 sm:px-6 py-3 sm:py-4 bg-slate-50">
+              <div className="flex items-center gap-2 sm:gap-2.5">
+                <div className="p-1.5 sm:p-2 rounded-xl bg-emerald-600 text-white shrink-0">
                   <FileCheck className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-slate-900">
+                  <h3 className="text-sm sm:text-base font-bold text-slate-900">
                     Konfirmasi & Tanda Tangan BAST Digital
                   </h3>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-[11px] sm:text-xs text-slate-500">
                     Penerbitan dokumen Berita Acara Serah Terima resmi Politeknik Imigrasi dan Pemasyarakatan
                   </p>
                 </div>
               </div>
               <button
                 onClick={() => setSelectedBookingForBast(null)}
-                className="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg"
+                className="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg shrink-0"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            <div className="p-6 overflow-y-auto space-y-4 text-xs text-slate-700 flex-1">
+            <div className="p-4 sm:p-6 overflow-y-auto space-y-4 text-xs text-slate-700 flex-1">
               {bastError && (
                 <Alert variant="destructive">
                   <AlertTitle>Gagal Menerbitkan BAST</AlertTitle>
@@ -721,7 +721,7 @@ export default function KasubagBastDashboardPage() {
 
               {/* Rincian Transaksi */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-1">
+                <div className="bg-slate-50 p-3 sm:p-3.5 rounded-xl border border-slate-200 space-y-1">
                   <div className="text-[10px] font-bold text-slate-400 uppercase">Fasilitas / Sarpras</div>
                   <div className="font-bold text-slate-900 text-sm">
                     {selectedBookingForBast.sarpras.nama_sarpras}
@@ -731,7 +731,7 @@ export default function KasubagBastDashboardPage() {
                   </div>
                 </div>
 
-                <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-1">
+                <div className="bg-slate-50 p-3 sm:p-3.5 rounded-xl border border-slate-200 space-y-1">
                   <div className="text-[10px] font-bold text-slate-400 uppercase">Identitas Peminjam</div>
                   <div className="font-bold text-slate-900 text-sm">
                     {selectedBookingForBast.pemohon.nama_lengkap}
@@ -743,10 +743,10 @@ export default function KasubagBastDashboardPage() {
               </div>
 
               {/* Hasil Inspeksi Staf Pasca-Pengembalian */}
-              <div className="bg-emerald-50/70 border border-emerald-300 rounded-xl p-3.5 space-y-2">
+              <div className="bg-emerald-50/70 border border-emerald-300 rounded-xl p-3 sm:p-3.5 space-y-2">
                 <div className="font-bold text-emerald-900 text-xs flex items-center justify-between">
                   <span className="flex items-center gap-1.5">
-                    <CheckCheck className="h-4 w-4 text-emerald-600" />
+                    <CheckCheck className="h-4 w-4 text-emerald-600 shrink-0" />
                     Laporan Verifikasi Fisik Staf Lapangan
                   </span>
                   <Badge variant="success">Lulus Inspeksi</Badge>
@@ -771,7 +771,7 @@ export default function KasubagBastDashboardPage() {
               {/* Klausul Tanpa Denda Finansial */}
               <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 text-blue-900 space-y-1">
                 <div className="font-semibold text-xs flex items-center gap-1.5">
-                  <Sparkles className="h-3.5 w-3.5 text-blue-600" />
+                  <Sparkles className="h-3.5 w-3.5 text-blue-600 shrink-0" />
                   Klausul Bebas Denda Finansial:
                 </div>
                 <p className="text-[11px] text-blue-800 leading-relaxed">
@@ -796,12 +796,12 @@ export default function KasubagBastDashboardPage() {
               </div>
             </div>
 
-            <div className="border-t border-slate-200 px-6 py-3.5 bg-slate-50 flex items-center justify-between">
+            <div className="border-t border-slate-200 px-4 sm:px-6 py-3 bg-slate-50 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setSelectedBookingForBast(null)}
-                className="text-xs"
+                className="text-xs w-full sm:w-auto h-10 sm:h-9"
               >
                 Batal
               </Button>
@@ -809,10 +809,10 @@ export default function KasubagBastDashboardPage() {
               <Button
                 onClick={handleConfirmIssueBast}
                 disabled={submittingBast}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs h-9 px-5 flex items-center gap-2"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs h-10 sm:h-9 px-5 flex items-center justify-center gap-2 w-full sm:w-auto"
               >
                 <FileCheck className="h-4 w-4" />
-                {submittingBast ? 'Menerbitkan & Menandatangani...' : 'Tandatangani Elektronik & Terbitkan BAST'}
+                {submittingBast ? 'Menerbitkan...' : 'Tandatangani Elektronik & Terbitkan BAST'}
               </Button>
             </div>
           </div>
@@ -821,30 +821,30 @@ export default function KasubagBastDashboardPage() {
 
       {/* Modal Dialog: Detail BAST Terbit */}
       {viewingBastDetail && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-3 sm:p-4 animate-in fade-in">
           <div className="w-full max-w-xl rounded-2xl bg-white shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[85vh]">
-            <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4 bg-slate-50">
+            <div className="flex items-center justify-between border-b border-slate-200 px-4 sm:px-6 py-3 sm:py-4 bg-slate-50">
               <div>
                 <span className="font-mono text-xs font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded">
                   {viewingBastDetail.nomor_bast}
                 </span>
-                <h3 className="text-base font-bold text-slate-900 mt-1">
+                <h3 className="text-sm sm:text-base font-bold text-slate-900 mt-1">
                   Rincian Berita Acara Serah Terima (BAST)
                 </h3>
               </div>
               <button
                 onClick={() => setViewingBastDetail(null)}
-                className="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg"
+                className="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg shrink-0"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            <div className="p-6 overflow-y-auto space-y-4 text-xs text-slate-700">
-              <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center space-y-2">
-                <CheckCircle2 className="h-8 w-8 text-emerald-600 mx-auto" />
+            <div className="p-4 sm:p-6 overflow-y-auto space-y-4 text-xs text-slate-700">
+              <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3.5 sm:p-4 text-center space-y-2">
+                <CheckCircle2 className="h-7 w-7 sm:h-8 sm:w-8 text-emerald-600 mx-auto" />
                 <div className="font-bold text-emerald-900 text-sm">Dokumen BAST Digital Resmi</div>
-                <p className="font-mono text-[11px] text-emerald-800 bg-white py-1 px-3 rounded border border-emerald-200 inline-block">
+                <p className="font-mono text-[10px] sm:text-[11px] text-emerald-800 bg-white py-1 px-3 rounded border border-emerald-200 inline-block break-all">
                   QR Signature: {viewingBastDetail.qr_signature}
                 </p>
                 <p className="text-[11px] text-slate-500">
@@ -854,7 +854,7 @@ export default function KasubagBastDashboardPage() {
 
               <div className="space-y-2">
                 <div className="font-bold text-slate-800">Detail Para Pihak & Fasilitas:</div>
-                <div className="bg-slate-50 rounded-xl p-3 border border-slate-200 space-y-1.5">
+                <div className="bg-slate-50 rounded-xl p-3 sm:p-3.5 border border-slate-200 space-y-1.5">
                   <div>
                     <strong>Pihak Peminjam:</strong> {viewingBastDetail.peminjaman.pemohon.nama_lengkap} (
                     {viewingBastDetail.peminjaman.pemohon.role})
@@ -874,26 +874,27 @@ export default function KasubagBastDashboardPage() {
               </div>
             </div>
 
-            <div className="border-t border-slate-200 px-6 py-3.5 bg-slate-50 flex items-center justify-between">
+            <div className="border-t border-slate-200 px-4 sm:px-6 py-3 bg-slate-50 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setViewingBastDetail(null)}
-                className="text-xs"
+                className="text-xs w-full sm:w-auto h-10 sm:h-9"
               >
                 Tutup
               </Button>
 
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row items-stretch gap-2 w-full sm:w-auto">
                 <a
                   href={`/api/bast/${viewingBastDetail.id_bast}/pdf`}
                   target="_blank"
                   rel="noreferrer"
+                  className="w-full sm:w-auto"
                 >
                   <Button
                     size="sm"
                     variant="outline"
-                    className="text-xs h-8 border-[#034275] text-[#034275]"
+                    className="text-xs h-10 sm:h-8 border-[#034275] text-[#034275] w-full sm:w-auto flex items-center justify-center"
                   >
                     <FileText className="h-3.5 w-3.5 mr-1" />
                     Lihat PDF
@@ -901,10 +902,11 @@ export default function KasubagBastDashboardPage() {
                 </a>
                 <a
                   href={`/api/bast/${viewingBastDetail.id_bast}/pdf?download=true`}
+                  className="w-full sm:w-auto"
                 >
                   <Button
                     size="sm"
-                    className="text-xs h-8 bg-[#034275] hover:bg-[#02335c] text-white"
+                    className="text-xs h-10 sm:h-8 bg-[#034275] hover:bg-[#02335c] text-white w-full sm:w-auto flex items-center justify-center"
                   >
                     <Download className="h-3.5 w-3.5 mr-1" />
                     Unduh PDF

@@ -214,14 +214,14 @@ export default function KasubagApprovalPage() {
   const countTotal = transactions.length;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-6">
+    <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-5 sm:space-y-6">
       {/* Page Header */}
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2.5">
-          <CheckCircle2 className="h-7 w-7 text-[#034275]" />
+        <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2 sm:gap-2.5">
+          <CheckCircle2 className="h-6 w-6 sm:h-7 sm:w-7 text-[#034275] shrink-0" />
           Dasbor Persetujuan Peminjaman Sarpras
         </h1>
-        <p className="text-sm text-slate-500">
+        <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
           Kasubag Bagian Umum — Evaluasi permohonan digital, tinjau catatan verifikasi staf, dan terbitkan Tiket QR.
         </p>
       </div>
@@ -235,51 +235,51 @@ export default function KasubagApprovalPage() {
       )}
 
       {/* Summary KPI Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
         <Card className="border-slate-200">
-          <CardContent className="p-4 flex items-center justify-between">
+          <CardContent className="p-3 sm:p-4 flex items-center justify-between">
             <div>
-              <div className="text-xs text-slate-500 font-medium">Antrean Menunggu Approval</div>
-              <div className="text-2xl font-bold text-amber-600 mt-1">{countPending}</div>
+              <div className="text-[11px] sm:text-xs text-slate-500 font-medium">Antrean Menunggu</div>
+              <div className="text-xl sm:text-2xl font-bold text-amber-600 mt-0.5 sm:mt-1">{countPending}</div>
             </div>
-            <div className="p-2.5 rounded-xl bg-amber-50 text-amber-700">
-              <Clock className="h-5 w-5" />
+            <div className="p-2 sm:p-2.5 rounded-xl bg-amber-50 text-amber-700 shrink-0">
+              <Clock className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
           </CardContent>
         </Card>
 
         <Card className="border-slate-200">
-          <CardContent className="p-4 flex items-center justify-between">
+          <CardContent className="p-3 sm:p-4 flex items-center justify-between">
             <div>
-              <div className="text-xs text-slate-500 font-medium">Telah Disetujui (Tiket Aktif)</div>
-              <div className="text-2xl font-bold text-blue-600 mt-1">{countDisetujui}</div>
+              <div className="text-[11px] sm:text-xs text-slate-500 font-medium">Telah Disetujui</div>
+              <div className="text-xl sm:text-2xl font-bold text-blue-600 mt-0.5 sm:mt-1">{countDisetujui}</div>
             </div>
-            <div className="p-2.5 rounded-xl bg-blue-50 text-blue-700">
-              <CheckCircle2 className="h-5 w-5" />
+            <div className="p-2 sm:p-2.5 rounded-xl bg-blue-50 text-blue-700 shrink-0">
+              <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
           </CardContent>
         </Card>
 
         <Card className="border-slate-200">
-          <CardContent className="p-4 flex items-center justify-between">
+          <CardContent className="p-3 sm:p-4 flex items-center justify-between">
             <div>
-              <div className="text-xs text-slate-500 font-medium">Permohonan Ditolak</div>
-              <div className="text-2xl font-bold text-red-600 mt-1">{countDitolak}</div>
+              <div className="text-[11px] sm:text-xs text-slate-500 font-medium">Permohonan Ditolak</div>
+              <div className="text-xl sm:text-2xl font-bold text-red-600 mt-0.5 sm:mt-1">{countDitolak}</div>
             </div>
-            <div className="p-2.5 rounded-xl bg-red-50 text-red-700">
-              <XCircle className="h-5 w-5" />
+            <div className="p-2 sm:p-2.5 rounded-xl bg-red-50 text-red-700 shrink-0">
+              <XCircle className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
           </CardContent>
         </Card>
 
         <Card className="border-slate-200">
-          <CardContent className="p-4 flex items-center justify-between">
+          <CardContent className="p-3 sm:p-4 flex items-center justify-between">
             <div>
-              <div className="text-xs text-slate-500 font-medium">Total Seluruh Permohonan</div>
-              <div className="text-2xl font-bold text-slate-700 mt-1">{countTotal}</div>
+              <div className="text-[11px] sm:text-xs text-slate-500 font-medium">Total Permohonan</div>
+              <div className="text-xl sm:text-2xl font-bold text-slate-700 mt-0.5 sm:mt-1">{countTotal}</div>
             </div>
-            <div className="p-2.5 rounded-xl bg-slate-100 text-slate-700">
-              <History className="h-5 w-5" />
+            <div className="p-2 sm:p-2.5 rounded-xl bg-slate-100 text-slate-700 shrink-0">
+              <History className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
           </CardContent>
         </Card>
@@ -287,30 +287,30 @@ export default function KasubagApprovalPage() {
 
       {/* Filter Tabs & Search Bar */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 text-xs">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:pb-0 text-xs">
           {['Pending', 'Disetujui', 'Ditolak', 'Semua'].map((st) => (
             <button
               key={st}
               onClick={() => setStatusFilter(st)}
-              className={`rounded-lg px-3.5 py-1.5 font-semibold whitespace-nowrap transition-all ${
+              className={`rounded-lg px-3 sm:px-3.5 py-1.5 font-semibold whitespace-nowrap transition-all min-h-[36px] ${
                 statusFilter === st
                   ? 'bg-[#034275] text-white shadow-sm'
                   : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
               }`}
             >
-              {st === 'Pending' ? `Antrean Pending (${countPending})` : st}
+              {st === 'Pending' ? `Antrean (${countPending})` : st}
             </button>
           ))}
         </div>
 
-        <div className="relative sm:w-72">
+        <div className="relative w-full sm:w-72">
           <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
           <Input
             type="text"
             placeholder="Cari transaksi, pemohon, fasilitas..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="h-9 pl-9 text-xs"
+            className="h-10 sm:h-9 pl-9 text-xs"
           />
         </div>
       </div>
@@ -439,23 +439,23 @@ export default function KasubagApprovalPage() {
                     </div>
 
                     {/* Right: Action Buttons */}
-                    <div className="flex flex-row lg:flex-col items-center lg:items-end justify-end gap-2 shrink-0 border-t lg:border-t-0 pt-3 lg:pt-0 border-slate-100">
+                    <div className="flex flex-col sm:flex-row lg:flex-col items-stretch sm:items-center lg:items-end justify-end gap-2 shrink-0 border-t lg:border-t-0 pt-3 lg:pt-0 border-slate-100 w-full lg:w-auto">
                       <Button
                         size="sm"
                         variant="outline"
                         onClick={() => handleOpenActionModal(b, 'Detail')}
-                        className="text-xs flex items-center gap-1.5 h-8"
+                        className="text-xs flex items-center justify-center gap-1.5 h-9 sm:h-8 w-full sm:w-auto"
                       >
                         <Eye className="h-3.5 w-3.5 text-slate-500" />
                         Evaluasi Detail
                       </Button>
 
                       {b.status_transaksi === 'Pending' && (
-                        <div className="flex items-center gap-2">
+                        <div className="flex flex-col sm:flex-row items-stretch gap-2 w-full sm:w-auto">
                           <Button
                             size="sm"
                             onClick={() => handleOpenActionModal(b, 'Approve')}
-                            className="text-xs flex items-center gap-1.5 h-8 bg-emerald-700 hover:bg-emerald-800 text-white"
+                            className="text-xs flex items-center justify-center gap-1.5 h-9 sm:h-8 bg-emerald-700 hover:bg-emerald-800 text-white w-full sm:w-auto"
                           >
                             <CheckCircle2 className="h-3.5 w-3.5" />
                             Setujui (Approve)
@@ -465,7 +465,7 @@ export default function KasubagApprovalPage() {
                             size="sm"
                             variant="destructive"
                             onClick={() => handleOpenActionModal(b, 'Reject')}
-                            className="text-xs flex items-center gap-1.5 h-8 bg-red-600 hover:bg-red-700"
+                            className="text-xs flex items-center justify-center gap-1.5 h-9 sm:h-8 bg-red-600 hover:bg-red-700 w-full sm:w-auto"
                           >
                             <XCircle className="h-3.5 w-3.5" />
                             Tolak (Reject)
@@ -474,8 +474,8 @@ export default function KasubagApprovalPage() {
                       )}
 
                       {b.status_transaksi === 'Disetujui' && b.tiket_digital && (
-                        <Link href={`/peminjaman/${b.id_peminjaman}/tiket`}>
-                          <Button size="sm" variant="outline" className="text-xs flex items-center gap-1.5 h-8 text-blue-700 border-blue-300 bg-blue-50 hover:bg-blue-100">
+                        <Link href={`/peminjaman/${b.id_peminjaman}/tiket`} className="w-full sm:w-auto">
+                          <Button size="sm" variant="outline" className="text-xs flex items-center justify-center gap-1.5 h-9 sm:h-8 text-blue-700 border-blue-300 bg-blue-50 hover:bg-blue-100 w-full sm:w-auto">
                             <QrCode className="h-3.5 w-3.5" />
                             Lihat Tiket QR
                           </Button>
@@ -649,7 +649,7 @@ export default function KasubagApprovalPage() {
             </div>
 
             {/* Modal Footer */}
-            <div className="border-t border-slate-200 px-6 py-3 bg-slate-50 flex items-center justify-end gap-2.5">
+            <div className="border-t border-slate-200 px-4 sm:px-6 py-3 bg-slate-50 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-2.5">
               <Button
                 type="button"
                 variant="outline"
@@ -659,6 +659,7 @@ export default function KasubagApprovalPage() {
                   setActionType(null);
                 }}
                 disabled={submitting}
+                className="w-full sm:w-auto h-10 sm:h-9"
               >
                 Tutup
               </Button>
@@ -669,7 +670,7 @@ export default function KasubagApprovalPage() {
                   type="submit"
                   size="sm"
                   disabled={submitting}
-                  className="bg-emerald-700 hover:bg-emerald-800 text-white flex items-center gap-1.5"
+                  className="bg-emerald-700 hover:bg-emerald-800 text-white flex items-center justify-center gap-1.5 w-full sm:w-auto h-10 sm:h-9"
                 >
                   <CheckCircle2 className="h-4 w-4" />
                   {submitting ? 'Memproses...' : 'Setujui Permohonan & Terbitkan Tiket'}
@@ -683,7 +684,7 @@ export default function KasubagApprovalPage() {
                   size="sm"
                   variant="destructive"
                   disabled={submitting || !alasanPenolakan.trim()}
-                  className="bg-red-700 hover:bg-red-800 flex items-center gap-1.5"
+                  className="bg-red-700 hover:bg-red-800 flex items-center justify-center gap-1.5 w-full sm:w-auto h-10 sm:h-9"
                 >
                   <XCircle className="h-4 w-4" />
                   {submitting ? 'Memproses...' : 'Konfirmasi Tolak Permohonan'}

@@ -207,21 +207,21 @@ export default function RiwayatPeminjamanPage() {
   const countDibatalkan = bookings.filter((b) => b.status_transaksi === 'Dibatalkan').length;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-6">
+    <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-5 sm:space-y-6">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2.5">
-            <ClipboardList className="h-7 w-7 text-[#034275]" />
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2 sm:gap-2.5">
+            <ClipboardList className="h-6 w-6 sm:h-7 sm:w-7 text-[#034275] shrink-0" />
             Riwayat Peminjaman Fasilitas
           </h1>
-          <p className="text-sm text-slate-500">
+          <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
             Pantau status transaksi, tiket QR digital, serta pembatalan mandiri peminjaman.
           </p>
         </div>
 
-        <Link href="/katalog">
-          <Button size="sm" className="flex items-center gap-1.5 self-start">
+        <Link href="/katalog" className="w-full sm:w-auto">
+          <Button size="sm" className="w-full sm:w-auto h-10 sm:h-9 flex items-center justify-center gap-1.5">
             <Calendar className="h-4 w-4" />
             Ajukan Peminjaman Baru
             <ArrowRight className="h-4 w-4 ml-1" />
@@ -238,51 +238,51 @@ export default function RiwayatPeminjamanPage() {
       )}
 
       {/* Summary KPI Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
         <Card className="border-slate-200">
-          <CardContent className="p-4 flex items-center justify-between">
+          <CardContent className="p-3 sm:p-4 flex items-center justify-between">
             <div>
-              <div className="text-xs text-slate-500 font-medium">Pending Approval</div>
-              <div className="text-2xl font-bold text-amber-600 mt-1">{countPending}</div>
+              <div className="text-[11px] sm:text-xs text-slate-500 font-medium">Pending Approval</div>
+              <div className="text-xl sm:text-2xl font-bold text-amber-600 mt-0.5 sm:mt-1">{countPending}</div>
             </div>
-            <div className="p-2.5 rounded-xl bg-amber-50 text-amber-700">
-              <Clock className="h-5 w-5" />
+            <div className="p-2 sm:p-2.5 rounded-xl bg-amber-50 text-amber-700 shrink-0">
+              <Clock className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
           </CardContent>
         </Card>
 
         <Card className="border-slate-200">
-          <CardContent className="p-4 flex items-center justify-between">
+          <CardContent className="p-3 sm:p-4 flex items-center justify-between">
             <div>
-              <div className="text-xs text-slate-500 font-medium">Disetujui (Tiket Aktif)</div>
-              <div className="text-2xl font-bold text-blue-600 mt-1">{countDisetujui}</div>
+              <div className="text-[11px] sm:text-xs text-slate-500 font-medium">Disetujui (Tiket)</div>
+              <div className="text-xl sm:text-2xl font-bold text-blue-600 mt-0.5 sm:mt-1">{countDisetujui}</div>
             </div>
-            <div className="p-2.5 rounded-xl bg-blue-50 text-blue-700">
-              <QrCode className="h-5 w-5" />
+            <div className="p-2 sm:p-2.5 rounded-xl bg-blue-50 text-blue-700 shrink-0">
+              <QrCode className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
           </CardContent>
         </Card>
 
         <Card className="border-slate-200">
-          <CardContent className="p-4 flex items-center justify-between">
+          <CardContent className="p-3 sm:p-4 flex items-center justify-between">
             <div>
-              <div className="text-xs text-slate-500 font-medium">Selesai (BAST)</div>
-              <div className="text-2xl font-bold text-emerald-600 mt-1">{countSelesai}</div>
+              <div className="text-[11px] sm:text-xs text-slate-500 font-medium">Selesai (BAST)</div>
+              <div className="text-xl sm:text-2xl font-bold text-emerald-600 mt-0.5 sm:mt-1">{countSelesai}</div>
             </div>
-            <div className="p-2.5 rounded-xl bg-emerald-50 text-emerald-700">
-              <CheckCircle2 className="h-5 w-5" />
+            <div className="p-2 sm:p-2.5 rounded-xl bg-emerald-50 text-emerald-700 shrink-0">
+              <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
           </CardContent>
         </Card>
 
         <Card className="border-slate-200">
-          <CardContent className="p-4 flex items-center justify-between">
+          <CardContent className="p-3 sm:p-4 flex items-center justify-between">
             <div>
-              <div className="text-xs text-slate-500 font-medium">Dibatalkan</div>
-              <div className="text-2xl font-bold text-slate-600 mt-1">{countDibatalkan}</div>
+              <div className="text-[11px] sm:text-xs text-slate-500 font-medium">Dibatalkan</div>
+              <div className="text-xl sm:text-2xl font-bold text-slate-600 mt-0.5 sm:mt-1">{countDibatalkan}</div>
             </div>
-            <div className="p-2.5 rounded-xl bg-slate-100 text-slate-700">
-              <XCircle className="h-5 w-5" />
+            <div className="p-2 sm:p-2.5 rounded-xl bg-slate-100 text-slate-700 shrink-0">
+              <XCircle className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
           </CardContent>
         </Card>
@@ -291,12 +291,12 @@ export default function RiwayatPeminjamanPage() {
       {/* Filter Tabs & Search Bar */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
         {/* Status Filter Buttons */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 text-xs">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:pb-0 text-xs">
           {['Semua', 'Pending', 'Disetujui', 'Selesai', 'Dibatalkan', 'Ditolak'].map((st) => (
             <button
               key={st}
               onClick={() => setStatusFilter(st)}
-              className={`rounded-lg px-3 py-1.5 font-medium whitespace-nowrap transition-colors ${
+              className={`rounded-lg px-3 py-1.5 font-medium whitespace-nowrap transition-colors min-h-[36px] ${
                 statusFilter === st
                   ? 'bg-[#034275] text-white shadow-sm'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
@@ -308,14 +308,14 @@ export default function RiwayatPeminjamanPage() {
         </div>
 
         {/* Search Input */}
-        <div className="relative sm:w-72">
+        <div className="relative w-full sm:w-72">
           <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
           <Input
             type="text"
             placeholder="Cari kode transaksi, fasilitas..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="h-9 pl-9 text-xs"
+            className="h-10 sm:h-9 pl-9 text-xs"
           />
         </div>
       </div>
@@ -407,22 +407,22 @@ export default function RiwayatPeminjamanPage() {
                     </div>
 
                     {/* Right: Actions */}
-                    <div className="flex flex-row md:flex-col items-center md:items-end justify-end gap-2 shrink-0 border-t md:border-t-0 pt-3 md:pt-0 border-slate-100">
+                    <div className="flex flex-col sm:flex-row md:flex-col items-stretch sm:items-center md:items-end justify-end gap-2 shrink-0 border-t md:border-t-0 pt-3 md:pt-0 border-slate-100 w-full md:w-auto">
                       <Button
                         size="sm"
                         variant="outline"
                         onClick={() => setSelectedDetail(b)}
-                        className="text-xs flex items-center gap-1.5 h-8"
+                        className="text-xs flex items-center justify-center gap-1.5 h-9 sm:h-8 w-full sm:w-auto"
                       >
                         <Eye className="h-3.5 w-3.5 text-slate-500" />
                         Rincian Detail
                       </Button>
 
                       {b.status_transaksi === 'Disetujui' && b.tiket_digital && (
-                        <Link href={`/peminjaman/${b.id_peminjaman}/tiket`}>
+                        <Link href={`/peminjaman/${b.id_peminjaman}/tiket`} className="w-full sm:w-auto">
                           <Button
                             size="sm"
-                            className="text-xs flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 h-8"
+                            className="text-xs flex items-center justify-center gap-1.5 bg-blue-600 hover:bg-blue-700 h-9 sm:h-8 w-full sm:w-auto"
                           >
                             <QrCode className="h-3.5 w-3.5" />
                             Buka Tiket QR Resmi
@@ -431,11 +431,11 @@ export default function RiwayatPeminjamanPage() {
                       )}
 
                       {b.status_transaksi === 'Selesai' && b.bast_digital && (
-                        <div className="flex items-center gap-1.5">
-                          <Link href={`/peminjaman/${b.id_peminjaman}/bast`}>
+                        <div className="flex flex-col sm:flex-row items-stretch gap-1.5 w-full sm:w-auto">
+                          <Link href={`/peminjaman/${b.id_peminjaman}/bast`} className="w-full sm:w-auto">
                             <Button
                               size="sm"
-                              className="text-xs flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 h-8 text-white shadow-sm"
+                              className="text-xs flex items-center justify-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 h-9 sm:h-8 text-white shadow-sm w-full sm:w-auto"
                             >
                               <FileCheck className="h-3.5 w-3.5" />
                               Buka BAST Digital
@@ -443,11 +443,12 @@ export default function RiwayatPeminjamanPage() {
                           </Link>
                           <a
                             href={`/api/bast/${b.bast_digital.id_bast}/pdf?download=true`}
+                            className="w-full sm:w-auto"
                           >
                             <Button
                               size="sm"
                               variant="outline"
-                              className="text-xs flex items-center gap-1 h-8 border-emerald-300 text-emerald-700 hover:bg-emerald-50 px-2.5"
+                              className="text-xs flex items-center justify-center gap-1 h-9 sm:h-8 border-emerald-300 text-emerald-700 hover:bg-emerald-50 px-2.5 w-full sm:w-auto"
                               title="Unduh PDF Resmi"
                             >
                               <Download className="h-3.5 w-3.5" />
@@ -462,7 +463,7 @@ export default function RiwayatPeminjamanPage() {
                           size="sm"
                           variant="destructive"
                           onClick={() => handleOpenCancelModal(b)}
-                          className="text-xs flex items-center gap-1.5 h-8 bg-red-50 text-red-700 hover:bg-red-100 border border-red-200"
+                          className="text-xs flex items-center justify-center gap-1.5 h-9 sm:h-8 bg-red-50 text-red-700 hover:bg-red-100 border border-red-200 w-full sm:w-auto"
                         >
                           <XCircle className="h-3.5 w-3.5" />
                           Batalkan Peminjaman
@@ -470,7 +471,7 @@ export default function RiwayatPeminjamanPage() {
                       )}
 
                       {['Pending', 'Disetujui'].includes(b.status_transaksi) && !isUpcoming && (
-                        <span className="text-[10px] text-slate-400 italic">
+                        <span className="text-[10px] text-slate-400 italic text-center md:text-right">
                           Peminjaman sedang berjalan / waktu mulai telah lewat
                         </span>
                       )}
@@ -485,9 +486,9 @@ export default function RiwayatPeminjamanPage() {
 
       {/* Modal Detail Peminjaman */}
       {selectedDetail && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in">
-          <div className="w-full max-w-2xl rounded-2xl bg-white shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[85vh]">
-            <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4 bg-slate-50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-3 sm:p-4 animate-in fade-in">
+          <div className="w-full max-w-2xl rounded-2xl bg-white shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh] sm:max-h-[85vh]">
+            <div className="flex items-center justify-between border-b border-slate-200 px-4 sm:px-6 py-3 sm:py-4 bg-slate-50">
               <div>
                 <span className="font-mono text-xs font-bold text-[#034275] bg-blue-100 px-2 py-0.5 rounded">
                   {selectedDetail.kode_transaksi}
@@ -506,7 +507,7 @@ export default function RiwayatPeminjamanPage() {
               </Button>
             </div>
 
-            <div className="p-6 overflow-y-auto space-y-5 text-xs text-slate-700">
+            <div className="p-4 sm:p-6 overflow-y-auto space-y-4 sm:space-y-5 text-xs text-slate-700">
               {/* Status Section */}
               <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200">
                 <span className="font-semibold text-slate-600">Status Permohonan Saat Ini:</span>
@@ -566,9 +567,9 @@ export default function RiwayatPeminjamanPage() {
                     Pengembalian fasilitas telah diverifikasi staf dan ditandatangani secara elektronik oleh Kasubag Umum. Dokumen BAST resmi tersedia untuk diunduh.
                   </p>
 
-                  <div className="flex items-center gap-2 pt-1">
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 pt-1">
                     <Link href={`/peminjaman/${selectedDetail.id_peminjaman}/bast`} className="flex-1">
-                      <Button size="sm" className="w-full text-xs h-8 bg-emerald-700 hover:bg-emerald-800 text-white">
+                      <Button size="sm" className="w-full text-xs h-9 sm:h-8 bg-emerald-700 hover:bg-emerald-800 text-white flex items-center justify-center">
                         <FileCheck className="h-3.5 w-3.5 mr-1.5" />
                         Buka Sertifikat BAST
                       </Button>
@@ -577,7 +578,7 @@ export default function RiwayatPeminjamanPage() {
                       href={`/api/bast/${selectedDetail.bast_digital.id_bast}/pdf?download=true`}
                       className="flex-1"
                     >
-                      <Button size="sm" variant="outline" className="w-full text-xs h-8 border-emerald-400 text-emerald-800 hover:bg-emerald-100">
+                      <Button size="sm" variant="outline" className="w-full text-xs h-9 sm:h-8 border-emerald-400 text-emerald-800 hover:bg-emerald-100 flex items-center justify-center">
                         <Download className="h-3.5 w-3.5 mr-1.5" />
                         Unduh PDF Resmi
                       </Button>
@@ -629,7 +630,7 @@ export default function RiwayatPeminjamanPage() {
               {/* Approver Info */}
               {selectedDetail.approver && (
                 <div className="flex items-center gap-2 p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-900 text-xs">
-                  <UserCheck className="h-4 w-4 text-emerald-700" />
+                  <UserCheck className="h-4 w-4 text-emerald-700 shrink-0" />
                   <span>
                     Disetujui oleh: <strong>{selectedDetail.approver.nama_lengkap}</strong> ({selectedDetail.approver.email})
                   </span>
@@ -658,8 +659,8 @@ export default function RiwayatPeminjamanPage() {
               )}
             </div>
 
-            <div className="border-t border-slate-200 px-6 py-3 bg-slate-50 flex justify-end">
-              <Button size="sm" onClick={() => setSelectedDetail(null)}>
+            <div className="border-t border-slate-200 px-4 sm:px-6 py-3 bg-slate-50 flex justify-end">
+              <Button size="sm" onClick={() => setSelectedDetail(null)} className="w-full sm:w-auto">
                 Tutup
               </Button>
             </div>
@@ -669,7 +670,7 @@ export default function RiwayatPeminjamanPage() {
 
       {/* Modal Dialog Pembatalan Mandiri */}
       {cancellingBooking && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-3 sm:p-4 animate-in fade-in">
           <div className="w-full max-w-lg rounded-2xl bg-white shadow-2xl border border-slate-200 overflow-hidden">
             <div className="bg-red-600 p-4 text-white flex items-center gap-3">
               <ShieldAlert className="h-6 w-6 text-white shrink-0" />
@@ -681,7 +682,7 @@ export default function RiwayatPeminjamanPage() {
               </div>
             </div>
 
-            <form onSubmit={handleConfirmCancel} className="p-6 space-y-4">
+            <form onSubmit={handleConfirmCancel} className="p-4 sm:p-6 space-y-4">
               {cancelError && (
                 <Alert variant="destructive">
                   <AlertTitle>Gagal</AlertTitle>
@@ -691,7 +692,7 @@ export default function RiwayatPeminjamanPage() {
 
               <div className="rounded-xl bg-amber-50 border border-amber-200 p-3.5 text-xs text-amber-900 space-y-1.5">
                 <div className="font-bold flex items-center gap-1.5">
-                  <AlertCircle className="h-4 w-4 text-amber-700" />
+                  <AlertCircle className="h-4 w-4 text-amber-700 shrink-0" />
                   Konsekuensi Pembatalan:
                 </div>
                 <p>
@@ -721,13 +722,14 @@ export default function RiwayatPeminjamanPage() {
                 </p>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+              <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 pt-3 border-t border-slate-100">
                 <Button
                   type="button"
                   variant="outline"
                   size="sm"
                   onClick={() => setCancellingBooking(null)}
                   disabled={cancelLoading}
+                  className="w-full sm:w-auto h-10 sm:h-9"
                 >
                   Batal, Tetap Pinjam
                 </Button>
@@ -736,7 +738,7 @@ export default function RiwayatPeminjamanPage() {
                   variant="destructive"
                   size="sm"
                   disabled={cancelLoading || !alasanBatal.trim()}
-                  className="flex items-center gap-1.5"
+                  className="w-full sm:w-auto h-10 sm:h-9 flex items-center justify-center gap-1.5"
                 >
                   {cancelLoading ? 'Memproses Pembatalan...' : 'Ya, Batalkan Peminjaman'}
                 </Button>

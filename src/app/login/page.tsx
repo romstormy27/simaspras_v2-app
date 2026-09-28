@@ -102,7 +102,7 @@ function LoginForm() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-3 text-slate-400 hover:text-slate-600 focus:outline-none transition-colors"
+                  className="absolute right-1 top-1 h-8 w-8 flex items-center justify-center text-slate-400 hover:text-slate-600 focus:outline-none transition-colors"
                   aria-label={showPassword ? 'Sembunyikan password' : 'Lihat password'}
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -112,12 +112,12 @@ function LoginForm() {
           </CardContent>
 
           <CardFooter className="flex flex-col space-y-4">
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full h-11 text-sm font-semibold" disabled={loading}>
               {loading ? 'Memverifikasi...' : 'Masuk Sekarang'}
               {!loading && <ArrowRight className="ml-2 h-4 w-4" />}
             </Button>
 
-            <div className="text-center text-sm text-slate-600">
+            <div className="text-center text-xs sm:text-sm text-slate-600">
               Belum memiliki akun?{' '}
               <Link href="/register" className="font-semibold text-[#034275] hover:underline">
                 Registrasi Pemohon
@@ -128,12 +128,12 @@ function LoginForm() {
       </Card>
 
       {/* Quick Demo Login Picker */}
-      <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm space-y-2.5">
+      <div className="rounded-xl border border-slate-200 bg-white p-3.5 sm:p-4 shadow-sm space-y-2.5">
         <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500">
           <ShieldCheck className="h-4 w-4 text-[#034275]" />
           Akun Percobaan Cepat (Seed Data):
         </div>
-        <div className="grid grid-cols-2 gap-2 text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
           <button
             type="button"
             onClick={() => handleQuickLogin('admin@politeknik.ac.id')}

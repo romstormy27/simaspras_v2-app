@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { getSession } from '@/lib/auth';
 import { Navbar } from '@/components/navbar';
@@ -6,6 +6,14 @@ import { Navbar } from '@/components/navbar';
 export const metadata: Metadata = {
   title: 'SIMASPRAS - Politeknik Imigrasi dan Pemasyarakatan',
   description: 'Sistem Informasi Peminjaman Sarana dan Prasarana Politeknik Imigrasi dan Pemasyarakatan Indonesia (Poltekimipas)',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  themeColor: '#034275',
 };
 
 export default async function RootLayout({

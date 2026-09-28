@@ -166,25 +166,25 @@ export default function KatalogPage() {
   });
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+    <div className="mx-auto max-w-7xl px-3 py-6 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
       {/* Header Banner */}
-      <div className="rounded-2xl bg-gradient-to-r from-[#034275] to-[#022b4d] p-6 sm:p-8 text-white shadow-md flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="rounded-2xl bg-gradient-to-r from-[#034275] to-[#022b4d] p-5 sm:p-8 text-white shadow-md flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6">
         <div className="space-y-2">
           <Badge className="bg-white/10 text-white border-white/20 text-xs">
             <Sparkles className="mr-1.5 h-3.5 w-3.5 text-amber-300" />
             Katalog Resmi Sarpras Poltekimipas
           </Badge>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+          <h1 className="text-xl sm:text-3xl font-extrabold tracking-tight">
             Katalog Fasilitas & Jadwal Ketersediaan
           </h1>
-          <p className="text-sm text-slate-200 max-w-2xl">
+          <p className="text-xs sm:text-sm text-slate-200 max-w-2xl leading-relaxed">
             Tinjau spesifikasi fisik dan kalender ketersediaan <em>real-time</em> sarpras sebelum mengajukan permohonan digital.
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
-          <Link href="/peminjaman/riwayat">
-            <Button className="bg-white text-[#034275] hover:bg-slate-100 font-semibold shadow-sm text-sm border-0">
+        <div className="flex items-center gap-3 w-full md:w-auto">
+          <Link href="/peminjaman/riwayat" className="w-full md:w-auto">
+            <Button className="w-full md:w-auto bg-white text-[#034275] hover:bg-slate-100 font-semibold shadow-sm text-xs sm:text-sm border-0 h-10">
               Riwayat Peminjaman Saya
             </Button>
           </Link>
@@ -193,12 +193,12 @@ export default function KatalogPage() {
 
       {/* Filter and Tabs Controls */}
       <div className="space-y-4">
-        {/* Category Tabs */}
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-4">
-          <div className="flex items-center gap-2 overflow-x-auto pb-1">
+        {/* Category Tabs & Search Bar */}
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-slate-200 pb-4">
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
             <button
               onClick={() => setActiveCategory('ALL')}
-              className={`rounded-lg px-3.5 py-2 text-xs font-semibold transition-all ${
+              className={`rounded-lg px-3 py-2 text-xs font-semibold shrink-0 transition-all ${
                 activeCategory === 'ALL'
                   ? 'bg-[#034275] text-white shadow-sm'
                   : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
@@ -208,7 +208,7 @@ export default function KatalogPage() {
             </button>
             <button
               onClick={() => setActiveCategory('Ruangan')}
-              className={`flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-xs font-semibold transition-all ${
+              className={`flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold shrink-0 transition-all ${
                 activeCategory === 'Ruangan'
                   ? 'bg-[#034275] text-white shadow-sm'
                   : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
@@ -219,7 +219,7 @@ export default function KatalogPage() {
             </button>
             <button
               onClick={() => setActiveCategory('Mobil_Operasional')}
-              className={`flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-xs font-semibold transition-all ${
+              className={`flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold shrink-0 transition-all ${
                 activeCategory === 'Mobil_Operasional'
                   ? 'bg-[#034275] text-white shadow-sm'
                   : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
@@ -230,7 +230,7 @@ export default function KatalogPage() {
             </button>
             <button
               onClick={() => setActiveCategory('Perangkat_Kerja')}
-              className={`flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-xs font-semibold transition-all ${
+              className={`flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold shrink-0 transition-all ${
                 activeCategory === 'Perangkat_Kerja'
                   ? 'bg-[#034275] text-white shadow-sm'
                   : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
@@ -242,15 +242,15 @@ export default function KatalogPage() {
           </div>
 
           {/* Search & Checkbox */}
-          <div className="flex items-center gap-3 w-full sm:w-auto">
-            <label className="flex items-center gap-1.5 text-xs text-slate-600 font-medium cursor-pointer">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full lg:w-auto">
+            <label className="flex items-center gap-2 text-xs text-slate-600 font-medium cursor-pointer py-1">
               <input
                 type="checkbox"
                 checked={availableOnly}
                 onChange={(e) => setAvailableOnly(e.target.checked)}
-                className="rounded border-slate-300 text-[#034275] focus:ring-[#034275]"
+                className="rounded border-slate-300 text-[#034275] focus:ring-[#034275] h-4 w-4"
               />
-              Hanya Yang Tersedia
+              <span>Hanya Yang Tersedia</span>
             </label>
 
             <div className="relative flex-1 sm:w-64">
@@ -260,7 +260,7 @@ export default function KatalogPage() {
                 placeholder="Cari fasilitas, kapasitas..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="h-9 pl-9 text-xs"
+                className="h-9 pl-9 text-xs w-full"
               />
             </div>
           </div>
@@ -368,9 +368,9 @@ export default function KatalogPage() {
               </button>
             </div>
 
-            <div className="p-6 overflow-y-auto space-y-4 flex-1">
+            <div className="p-3.5 sm:p-6 overflow-y-auto space-y-4 flex-1">
               {/* Asset Status Banner */}
-              <div className="p-3.5 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between text-xs">
+              <div className="p-3 rounded-xl border border-slate-200 bg-slate-50 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
                 <div>
                   <span className="text-slate-500">Status Operasional: </span>
                   <Badge
@@ -391,15 +391,15 @@ export default function KatalogPage() {
               </div>
 
               {/* View Mode Selector Switch */}
-              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-600">
                   Tampilan Jadwal
                 </span>
-                <div className="inline-flex rounded-lg bg-slate-100 p-1 border border-slate-200">
+                <div className="grid grid-cols-2 sm:inline-flex rounded-lg bg-slate-100 p-1 border border-slate-200 w-full sm:w-auto">
                   <button
                     type="button"
                     onClick={() => setCalendarViewMode('calendar')}
-                    className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
+                    className={`flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md transition-colors ${
                       calendarViewMode === 'calendar'
                         ? 'bg-white text-[#034275] shadow-sm'
                         : 'text-slate-600 hover:text-slate-900'
@@ -411,7 +411,7 @@ export default function KatalogPage() {
                   <button
                     type="button"
                     onClick={() => setCalendarViewMode('list')}
-                    className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
+                    className={`flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md transition-colors ${
                       calendarViewMode === 'list'
                         ? 'bg-white text-[#034275] shadow-sm'
                         : 'text-slate-600 hover:text-slate-900'
@@ -481,7 +481,7 @@ export default function KatalogPage() {
                   {/* Grid Tanggal Kalender */}
                   <div className="grid grid-cols-7 gap-1">
                     {Array.from({ length: firstDayIndex }).map((_, i) => (
-                      <div key={`empty-${i}`} className="h-14 rounded-lg bg-slate-50/50 border border-transparent" />
+                      <div key={`empty-${i}`} className="h-12 sm:h-14 rounded-lg bg-slate-50/50 border border-transparent" />
                     ))}
                     {Array.from({ length: daysInMonth }).map((_, i) => {
                       const day = i + 1;
@@ -499,7 +499,7 @@ export default function KatalogPage() {
                           key={day}
                           type="button"
                           onClick={() => setSelectedDateDay(day === selectedDateDay ? null : day)}
-                          className={`h-14 p-1.5 rounded-lg border text-left flex flex-col justify-between transition-all ${
+                          className={`h-12 sm:h-14 p-1 sm:p-1.5 rounded-lg border text-left flex flex-col justify-between transition-all ${
                             isSelected
                               ? 'border-[#034275] ring-2 ring-[#034275]/25 bg-blue-50/60'
                               : isToday
@@ -509,7 +509,7 @@ export default function KatalogPage() {
                         >
                           <div className="flex items-center justify-between w-full">
                             <span
-                              className={`text-xs font-semibold leading-none rounded-full w-5 h-5 flex items-center justify-center ${
+                              className={`text-[11px] sm:text-xs font-semibold leading-none rounded-full w-5 h-5 flex items-center justify-center ${
                                 isToday
                                   ? 'bg-[#034275] text-white font-bold'
                                   : 'text-slate-700'
@@ -518,7 +518,7 @@ export default function KatalogPage() {
                               {day}
                             </span>
                             {dayBookings.length > 0 && (
-                              <span className="text-[10px] font-mono px-1 rounded bg-slate-100 text-slate-700 font-bold">
+                              <span className="text-[9px] sm:text-[10px] font-mono px-1 rounded bg-slate-100 text-slate-700 font-bold">
                                 {dayBookings.length}
                               </span>
                             )}
@@ -526,21 +526,21 @@ export default function KatalogPage() {
                           <div className="w-full">
                             {dayBookings.length === 0 ? (
                               <div className="text-[9px] text-emerald-600 flex items-center gap-1 font-medium">
-                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
-                                <span>Tersedia</span>
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block shrink-0" />
+                                <span className="hidden sm:inline">Tersedia</span>
                               </div>
                             ) : (
                               <div className="flex flex-col gap-0.5">
                                 {hasInUse && (
                                   <div className="text-[9px] text-blue-700 font-semibold truncate flex items-center gap-1">
                                     <span className="w-1.5 h-1.5 rounded-full bg-blue-600 inline-block shrink-0" />
-                                    <span className="truncate">In Use</span>
+                                    <span className="hidden sm:inline truncate">In Use</span>
                                   </div>
                                 )}
                                 {hasReserved && (
                                   <div className="text-[9px] text-amber-700 font-semibold truncate flex items-center gap-1">
                                     <span className="w-1.5 h-1.5 rounded-full bg-amber-500 inline-block shrink-0" />
-                                    <span className="truncate">Reserved</span>
+                                    <span className="hidden sm:inline truncate">Reserved</span>
                                   </div>
                                 )}
                               </div>
@@ -689,21 +689,21 @@ export default function KatalogPage() {
               )}
             </div>
 
-            <div className="border-t border-slate-200 px-6 py-4 bg-slate-50 flex items-center justify-between">
+            <div className="border-t border-slate-200 px-4 py-3 sm:px-6 sm:py-4 bg-slate-50 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
               <div className="flex items-center gap-1.5 text-xs text-slate-500">
-                <Info className="h-4 w-4 text-blue-600" />
+                <Info className="h-4 w-4 text-blue-600 shrink-0" />
                 <span>Slot bertanda <strong>Reserved</strong> sedang diverifikasi Kasubag</span>
               </div>
 
-              <div className="flex items-center gap-2">
-                <Button variant="outline" size="sm" onClick={() => setSelectedSarpras(null)}>
+              <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+                <Button variant="outline" size="sm" onClick={() => setSelectedSarpras(null)} className="flex-1 sm:flex-initial">
                   Tutup
                 </Button>
-                <Link href={`/peminjaman/ajukan?sarpras=${selectedSarpras.id_sarpras}`}>
+                <Link href={`/peminjaman/ajukan?sarpras=${selectedSarpras.id_sarpras}`} className="flex-1 sm:flex-initial">
                   <Button
                     size="sm"
                     disabled={selectedSarpras.status_operasional !== 'Tersedia'}
-                    className="flex items-center gap-1"
+                    className="w-full flex items-center justify-center gap-1"
                   >
                     Lanjutkan Peminjaman
                     <ArrowRight className="h-3.5 w-3.5" />

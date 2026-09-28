@@ -294,14 +294,14 @@ export default function StafVerifikasiPage() {
   const countTotalInspeksi = allVerifications.length;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-6">
+    <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-5 sm:space-y-6">
       {/* Page Header */}
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2.5">
-          <ClipboardCheck className="h-7 w-7 text-[#034275]" />
+        <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2 sm:gap-2.5">
+          <ClipboardCheck className="h-6 w-6 sm:h-7 sm:w-7 text-[#034275] shrink-0" />
           Dasbor Verifikasi Fisik & Pindai Tiket Sarpras
         </h1>
-        <p className="text-sm text-slate-500">
+        <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
           Staf Bagian Umum — Verifikasi kelayakan teknis pra-approval, pemindaian tiket QR serah terima aset, dan inspeksi fisik pasca-pengembalian.
         </p>
       </div>
@@ -315,51 +315,51 @@ export default function StafVerifikasiPage() {
       )}
 
       {/* Summary KPI Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
         <Card className="border-slate-200">
-          <CardContent className="p-4 flex items-center justify-between">
+          <CardContent className="p-3 sm:p-4 flex items-center justify-between">
             <div>
-              <div className="text-xs text-slate-500 font-medium">Antrean Pra-Approval</div>
-              <div className="text-2xl font-bold text-amber-600 mt-1">{countPendingVerif}</div>
+              <div className="text-[11px] sm:text-xs text-slate-500 font-medium">Pra-Approval</div>
+              <div className="text-xl sm:text-2xl font-bold text-amber-600 mt-0.5 sm:mt-1">{countPendingVerif}</div>
             </div>
-            <div className="p-2.5 rounded-xl bg-amber-50 text-amber-700">
-              <Clock className="h-5 w-5" />
+            <div className="p-2 sm:p-2.5 rounded-xl bg-amber-50 text-amber-700 shrink-0">
+              <Clock className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
           </CardContent>
         </Card>
 
         <Card className="border-slate-200">
-          <CardContent className="p-4 flex items-center justify-between">
+          <CardContent className="p-3 sm:p-4 flex items-center justify-between">
             <div>
-              <div className="text-xs text-slate-500 font-medium">Siap Ambil (Tiket Aktif)</div>
-              <div className="text-2xl font-bold text-blue-600 mt-1">{countApprovedReady}</div>
+              <div className="text-[11px] sm:text-xs text-slate-500 font-medium">Siap Ambil (Tiket)</div>
+              <div className="text-xl sm:text-2xl font-bold text-blue-600 mt-0.5 sm:mt-1">{countApprovedReady}</div>
             </div>
-            <div className="p-2.5 rounded-xl bg-blue-50 text-blue-700">
-              <QrCode className="h-5 w-5" />
+            <div className="p-2 sm:p-2.5 rounded-xl bg-blue-50 text-blue-700 shrink-0">
+              <QrCode className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
           </CardContent>
         </Card>
 
         <Card className="border-slate-200">
-          <CardContent className="p-4 flex items-center justify-between">
+          <CardContent className="p-3 sm:p-4 flex items-center justify-between">
             <div>
-              <div className="text-xs text-slate-500 font-medium">Perlu Cek Pengembalian</div>
-              <div className="text-2xl font-bold text-indigo-600 mt-1">{countReturnVerif}</div>
+              <div className="text-[11px] sm:text-xs text-slate-500 font-medium">Cek Pengembalian</div>
+              <div className="text-xl sm:text-2xl font-bold text-indigo-600 mt-0.5 sm:mt-1">{countReturnVerif}</div>
             </div>
-            <div className="p-2.5 rounded-xl bg-indigo-50 text-indigo-700">
-              <PackageCheck className="h-5 w-5" />
+            <div className="p-2 sm:p-2.5 rounded-xl bg-indigo-50 text-indigo-700 shrink-0">
+              <PackageCheck className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
           </CardContent>
         </Card>
 
         <Card className="border-slate-200">
-          <CardContent className="p-4 flex items-center justify-between">
+          <CardContent className="p-3 sm:p-4 flex items-center justify-between">
             <div>
-              <div className="text-xs text-slate-500 font-medium">Total Inspeksi Selesai</div>
-              <div className="text-2xl font-bold text-emerald-600 mt-1">{countTotalInspeksi}</div>
+              <div className="text-[11px] sm:text-xs text-slate-500 font-medium">Inspeksi Selesai</div>
+              <div className="text-xl sm:text-2xl font-bold text-emerald-600 mt-0.5 sm:mt-1">{countTotalInspeksi}</div>
             </div>
-            <div className="p-2.5 rounded-xl bg-emerald-50 text-emerald-700">
-              <CheckCircle2 className="h-5 w-5" />
+            <div className="p-2 sm:p-2.5 rounded-xl bg-emerald-50 text-emerald-700 shrink-0">
+              <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
           </CardContent>
         </Card>
@@ -368,65 +368,65 @@ export default function StafVerifikasiPage() {
       {/* Tabs & Search Navigation */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
         {/* Tab Buttons */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 text-xs">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:pb-0 text-xs">
           <button
             onClick={() => setActiveTab('pra-approval')}
-            className={`flex items-center gap-1.5 rounded-lg px-3.5 py-2 font-semibold transition-all ${
+            className={`flex items-center gap-1.5 rounded-lg px-3 sm:px-3.5 py-2 font-semibold whitespace-nowrap transition-all min-h-[36px] ${
               activeTab === 'pra-approval'
                 ? 'bg-[#034275] text-white shadow-sm'
                 : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
             }`}
           >
             <Clock className="h-3.5 w-3.5" />
-            Verifikasi Pra-Approval ({pendingPraApproval.length})
+            Pra-Approval ({pendingPraApproval.length})
           </button>
 
           <button
             onClick={() => setActiveTab('verifikasi-tiket')}
-            className={`flex items-center gap-1.5 rounded-lg px-3.5 py-2 font-semibold transition-all ${
+            className={`flex items-center gap-1.5 rounded-lg px-3 sm:px-3.5 py-2 font-semibold whitespace-nowrap transition-all min-h-[36px] ${
               activeTab === 'verifikasi-tiket'
                 ? 'bg-[#034275] text-white shadow-sm'
                 : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
             }`}
           >
             <QrCode className="h-3.5 w-3.5" />
-            Pindai & Verifikasi Tiket QR ({countApprovedReady})
+            Pindai Tiket ({countApprovedReady})
           </button>
 
           <button
             onClick={() => setActiveTab('pasca-pengembalian')}
-            className={`flex items-center gap-1.5 rounded-lg px-3.5 py-2 font-semibold transition-all ${
+            className={`flex items-center gap-1.5 rounded-lg px-3 sm:px-3.5 py-2 font-semibold whitespace-nowrap transition-all min-h-[36px] ${
               activeTab === 'pasca-pengembalian'
                 ? 'bg-[#034275] text-white shadow-sm'
                 : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
             }`}
           >
             <PackageCheck className="h-3.5 w-3.5" />
-            Inspeksi Pengembalian ({returnInspectionList.length})
+            Pengembalian ({returnInspectionList.length})
           </button>
 
           <button
             onClick={() => setActiveTab('riwayat-inspeksi')}
-            className={`flex items-center gap-1.5 rounded-lg px-3.5 py-2 font-semibold transition-all ${
+            className={`flex items-center gap-1.5 rounded-lg px-3 sm:px-3.5 py-2 font-semibold whitespace-nowrap transition-all min-h-[36px] ${
               activeTab === 'riwayat-inspeksi'
                 ? 'bg-[#034275] text-white shadow-sm'
                 : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
             }`}
           >
             <History className="h-3.5 w-3.5" />
-            Log Riwayat Inspeksi ({allVerifications.length})
+            Riwayat ({allVerifications.length})
           </button>
         </div>
 
         {/* Search Input */}
-        <div className="relative sm:w-72">
+        <div className="relative w-full sm:w-72">
           <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
           <Input
             type="text"
-            placeholder="Cari kode transaksi, fasilitas, pemohon..."
+            placeholder="Cari kode, fasilitas, pemohon..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="h-9 pl-9 text-xs"
+            className="h-10 sm:h-9 pl-9 text-xs"
           />
         </div>
       </div>
@@ -547,12 +547,12 @@ export default function StafVerifikasiPage() {
                         )}
                       </div>
 
-                      <div className="flex flex-row lg:flex-col items-center lg:items-end justify-end gap-2 shrink-0 border-t lg:border-t-0 pt-3 lg:pt-0 border-slate-100">
+                      <div className="flex flex-col sm:flex-row lg:flex-col items-stretch sm:items-center lg:items-end justify-end gap-2 shrink-0 border-t lg:border-t-0 pt-3 lg:pt-0 border-slate-100 w-full lg:w-auto">
                         <Button
                           size="sm"
                           variant="outline"
                           onClick={() => setViewDetailBooking(b)}
-                          className="text-xs flex items-center gap-1.5 h-8"
+                          className="text-xs flex items-center justify-center gap-1.5 h-9 sm:h-8 w-full sm:w-auto"
                         >
                           <Eye className="h-3.5 w-3.5 text-slate-500" />
                           Rincian
@@ -561,7 +561,7 @@ export default function StafVerifikasiPage() {
                         <Button
                           size="sm"
                           onClick={() => handleOpenInspectModal(b, 'Pra_Approval')}
-                          className="text-xs flex items-center gap-1.5 h-8 bg-[#034275] hover:bg-[#02335c]"
+                          className="text-xs flex items-center justify-center gap-1.5 h-9 sm:h-8 bg-[#034275] hover:bg-[#02335c] w-full sm:w-auto"
                         >
                           <FileCheck2 className="h-3.5 w-3.5" />
                           {isVerified ? 'Perbarui Verifikasi' : 'Input Verifikasi Pra-Approval'}
@@ -912,12 +912,12 @@ export default function StafVerifikasiPage() {
                         )}
                       </div>
 
-                      <div className="flex flex-row lg:flex-col items-center lg:items-end justify-end gap-2 shrink-0 border-t lg:border-t-0 pt-3 lg:pt-0 border-slate-100">
+                      <div className="flex flex-col sm:flex-row lg:flex-col items-stretch sm:items-center lg:items-end justify-end gap-2 shrink-0 border-t lg:border-t-0 pt-3 lg:pt-0 border-slate-100 w-full lg:w-auto">
                         <Button
                           size="sm"
                           variant="outline"
                           onClick={() => setViewDetailBooking(b)}
-                          className="text-xs flex items-center gap-1.5 h-8"
+                          className="text-xs flex items-center justify-center gap-1.5 h-9 sm:h-8 w-full sm:w-auto"
                         >
                           <Eye className="h-3.5 w-3.5 text-slate-500" />
                           Rincian
@@ -926,7 +926,7 @@ export default function StafVerifikasiPage() {
                         <Button
                           size="sm"
                           onClick={() => handleOpenInspectModal(b, 'Pasca_Pengembalian')}
-                          className="text-xs flex items-center gap-1.5 h-8 bg-emerald-700 hover:bg-emerald-800 text-white"
+                          className="text-xs flex items-center justify-center gap-1.5 h-9 sm:h-8 bg-emerald-700 hover:bg-emerald-800 text-white w-full sm:w-auto"
                         >
                           <PackageCheck className="h-3.5 w-3.5" />
                           {isReturned ? 'Perbarui Catatan Fisik' : 'Input Inspeksi Pengembalian'}
@@ -1010,27 +1010,27 @@ export default function StafVerifikasiPage() {
 
       {/* MODAL FORMULIR INSPEKSI FISIK LAPANGAN */}
       {selectedBooking && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-3 sm:p-4 animate-in fade-in">
           <div className="w-full max-w-xl rounded-2xl bg-white shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]">
-            <div className="bg-[#034275] p-5 text-white flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <ClipboardCheck className="h-6 w-6 text-white shrink-0" />
+            <div className="bg-[#034275] p-4 sm:p-5 text-white flex items-center justify-between">
+              <div className="flex items-center gap-2 sm:gap-2.5">
+                <ClipboardCheck className="h-5 w-5 sm:h-6 sm:w-6 text-white shrink-0" />
                 <div>
-                  <h3 className="font-bold text-base">Formulir Verifikasi Fisik Lapangan</h3>
-                  <p className="text-blue-100 text-xs font-mono">{selectedBooking.kode_transaksi}</p>
+                  <h3 className="font-bold text-sm sm:text-base">Formulir Verifikasi Fisik Lapangan</h3>
+                  <p className="text-blue-100 text-[11px] sm:text-xs font-mono">{selectedBooking.kode_transaksi}</p>
                 </div>
               </div>
               <Button
                 size="sm"
                 variant="outline"
                 onClick={() => setSelectedBooking(null)}
-                className="h-8 w-8 p-0 rounded-full text-slate-700 hover:text-black"
+                className="h-8 w-8 p-0 rounded-full text-slate-700 hover:text-black shrink-0"
               >
                 ✕
               </Button>
             </div>
 
-            <form onSubmit={handleSubmitVerification} className="p-6 space-y-4 overflow-y-auto">
+            <form onSubmit={handleSubmitVerification} className="p-4 sm:p-6 space-y-4 overflow-y-auto">
               {formError && (
                 <Alert variant="destructive">
                   <AlertTitle>Perhatian</AlertTitle>
@@ -1039,7 +1039,7 @@ export default function StafVerifikasiPage() {
               )}
 
               {/* Target Facility Summary */}
-              <div className="rounded-xl bg-slate-50 border border-slate-200 p-3.5 text-xs text-slate-700 space-y-1.5">
+              <div className="rounded-xl bg-slate-50 border border-slate-200 p-3 sm:p-3.5 text-xs text-slate-700 space-y-1.5">
                 <div className="flex justify-between font-bold text-slate-900">
                   <span>{selectedBooking.sarpras.nama_sarpras}</span>
                   <span className="font-mono text-[#034275]">{selectedBooking.sarpras.kode_aset}</span>
@@ -1056,9 +1056,9 @@ export default function StafVerifikasiPage() {
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
                   Jenis Pemeriksaan <span className="text-red-500">*</span>
                 </label>
-                <div className="grid grid-cols-2 gap-3 text-xs">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 text-xs">
                   <label
-                    className={`flex items-center gap-2 p-3 rounded-xl border cursor-pointer transition-colors ${
+                    className={`flex items-center gap-2 p-3 rounded-xl border cursor-pointer transition-colors min-h-[44px] ${
                       modalJenis === 'Pra_Approval'
                         ? 'border-[#034275] bg-blue-50 text-[#034275] font-semibold'
                         : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
@@ -1070,13 +1070,13 @@ export default function StafVerifikasiPage() {
                       value="Pra_Approval"
                       checked={modalJenis === 'Pra_Approval'}
                       onChange={() => setModalJenis('Pra_Approval')}
-                      className="text-[#034275]"
+                      className="text-[#034275] shrink-0"
                     />
                     <span>Pra-Approval (Kesiapan Sarpras)</span>
                   </label>
 
                   <label
-                    className={`flex items-center gap-2 p-3 rounded-xl border cursor-pointer transition-colors ${
+                    className={`flex items-center gap-2 p-3 rounded-xl border cursor-pointer transition-colors min-h-[44px] ${
                       modalJenis === 'Pasca_Pengembalian'
                         ? 'border-[#034275] bg-blue-50 text-[#034275] font-semibold'
                         : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
@@ -1088,7 +1088,7 @@ export default function StafVerifikasiPage() {
                       value="Pasca_Pengembalian"
                       checked={modalJenis === 'Pasca_Pengembalian'}
                       onChange={() => setModalJenis('Pasca_Pengembalian')}
-                      className="text-[#034275]"
+                      className="text-[#034275] shrink-0"
                     />
                     <span>Pasca-Pengembalian (Serah Terima)</span>
                   </label>
@@ -1100,17 +1100,17 @@ export default function StafVerifikasiPage() {
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
                   Evaluasi Kondisi Fisik Lapangan <span className="text-red-500">*</span>
                 </label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 text-xs">
                   <div
                     onClick={() => setModalKondisi('Baik_Sesuai')}
-                    className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
+                    className={`p-3 sm:p-3.5 rounded-xl border cursor-pointer transition-all min-h-[44px] ${
                       modalKondisi === 'Baik_Sesuai'
                         ? 'border-emerald-500 bg-emerald-50 ring-1 ring-emerald-500 text-emerald-950'
                         : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
                     }`}
                   >
                     <div className="flex items-center gap-2 font-bold mb-1">
-                      <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                      <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
                       Kondisi Baik / Sesuai
                     </div>
                     <p className="text-[11px] text-slate-500">
@@ -1120,14 +1120,14 @@ export default function StafVerifikasiPage() {
 
                   <div
                     onClick={() => setModalKondisi('Ada_Catatan_Khusus')}
-                    className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
+                    className={`p-3 sm:p-3.5 rounded-xl border cursor-pointer transition-all min-h-[44px] ${
                       modalKondisi === 'Ada_Catatan_Khusus'
                         ? 'border-amber-500 bg-amber-50 ring-1 ring-amber-500 text-amber-950'
                         : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
                     }`}
                   >
                     <div className="flex items-center gap-2 font-bold mb-1">
-                      <AlertTriangle className="h-4 w-4 text-amber-600" />
+                      <AlertTriangle className="h-4 w-4 text-amber-600 shrink-0" />
                       Ada Catatan Khusus
                     </div>
                     <p className="text-[11px] text-slate-500">
@@ -1173,13 +1173,14 @@ export default function StafVerifikasiPage() {
                 </span>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+              <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2 sm:gap-3 pt-3 border-t border-slate-100">
                 <Button
                   type="button"
                   variant="outline"
                   size="sm"
                   onClick={() => setSelectedBooking(null)}
                   disabled={submitting}
+                  className="w-full sm:w-auto h-10 sm:h-9"
                 >
                   Batal
                 </Button>
@@ -1187,7 +1188,7 @@ export default function StafVerifikasiPage() {
                   type="submit"
                   size="sm"
                   disabled={submitting || (modalKondisi === 'Ada_Catatan_Khusus' && !modalCatatan.trim())}
-                  className="flex items-center gap-1.5 bg-[#034275] hover:bg-[#02335c]"
+                  className="flex items-center justify-center gap-1.5 bg-[#034275] hover:bg-[#02335c] w-full sm:w-auto h-10 sm:h-9"
                 >
                   {submitting ? 'Menyimpan...' : 'Simpan & Teruskan ke Kasubag'}
                   {!submitting && <ArrowRight className="h-4 w-4" />}
@@ -1200,14 +1201,14 @@ export default function StafVerifikasiPage() {
 
       {/* MODAL VIEW DETAIL TRANSACTION */}
       {viewDetailBooking && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-3 sm:p-4 animate-in fade-in">
           <div className="w-full max-w-xl rounded-2xl bg-white shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[85vh]">
-            <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4 bg-slate-50">
+            <div className="flex items-center justify-between border-b border-slate-200 px-4 sm:px-6 py-3 sm:py-4 bg-slate-50">
               <div>
                 <span className="font-mono text-xs font-bold text-[#034275] bg-blue-100 px-2 py-0.5 rounded">
                   {viewDetailBooking.kode_transaksi}
                 </span>
-                <h3 className="text-base font-bold text-slate-900 mt-1">Detail Permohonan & Fasilitas</h3>
+                <h3 className="text-sm sm:text-base font-bold text-slate-900 mt-1">Detail Permohonan & Fasilitas</h3>
               </div>
               <Button
                 size="sm"
@@ -1219,7 +1220,7 @@ export default function StafVerifikasiPage() {
               </Button>
             </div>
 
-            <div className="p-6 overflow-y-auto space-y-4 text-xs text-slate-700">
+            <div className="p-4 sm:p-6 overflow-y-auto space-y-4 text-xs text-slate-700">
               <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-1.5">
                 <div className="font-bold text-sm text-slate-900">{viewDetailBooking.sarpras.nama_sarpras}</div>
                 <div>Kategori: {viewDetailBooking.sarpras.kategori.replace('_', ' ')}</div>
@@ -1272,8 +1273,8 @@ export default function StafVerifikasiPage() {
               )}
             </div>
 
-            <div className="border-t border-slate-200 px-6 py-3 bg-slate-50 flex justify-end">
-              <Button size="sm" onClick={() => setViewDetailBooking(null)}>
+            <div className="border-t border-slate-200 px-4 sm:px-6 py-3 bg-slate-50 flex justify-end">
+              <Button size="sm" onClick={() => setViewDetailBooking(null)} className="w-full sm:w-auto">
                 Tutup
               </Button>
             </div>

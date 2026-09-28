@@ -204,25 +204,25 @@ export default function AdminSarprasPage() {
   const totalMaintenance = sarprasList.filter((s) => s.status_operasional === 'Maintenance').length;
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-6">
+    <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-5 sm:space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2.5">
-            <Layers className="h-7 w-7 text-[#034275]" />
-            Kelola Master Data Sarpras
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2.5">
+            <Layers className="h-6 w-6 sm:h-7 sm:w-7 text-[#034275] shrink-0" />
+            <span>Kelola Master Data Sarpras</span>
           </h1>
-          <p className="text-sm text-slate-500">
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
             Administrator — Pengelolaan fasilitas inventaris kampus: Ruangan, Mobil Operasional, dan Perangkat Kerja.
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" onClick={fetchSarpras} disabled={loading} className="flex items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-2">
+          <Button variant="outline" size="sm" onClick={fetchSarpras} disabled={loading} className="min-h-[40px] flex-1 sm:flex-none flex items-center justify-center gap-1.5">
             <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
             Segarkan
           </Button>
-          <Button size="sm" onClick={openAddModal} className="flex items-center gap-1.5">
+          <Button size="sm" onClick={openAddModal} className="min-h-[40px] flex-1 sm:flex-none flex items-center justify-center gap-1.5">
             <Plus className="h-4 w-4" />
             Tambah Sarpras Baru
           </Button>
@@ -236,63 +236,63 @@ export default function AdminSarprasPage() {
       )}
 
       {/* Metrics Banner */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="p-4 rounded-xl border border-slate-200 bg-white shadow-sm flex items-center gap-3">
-          <div className="p-2.5 bg-blue-50 text-[#034275] rounded-lg">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+        <div className="p-3 sm:p-4 rounded-xl border border-slate-200 bg-white shadow-sm flex items-center gap-2.5 sm:gap-3">
+          <div className="p-2 sm:p-2.5 bg-blue-50 text-[#034275] rounded-lg shrink-0">
             <Building2 className="h-5 w-5" />
           </div>
           <div>
-            <div className="text-xl font-bold text-slate-900">{totalRuangan}</div>
-            <div className="text-xs text-slate-500">Ruangan Aktif</div>
+            <div className="text-lg sm:text-xl font-bold text-slate-900">{totalRuangan}</div>
+            <div className="text-[11px] sm:text-xs text-slate-500">Ruangan Aktif</div>
           </div>
         </div>
 
-        <div className="p-4 rounded-xl border border-slate-200 bg-white shadow-sm flex items-center gap-3">
-          <div className="p-2.5 bg-emerald-50 text-emerald-700 rounded-lg">
+        <div className="p-3 sm:p-4 rounded-xl border border-slate-200 bg-white shadow-sm flex items-center gap-2.5 sm:gap-3">
+          <div className="p-2 sm:p-2.5 bg-emerald-50 text-emerald-700 rounded-lg shrink-0">
             <Car className="h-5 w-5" />
           </div>
           <div>
-            <div className="text-xl font-bold text-slate-900">{totalMobil}</div>
-            <div className="text-xs text-slate-500">Mobil Operasional</div>
+            <div className="text-lg sm:text-xl font-bold text-slate-900">{totalMobil}</div>
+            <div className="text-[11px] sm:text-xs text-slate-500">Mobil Operasional</div>
           </div>
         </div>
 
-        <div className="p-4 rounded-xl border border-slate-200 bg-white shadow-sm flex items-center gap-3">
-          <div className="p-2.5 bg-amber-50 text-amber-700 rounded-lg">
+        <div className="p-3 sm:p-4 rounded-xl border border-slate-200 bg-white shadow-sm flex items-center gap-2.5 sm:gap-3">
+          <div className="p-2 sm:p-2.5 bg-amber-50 text-amber-700 rounded-lg shrink-0">
             <Laptop className="h-5 w-5" />
           </div>
           <div>
-            <div className="text-xl font-bold text-slate-900">{totalAlat}</div>
-            <div className="text-xs text-slate-500">Perangkat Kerja</div>
+            <div className="text-lg sm:text-xl font-bold text-slate-900">{totalAlat}</div>
+            <div className="text-[11px] sm:text-xs text-slate-500">Perangkat Kerja</div>
           </div>
         </div>
 
-        <div className="p-4 rounded-xl border border-slate-200 bg-white shadow-sm flex items-center gap-3">
-          <div className="p-2.5 bg-amber-100 text-amber-900 rounded-lg">
+        <div className="p-3 sm:p-4 rounded-xl border border-slate-200 bg-white shadow-sm flex items-center gap-2.5 sm:gap-3">
+          <div className="p-2 sm:p-2.5 bg-amber-100 text-amber-900 rounded-lg shrink-0">
             <Wrench className="h-5 w-5" />
           </div>
           <div>
-            <div className="text-xl font-bold text-amber-900">{totalMaintenance}</div>
-            <div className="text-xs text-slate-500">Status Maintenance</div>
+            <div className="text-lg sm:text-xl font-bold text-amber-900">{totalMaintenance}</div>
+            <div className="text-[11px] sm:text-xs text-slate-500">Maintenance</div>
           </div>
         </div>
       </div>
 
       {/* Table Card */}
       <Card>
-        <CardHeader>
+        <CardHeader className="p-4 sm:p-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <CardTitle className="text-lg">Katalog Master Fasilitas & Aset</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-base sm:text-lg">Katalog Master Fasilitas & Aset</CardTitle>
+              <CardDescription className="text-xs sm:text-sm mt-0.5">
                 Seluruh data sarpras terintegrasi dengan kode inventaris BMN dan status kelayakan operasional.
               </CardDescription>
             </div>
 
             {/* Filter and Search */}
-            <div className="flex flex-col sm:flex-row items-center gap-3">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 w-full md:w-auto">
               <select
-                className="h-9 rounded-lg border border-slate-300 bg-white px-3 text-xs focus:outline-none focus:ring-1 focus:ring-[#034275] w-full sm:w-auto"
+                className="h-10 sm:h-9 rounded-lg border border-slate-300 bg-white px-3 text-xs focus:outline-none focus:ring-1 focus:ring-[#034275] w-full sm:w-auto"
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
               >
@@ -303,21 +303,21 @@ export default function AdminSarprasPage() {
               </select>
 
               <div className="relative w-full sm:w-64">
-                <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+                <Search className="absolute left-3 top-3 sm:top-2.5 h-4 w-4 text-slate-400" />
                 <input
                   type="text"
                   placeholder="Cari nama, BMN, lokasi..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="h-9 w-full rounded-lg border border-slate-300 pl-9 pr-3 text-xs focus:outline-none focus:ring-1 focus:ring-[#034275]"
+                  className="h-10 sm:h-9 w-full rounded-lg border border-slate-300 pl-9 pr-3 text-xs focus:outline-none focus:ring-1 focus:ring-[#034275]"
                 />
               </div>
             </div>
           </div>
         </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-slate-700">
+        <CardContent className="p-0 sm:p-6 sm:pt-0">
+          <div className="overflow-x-auto no-scrollbar">
+            <table className="w-full text-left text-sm text-slate-700 min-w-[640px]">
               <thead className="border-b border-slate-200 bg-slate-50 text-xs uppercase text-slate-500">
                 <tr>
                   <th className="px-4 py-3">Kode Aset (BMN)</th>
@@ -362,34 +362,36 @@ export default function AdminSarprasPage() {
                           {s.status_operasional}
                         </Badge>
                       </td>
-                      <td className="px-4 py-3 text-right space-x-1 whitespace-nowrap">
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="h-8 w-8 p-0 text-slate-600 hover:text-amber-700"
-                          title={s.status_operasional === 'Maintenance' ? 'Batal Maintenance' : 'Set Maintenance'}
-                          onClick={() => handleToggleMaintenance(s)}
-                        >
-                          <Wrench className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="h-8 w-8 p-0 text-slate-600 hover:text-[#034275]"
-                          title="Edit Fasilitas"
-                          onClick={() => openEditModal(s)}
-                        >
-                          <Edit2 className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="h-8 w-8 p-0 text-slate-600 hover:text-red-600"
-                          title="Hapus / Nonaktifkan"
-                          onClick={() => handleDelete(s)}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
+                      <td className="px-4 py-3 text-right whitespace-nowrap">
+                        <div className="flex items-center justify-end gap-1">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="h-8 w-8 p-0 text-slate-600 hover:text-amber-700"
+                            title={s.status_operasional === 'Maintenance' ? 'Batal Maintenance' : 'Set Maintenance'}
+                            onClick={() => handleToggleMaintenance(s)}
+                          >
+                            <Wrench className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="h-8 w-8 p-0 text-slate-600 hover:text-[#034275]"
+                            title="Edit Fasilitas"
+                            onClick={() => openEditModal(s)}
+                          >
+                            <Edit2 className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="h-8 w-8 p-0 text-slate-600 hover:text-red-600"
+                            title="Hapus / Nonaktifkan"
+                            onClick={() => handleDelete(s)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
                       </td>
                     </tr>
                   ))
@@ -402,23 +404,23 @@ export default function AdminSarprasPage() {
 
       {/* Modal Dialog Tambah / Edit Sarpras */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in">
-          <div className="w-full max-w-lg rounded-xl bg-white shadow-2xl border border-slate-200 overflow-hidden">
-            <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4">
-              <h3 className="font-bold text-slate-900 text-lg">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm p-0 sm:p-4 animate-in fade-in">
+          <div className="w-full sm:max-w-lg rounded-t-2xl sm:rounded-xl bg-white shadow-2xl border border-slate-200 overflow-hidden max-h-[92vh] flex flex-col">
+            <div className="flex items-center justify-between border-b border-slate-200 px-4 sm:px-6 py-3.5 sm:py-4 shrink-0">
+              <h3 className="font-bold text-slate-900 text-base sm:text-lg">
                 {editingItem ? 'Edit Master Data Sarpras' : 'Tambah Sarpras Baru'}
               </h3>
               <button
                 type="button"
                 onClick={() => setIsModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 rounded-lg p-1"
+                className="text-slate-400 hover:text-slate-600 rounded-lg p-2 min-h-[44px] min-w-[44px] flex items-center justify-center"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 overflow-y-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label className="text-xs font-semibold uppercase text-slate-700">Kode Aset (BMN)</label>
                   <Input
@@ -426,13 +428,14 @@ export default function AdminSarprasPage() {
                     value={formData.kode_aset}
                     onChange={(e) => setFormData({ ...formData, kode_aset: e.target.value })}
                     required
+                    className="min-h-[44px] sm:min-h-[38px]"
                   />
                 </div>
 
                 <div className="space-y-1.5">
                   <label className="text-xs font-semibold uppercase text-slate-700">Kategori Fasilitas</label>
                   <select
-                    className="flex h-10 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#034275]"
+                    className="flex min-h-[44px] sm:min-h-[38px] w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#034275]"
                     value={formData.kategori}
                     onChange={(e) =>
                       setFormData({
@@ -456,10 +459,11 @@ export default function AdminSarprasPage() {
                   value={formData.nama_sarpras}
                   onChange={(e) => setFormData({ ...formData, nama_sarpras: e.target.value })}
                   required
+                  className="min-h-[44px] sm:min-h-[38px]"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label className="text-xs font-semibold uppercase text-slate-700">Lokasi / Nomor Plat</label>
                   <Input
@@ -467,13 +471,14 @@ export default function AdminSarprasPage() {
                     value={formData.lokasi_plat}
                     onChange={(e) => setFormData({ ...formData, lokasi_plat: e.target.value })}
                     required
+                    className="min-h-[44px] sm:min-h-[38px]"
                   />
                 </div>
 
                 <div className="space-y-1.5">
                   <label className="text-xs font-semibold uppercase text-slate-700">Status Operasional</label>
                   <select
-                    className="flex h-10 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#034275]"
+                    className="flex min-h-[44px] sm:min-h-[38px] w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#034275]"
                     value={formData.status_operasional}
                     onChange={(e) =>
                       setFormData({
@@ -501,11 +506,11 @@ export default function AdminSarprasPage() {
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
-                <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)}>
+              <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 pt-3 border-t border-slate-100">
+                <Button type="button" variant="outline" className="min-h-[44px] sm:min-h-[38px]" onClick={() => setIsModalOpen(false)}>
                   Batal
                 </Button>
-                <Button type="submit" disabled={formSubmitting}>
+                <Button type="submit" disabled={formSubmitting} className="min-h-[44px] sm:min-h-[38px]">
                   {formSubmitting ? 'Menyimpan...' : editingItem ? 'Simpan Perubahan' : 'Tambahkan Sarpras'}
                 </Button>
               </div>
