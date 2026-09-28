@@ -20,7 +20,6 @@ import {
   LogOut,
   Menu,
   X,
-  User as UserIcon,
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -84,6 +83,16 @@ export function Navbar({ user }: NavbarProps) {
   };
 
   const isPemohon = user && ['Dosen', 'Taruna', 'BPSDM', 'Kementerian', 'Alumni'].includes(user.role);
+
+  // Rute Publik yang dapat diakses publik tanpa login
+  const isPublicRoute =
+    pathname === '/' ||
+    pathname === '/login' ||
+    pathname === '/register' ||
+    pathname === '/pengaduan';
+
+  // Hamburger menu HANYA aktif pada laman non-publik (memerlukan login)
+  const showMobileMenu = !!user && !isPublicRoute;
 
   return (
     <>
@@ -228,26 +237,31 @@ export function Navbar({ user }: NavbarProps) {
                   {user.role}
                 </Badge>
 
+                {/* Tombol Logout: Tampil di sm:flex saat ada hamburger menu, atau selalu tampil di mobile saat berada di halaman publik tanpa hamburger */}
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={handleLogout}
-                  className="hidden sm:flex text-slate-600 hover:text-red-600 hover:bg-red-50 items-center gap-1.5"
+                  className={`${
+                    showMobileMenu ? 'hidden sm:flex' : 'flex'
+                  } text-slate-600 hover:text-red-600 hover:bg-red-50 items-center gap-1.5 h-9 px-2 sm:px-3 text-xs`}
                   title="Keluar"
                 >
                   <LogOut className="h-4 w-4" />
-                  <span>Keluar</span>
+                  <span className="hidden sm:inline">Keluar</span>
                 </Button>
 
-                {/* Hamburger Button for Mobile screens */}
-                <button
-                  type="button"
-                  onClick={() => setMobileMenuOpen((prev) => !prev)}
-                  className="md:hidden h-10 w-10 flex items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 hover:text-slate-900 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-[#034275]/20"
-                  aria-label={mobileMenuOpen ? 'Tutup navigasi' : 'Buka navigasi'}
-                >
-                  {mobileMenuOpen ? <X className="h-5 w-5 text-slate-800" /> : <Menu className="h-5 w-5 text-slate-800" />}
-                </button>
+                {/* Hamburger Button: HANYA tampil pada laman non-publik (perlu login) */}
+                {showMobileMenu && (
+                  <button
+                    type="button"
+                    onClick={() => setMobileMenuOpen((prev) => !prev)}
+                    className="md:hidden h-10 w-10 flex items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 hover:text-slate-900 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-[#034275]/20"
+                    aria-label={mobileMenuOpen ? 'Tutup navigasi' : 'Buka navigasi'}
+                  >
+                    {mobileMenuOpen ? <X className="h-5 w-5 text-slate-800" /> : <Menu className="h-5 w-5 text-slate-800" />}
+                  </button>
+                )}
               </div>
             ) : (
               <div className="flex items-center gap-1.5 sm:gap-2">
@@ -261,22 +275,14 @@ export function Navbar({ user }: NavbarProps) {
                     Registrasi
                   </Button>
                 </Link>
-                <button
-                  type="button"
-                  onClick={() => setMobileMenuOpen((prev) => !prev)}
-                  className="md:hidden h-10 w-10 flex items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 hover:text-slate-900 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-[#034275]/20"
-                  aria-label={mobileMenuOpen ? 'Tutup navigasi' : 'Buka navigasi'}
-                >
-                  {mobileMenuOpen ? <X className="h-5 w-5 text-slate-800" /> : <Menu className="h-5 w-5 text-slate-800" />}
-                </button>
               </div>
             )}
           </div>
         </div>
       </header>
 
-      {/* Mobile Slide-Over Navigation Drawer via Portal to document.body */}
-      {mounted && mobileMenuOpen && typeof document !== 'undefined' && createPortal(
+      {/* Mobile Slide-Over Navigation Drawer via Portal: HANYA dirender pada laman non-publik */}
+      {showMobileMenu && mounted && mobileMenuOpen && typeof document !== 'undefined' && createPortal(
         <div className="fixed inset-0 z-[100] md:hidden">
           {/* Backdrop with smooth blur and fade-in */}
           <div
@@ -314,30 +320,22 @@ export function Navbar({ user }: NavbarProps) {
             </div>
 
             {/* User Identity Card on Mobile Drawer */}
-            {user ? (
-              <div className="p-4 border-b border-slate-100 bg-gradient-to-br from-blue-50/70 via-slate-50 to-white shrink-0">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-[#034275] text-white flex items-center justify-center font-bold text-sm shadow-xs shrink-0">
-                    {user.nama_lengkap.charAt(0).toUpperCase()}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="font-bold text-sm text-slate-900 truncate">{user.nama_lengkap}</div>
-                    <div className="text-xs text-slate-500 truncate">{user.email}</div>
-                    <div className="mt-1">
-                      <Badge className="bg-[#034275] text-[10px] py-0 px-2 font-medium">
-                        Peran: {user.role}
-                      </Badge>
-                    </div>
+            <div className="p-4 border-b border-slate-100 bg-gradient-to-br from-blue-50/70 via-slate-50 to-white shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-full bg-[#034275] text-white flex items-center justify-center font-bold text-sm shadow-xs shrink-0">
+                  {user.nama_lengkap.charAt(0).toUpperCase()}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="font-bold text-sm text-slate-900 truncate">{user.nama_lengkap}</div>
+                  <div className="text-xs text-slate-500 truncate">{user.email}</div>
+                  <div className="mt-1">
+                    <Badge className="bg-[#034275] text-[10px] py-0 px-2 font-medium">
+                      Peran: {user.role}
+                    </Badge>
                   </div>
                 </div>
               </div>
-            ) : (
-              <div className="p-4 border-b border-slate-100 bg-slate-50/50 shrink-0">
-                <p className="text-xs text-slate-600">
-                  Selamat datang di portal SIMASPRAS Poltekimipas. Silakan masuk untuk mengakses layanan fasilitas.
-                </p>
-              </div>
-            )}
+            </div>
 
             {/* Mobile Nav Links: smooth scrolling list with active styling */}
             <nav className="flex-1 overflow-y-auto p-4 space-y-1 text-sm font-medium">
@@ -354,7 +352,7 @@ export function Navbar({ user }: NavbarProps) {
                 <span>Beranda Portal</span>
               </Link>
 
-              {user && isPemohon && (
+              {isPemohon && (
                 <>
                   <div className="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
                     Layanan Pemohon
@@ -400,7 +398,7 @@ export function Navbar({ user }: NavbarProps) {
                 </>
               )}
 
-              {user && user.role === 'Kasubag' && (
+              {user.role === 'Kasubag' && (
                 <>
                   <div className="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
                     Menu Kasubag Umum
@@ -433,7 +431,7 @@ export function Navbar({ user }: NavbarProps) {
                 </>
               )}
 
-              {user && user.role === 'Staf' && (
+              {user.role === 'Staf' && (
                 <>
                   <div className="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
                     Menu Staf Umum
@@ -453,7 +451,7 @@ export function Navbar({ user }: NavbarProps) {
                 </>
               )}
 
-              {user && user.role === 'Kabag' && (
+              {user.role === 'Kabag' && (
                 <>
                   <div className="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
                     Menu Pimpinan
@@ -473,7 +471,7 @@ export function Navbar({ user }: NavbarProps) {
                 </>
               )}
 
-              {user && user.role === 'Admin' && (
+              {user.role === 'Admin' && (
                 <>
                   <div className="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
                     Menu Administrator
@@ -521,41 +519,19 @@ export function Navbar({ user }: NavbarProps) {
                 <Layers className="h-4 w-4 shrink-0" />
                 <span>Pengaduan Sarpras Rusak</span>
               </Link>
-
-              {!user && (
-                <div className="space-y-2.5 pt-4 border-t border-slate-100 mt-4">
-                  <Link
-                    href="/login"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-2 w-full min-h-[44px] border border-slate-300 rounded-xl text-slate-700 font-semibold text-xs hover:bg-slate-50 active:scale-[0.98] transition-all"
-                  >
-                    <UserIcon className="h-4 w-4" />
-                    <span>Masuk ke Sistem</span>
-                  </Link>
-                  <Link
-                    href="/register"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-2 w-full min-h-[44px] bg-[#034275] text-white rounded-xl font-semibold text-xs hover:bg-[#022b4d] shadow-xs active:scale-[0.98] transition-all"
-                  >
-                    <span>Registrasi Akun Pemohon</span>
-                  </Link>
-                </div>
-              )}
             </nav>
 
             {/* Drawer Footer */}
             <div className="p-4 border-t border-slate-100 bg-slate-50/80 shrink-0 space-y-2.5">
-              {user && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleLogout}
-                  className="w-full flex items-center justify-center gap-2 min-h-[44px] text-xs font-semibold rounded-xl bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100 hover:text-rose-800 transition-all active:scale-[0.98]"
-                >
-                  <LogOut className="h-4 w-4" />
-                  <span>Keluar dari Akun</span>
-                </Button>
-              )}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleLogout}
+                className="w-full flex items-center justify-center gap-2 min-h-[44px] text-xs font-semibold rounded-xl bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100 hover:text-rose-800 transition-all active:scale-[0.98]"
+              >
+                <LogOut className="h-4 w-4" />
+                <span>Keluar dari Akun</span>
+              </Button>
               <div className="text-center text-[10px] text-slate-400">
                 SIMASPRAS V2 • Poltekimipas
               </div>
