@@ -89,6 +89,12 @@ if [ -d ".next/standalone" ]; then
         cp .env .next/standalone/.env
         echo -e "✓ File .env disalin ke .next/standalone/.env"
     fi
+
+    # Salin Prisma Query Engines ke standalone bundle agar kompatibel dengan lingkungan cPanel
+    if [ -d "node_modules/.prisma/client" ] && [ -d ".next/standalone/node_modules/.prisma/client" ]; then
+        cp -f node_modules/.prisma/client/*.so.node .next/standalone/node_modules/.prisma/client/ 2>/dev/null || true
+        echo -e "✓ Prisma Query Engines berhasil disinkronkan ke .next/standalone"
+    fi
 else
     echo -e "${RED}[ERROR] Folder .next/standalone tidak ditemukan. Periksa next.config.mjs 'output: standalone'.${NC}"
     exit 1
