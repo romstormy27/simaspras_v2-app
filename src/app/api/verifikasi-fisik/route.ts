@@ -114,8 +114,9 @@ export async function POST(request: NextRequest) {
       return verifikasi;
     });
 
-    // Notify Kasubag Umum (Skenario 7 PRD §14)
+    // Notify Kasubag Umum & Pemohon (Skenario 7 PRD §14)
     await NotificationService.notifyInspectionCompleted({
+      id_pemohon: booking.id_pemohon,
       kode_transaksi: booking.kode_transaksi,
       sarpras_nama: booking.sarpras.nama_sarpras,
       jenis: jenis,

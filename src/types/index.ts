@@ -40,3 +40,23 @@ export interface ApiResponse<T = unknown> {
   message?: string;
   errors?: Record<string, string[]> | string | unknown;
 }
+
+export type TipeNotifikasi =
+  | 'Info'
+  | 'Persetujuan'
+  | 'Penolakan'
+  | 'Peringatan'
+  | 'Inspeksi'
+  | 'BAST'
+  | 'Keamanan';
+
+export interface InAppNotifikasi {
+  id_notifikasi: string;
+  id_user: string;
+  judul: string;
+  pesan: string;
+  tipe: TipeNotifikasi;
+  tautan?: string | null;
+  is_read: boolean;
+  created_at: string | Date;
+}

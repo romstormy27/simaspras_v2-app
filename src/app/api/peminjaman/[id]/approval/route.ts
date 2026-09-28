@@ -124,8 +124,9 @@ export async function PATCH(
         return { booking: resBooking, tiket };
       });
 
-      // Send email to Pemohon (Skenario 5 PRD §14)
+      // Send notification to Pemohon & Staf
       await NotificationService.notifyBookingApproved({
+        id_pemohon: booking.id_pemohon,
         kode_transaksi: booking.kode_transaksi,
         sarpras_nama: booking.sarpras.nama_sarpras,
         pemohon_email: booking.pemohon.email,
@@ -165,8 +166,9 @@ export async function PATCH(
         return resBooking;
       });
 
-      // Send rejection notification email to Pemohon (Skenario 6 PRD §14)
+      // Send rejection notification email & in-app to Pemohon
       await NotificationService.notifyBookingRejected({
+        id_pemohon: booking.id_pemohon,
         kode_transaksi: booking.kode_transaksi,
         sarpras_nama: booking.sarpras.nama_sarpras,
         pemohon_email: booking.pemohon.email,

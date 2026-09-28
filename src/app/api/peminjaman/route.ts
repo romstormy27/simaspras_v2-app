@@ -229,6 +229,8 @@ export async function POST(request: NextRequest) {
     // Trigger notification to Kasubag & Staf (Skenario 3 PRD §14)
     const booking = result.booking!;
     await NotificationService.notifyBookingCreated({
+      id_peminjaman: booking.id_peminjaman,
+      id_pemohon: session.id_user,
       kode_transaksi: booking.kode_transaksi,
       sarpras_nama: booking.sarpras.nama_sarpras,
       pemohon_nama: session.nama_lengkap,

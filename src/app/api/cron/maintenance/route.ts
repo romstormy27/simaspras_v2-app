@@ -62,6 +62,16 @@ async function handleCronMaintenance(req: NextRequest) {
             ip_address: '127.0.0.1 (web-cron)',
           },
         });
+
+        await tx.notifikasi.create({
+          data: {
+            id_user: item.id_pemohon,
+            judul: `Peminjaman Dibatalkan Otomatis: ${item.kode_transaksi}`,
+            pesan: `Pengajuan peminjaman untuk fasilitas ${item.sarpras.nama_sarpras} telah dibatalkan otomatis oleh sistem karena jadwal mulai telah terlewati tanpa verifikasi lengkap.`,
+            tipe: 'Peringatan',
+            tautan: '/peminjaman/riwayat',
+          },
+        });
       });
       expiredCancelledCount++;
     }

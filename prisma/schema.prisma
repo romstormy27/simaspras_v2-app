@@ -62,6 +62,16 @@ enum KondisiFisik {
   Ada_Catatan_Khusus @map("Ada Catatan Khusus")
 }
 
+enum TipeNotifikasi {
+  Info
+  Persetujuan
+  Penolakan
+  Peringatan
+  Inspeksi
+  BAST
+  Keamanan
+}
+
 model User {
   id_user         String         @id @default(uuid()) @db.VarChar(36)
   nama_lengkap    String         @db.VarChar(100)
@@ -78,6 +88,7 @@ model User {
   verifikasi_dibuat VerifikasiFisik[] @relation("VerifikasiStaf")
   bast_dibuat       BASTDigital[]     @relation("BASTKasubag")
   audit_logs        AuditLog[]        @relation("AuditUser")
+  notifikasi        Notifikasi[]
 
   @@index([role, status_aktivasi], name: "idx_users_role_status")
   @@map("users")
@@ -184,4 +195,20 @@ model AuditLog {
 
   @@index([timestamp, id_user], name: "idx_audit_log_timestamp")
   @@map("audit_log")
+}
+
+model Notifikasi {
+  id_notifikasi String         @id @default(uuid()) @db.VarChar(36)
+  id_user       String         @db.VarChar(36)
+  judul         String         @db.VarChar(150)
+  pesan         String         @db.Text
+  tipe          TipeNotifikasi @default(Info)
+  tautan        String?        @db.VarChar(255)
+  is_read       Boolean        @default(false)
+  created_at    DateTime       @default(now()) @db.Timestamp(0)
+
+  user User @relation(fields: [id_user], references: [id_user], onDelete: Cascade, onUpdate: Cascade, map: "fk_notifikasi_user")
+
+  @@index([id_user, is_read, created_at], name: "idx_notifikasi_user")
+  @@map("notifikasi")
 }

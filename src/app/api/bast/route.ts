@@ -248,8 +248,10 @@ export async function POST(req: NextRequest) {
       return newBast;
     });
 
-    // 6. Asynchronous Notification Email to Pemohon (Skenario 8 PRD §14)
+    // 6. Asynchronous Notification (Email & In-App) to Pemohon (Skenario 8 PRD §14)
     await NotificationService.notifyBastIssued({
+      id_pemohon: booking.id_pemohon,
+      id_peminjaman: booking.id_peminjaman,
       nomor_bast: result.nomor_bast,
       kode_transaksi: booking.kode_transaksi,
       pemohon_email: booking.pemohon.email,

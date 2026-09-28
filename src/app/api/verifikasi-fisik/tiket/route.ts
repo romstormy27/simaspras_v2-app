@@ -3,6 +3,7 @@ import prisma from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
 import { generateQrDataUrl } from '@/lib/qrcode';
 import { formatDateTime } from '@/lib/utils';
+import { NotificationService } from '@/lib/notifications';
 import { z } from 'zod';
 
 export async function GET(request: NextRequest) {
@@ -190,6 +191,14 @@ export async function PATCH(request: NextRequest) {
       });
 
       return res;
+    });
+
+    // Kirim notifikasi in-app ke pemohon bahwa serah terima fasilitas telah sukses
+    await NotificationService.notifyAssetHandedOver({
+      id_pemohon: tiket.peminjaman.id_pemohon,
+      kode_transaksi: tiket.peminjaman.kode_transaksi,
+      sarpras_nama: tiket.peminjaman.sarpras.nama_sarpras,
+      staf_nama: session.nama_lengkap,
     });
 
     return NextResponse.json({

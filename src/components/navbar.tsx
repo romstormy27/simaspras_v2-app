@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { AuthUser } from '@/types';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
+import { NotificationBell } from './notification-bell';
 import {
   Building2,
   Calendar,
@@ -164,7 +165,8 @@ export function Navbar({ user }: NavbarProps) {
         {/* User Status / Action Buttons */}
         <div className="flex items-center gap-3">
           {user ? (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5 sm:gap-3">
+              <NotificationBell />
               <div className="hidden sm:flex flex-col items-end">
                 <span className="text-sm font-semibold text-slate-800 leading-tight">
                   {user.nama_lengkap}

@@ -125,6 +125,7 @@ export async function PATCH(
 
     // Notify applicant and Kasubag / Staf (Skenario 4 PRD §14)
     await NotificationService.notifyBookingCancelled({
+      id_pemohon: booking.id_pemohon,
       kode_transaksi: booking.kode_transaksi,
       sarpras_nama: booking.sarpras.nama_sarpras,
       pemohon_email: booking.pemohon.email,

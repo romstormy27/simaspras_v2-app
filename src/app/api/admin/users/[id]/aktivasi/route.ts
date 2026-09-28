@@ -51,9 +51,9 @@ export async function PATCH(
       ip_address: ip,
     });
 
-    // Kirim Notifikasi Email Terpusat (Skenario 2)
+    // Kirim Notifikasi Terpusat (Email & In-App)
     await NotificationService.notifyActivationDecision(
-      { email: targetUser.email, nama_lengkap: targetUser.nama_lengkap },
+      { id_user: targetUser.id_user, email: targetUser.email, nama_lengkap: targetUser.nama_lengkap },
       decision,
       reason
     );

@@ -63,6 +63,14 @@ export async function PATCH(
       ip_address: ip,
     });
 
+    // Kirim notifikasi in-app ke pengguna terkait
+    await NotificationService.notifyRoleChanged({
+      id_user: id,
+      role_lama: oldRole,
+      role_baru: newRole,
+      admin_nama: admin.nama_lengkap,
+    });
+
     return NextResponse.json({
       success: true,
       message: `Role pengguna berhasil diubah menjadi ${newRole}`,
