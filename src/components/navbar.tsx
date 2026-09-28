@@ -504,21 +504,6 @@ export function Navbar({ user }: NavbarProps) {
                 </>
               )}
 
-              <div className="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                Layanan Terkait
-              </div>
-              <Link
-                href="/pengaduan"
-                onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all duration-150 ${
-                  pathname === '/pengaduan'
-                    ? 'bg-[#034275] text-white shadow-xs font-semibold'
-                    : 'text-slate-700 hover:bg-slate-100 active:scale-[0.98]'
-                }`}
-              >
-                <Layers className="h-4 w-4 shrink-0" />
-                <span>Pengaduan Sarpras Rusak</span>
-              </Link>
             </nav>
 
             {/* Drawer Footer */}
