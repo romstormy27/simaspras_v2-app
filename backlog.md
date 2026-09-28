@@ -335,7 +335,7 @@ Setiap tugas/item backlog dinyatakan **selesai (Done)** hanya jika memenuhi krit
 
 ### FASE 9: Pengujian Kualitas, Audit Keamanan & Hardening (Seksi 15, 16, 18)
 
-- [ ] **TASK-9.1: Pengujian Unit & Integrasi Bisnis Kritikal (Vitest)**
+- [x] **TASK-9.1: Pengujian Unit & Integrasi Bisnis Kritikal (Vitest)**
   * **Deskripsi:** Menulis rangkaian pengujian otomatis untuk:
     * Logika pengecekan bentrok jadwal overlap (UC-02, UC-03).
     * Validasi pembatalan mandiri sebelum vs sesudah waktu mulai (UC-04).
@@ -343,12 +343,12 @@ Setiap tugas/item backlog dinyatakan **selesai (Done)** hanya jika memenuhi krit
     * Integritas data saat soft-delete aset berelasi aktif (UC-09).
   * **Kriteria Keberhasilan:** Seluruh unit test lolos 100% dengan cakupan pengujian memadai.
 
-- [ ] **TASK-9.2: Pengujian Alur End-to-End (Playwright E2E)**
+- [x] **TASK-9.2: Pengujian Alur End-to-End (Playwright E2E)**
   * **Deskripsi:** Mensimulasikan alur penuh peminjaman sarpras dari awal hingga akhir:
     * `Register Pemohon` → `Approve Admin` → `Login Pemohon` → `Pilih Sarpras & Submit Pengajuan` → `Verifikasi Staf` → `Approval Kasubag (Tiket QR Terbit)` → `Inspeksi Pasca-Pakai Staf` → `Konfirmasi BAST Digital Kasubag (PDF Terbit)`.
   * **Kriteria Keberhasilan:** Alur E2E berjalan sukses tanpa kegagalan assertion.
 
-- [ ] **TASK-9.3: Audit Keamanan & Penegakan Prinsip Least Privilege**
+- [x] **TASK-9.3: Audit Keamanan & Penegakan Prinsip Least Privilege**
   * **Deskripsi:** Melakukan validasi keamanan rute dan API:
     * Uji coba bypass rute admin/approver oleh role pemohon (memastikan respon 403 Forbidden).
     * Verifikasi proteksi injection via Zod pada seluruh endpoint mutation.

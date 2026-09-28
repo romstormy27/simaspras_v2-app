@@ -3,6 +3,7 @@ import { z } from 'zod';
 import prisma from '@/lib/prisma';
 import { verifyPassword, createToken, SESSION_COOKIE_NAME, getDefaultDashboardRoute } from '@/lib/auth';
 import { logAudit } from '@/lib/audit';
+import { loginRateLimiter } from '@/lib/rate-limit';
 
 const loginSchema = z.object({
   email: z.string().email('Format email tidak valid'),
@@ -23,6 +24,22 @@ export async function POST(request: NextRequest) {
 
     const { email, password } = result.data;
     const ip = request.headers.get('x-forwarded-for') || '127.0.0.1';
+    const rateLimitKey = `${ip}:${email.toLowerCase()}`;
+
+    // Proteksi Brute-Force Rate Limiting (TASK-9.3 / Seksi 16)
+    const rateCheck = loginRateLimiter.check(rateLimitKey);
+    if (rateCheck.isBlocked) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: `Terlalu banyak percobaan login gagal. Percobaan login diblokir sementara selama ${rateCheck.retryAfterSeconds} detik untuk alasan keamanan.`,
+        },
+        {
+          status: 429,
+          headers: { 'Retry-After': String(rateCheck.retryAfterSeconds) },
+        }
+      );
+    }
 
     const user = await prisma.user.findUnique({
       where: { email: email.toLowerCase() },
@@ -30,6 +47,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (!user) {
+      loginRateLimiter.recordFailure(rateLimitKey);
       return NextResponse.json(
         { success: false, message: 'Email atau password salah' },
         { status: 401 }
@@ -38,6 +56,7 @@ export async function POST(request: NextRequest) {
 
     const isMatch = await verifyPassword(password, user.password_hash);
     if (!isMatch) {
+      loginRateLimiter.recordFailure(rateLimitKey);
       await logAudit({
         id_user: user.id_user,
         aktivitas: `Gagal login: Password salah untuk ${email}`,
@@ -83,6 +102,8 @@ export async function POST(request: NextRequest) {
 
     const token = createToken(authUser);
     const redirectUrl = getDefaultDashboardRoute(user.role);
+
+    loginRateLimiter.reset(rateLimitKey);
 
     await logAudit({
       id_user: user.id_user,

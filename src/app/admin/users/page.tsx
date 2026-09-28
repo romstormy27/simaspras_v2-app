@@ -8,7 +8,6 @@ import { Alert } from '@/components/ui/alert';
 import { Input } from '@/components/ui/input';
 import { formatDateTime } from '@/lib/utils';
 import {
-  Users,
   UserCheck,
   UserX,
   Clock,
@@ -18,9 +17,6 @@ import {
   History,
   FileSpreadsheet,
   Shield,
-  ShieldAlert,
-  ArrowRight,
-  Filter,
 } from 'lucide-react';
 
 interface UserRecord {

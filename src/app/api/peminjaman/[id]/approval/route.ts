@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { getSession } from '@/lib/auth';
 import { z } from 'zod';
-import { sendEmail } from '@/lib/email';
 import { NotificationService } from '@/lib/notifications';
 import { formatDateTime } from '@/lib/utils';
 
