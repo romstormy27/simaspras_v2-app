@@ -240,11 +240,11 @@ export default async function PemohonBastViewPage({
             </div>
           </div>
 
-          {/* Klausul Tanpa Denda Finansial (PRD §3.2) */}
+          {/* Klausul Tanpa Denda Finansial */}
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 text-blue-900 text-xs space-y-1">
             <div className="font-semibold flex items-center gap-1.5">
               <Sparkles className="h-3.5 w-3.5 text-blue-600" />
-              Ketetapan SIMASPRAS Bebas Denda Finansial (PRD §3.2):
+              Ketetapan SIMASPRAS Bebas Denda Finansial:
             </div>
             <p className="text-[11px] text-blue-800 leading-relaxed">
               Pengembalian fasilitas ini telah tuntas secara sah dan paperless. Sesuai kebijakan Politeknik

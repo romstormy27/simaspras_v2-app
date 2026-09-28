@@ -222,14 +222,13 @@ export default function KasubagApprovalPage() {
           Dasbor Persetujuan Peminjaman Sarpras
         </h1>
         <p className="text-sm text-slate-500">
-          Kasubag Bagian Umum — Evaluasi permohonan digital, tinjau catatan verifikasi staf, dan terbitkan Tiket QR (PRD UC-05 / UI-05).
+          Kasubag Bagian Umum — Evaluasi permohonan digital, tinjau catatan verifikasi staf, dan terbitkan Tiket QR.
         </p>
       </div>
 
       {/* Success Notification Alert */}
       {feedbackMessage && (
-        <Alert className="border-emerald-300 bg-emerald-50 text-emerald-900 animate-in fade-in">
-          <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+        <Alert variant="success" className="animate-in fade-in">
           <AlertTitle className="text-xs font-bold">Sukses</AlertTitle>
           <AlertDescription className="text-xs">{feedbackMessage}</AlertDescription>
         </Alert>
@@ -371,7 +370,7 @@ export default function KasubagApprovalPage() {
                         </span>
                         {getStatusBadge(b.status_transaksi)}
 
-                        {/* Staf Inspection Recommendation Badge (PRD UC-05 & UC-06 integration) */}
+                        {/* Staf Inspection Recommendation Badge */}
                         {praVerif ? (
                           <Badge
                             variant={praVerif.kondisi_fisik === 'Baik_Sesuai' ? 'success' : 'warning'}

@@ -127,7 +127,7 @@ export default function DashboardEksekutifPage() {
                 Executive Monitoring Dashboard
               </h1>
               <p className="text-xs text-slate-500">
-                Kepala Bagian Keuangan & Umum — Evaluasi utilisasi fasilitas, okupansi, dan laporan eksekutif (PRD UC-08).
+                Kepala Bagian Keuangan & Umum — Evaluasi utilisasi fasilitas, okupansi, dan laporan eksekutif.
               </p>
             </div>
           </div>

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert } from '@/components/ui/alert';
-import { Building2, ArrowRight, UserPlus } from 'lucide-react';
+import { Building2, ArrowRight, UserPlus, Eye, EyeOff } from 'lucide-react';
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -20,6 +20,7 @@ export default function RegisterPage() {
   });
 
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
@@ -101,7 +102,9 @@ export default function RegisterPage() {
                 {error && <Alert variant="destructive">{error}</Alert>}
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold uppercase tracking-wider text-slate-700">Nama Lengkap</label>
+                  <label className="text-xs font-semibold uppercase tracking-wider text-slate-700">
+                    Nama Lengkap <span className="text-red-500">*</span>
+                  </label>
                   <Input
                     type="text"
                     placeholder="Nama lengkap sesuai tanda pengenal"
@@ -113,7 +116,9 @@ export default function RegisterPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold uppercase tracking-wider text-slate-700">Alamat Email</label>
+                    <label className="text-xs font-semibold uppercase tracking-wider text-slate-700">
+                      Alamat Email <span className="text-red-500">*</span>
+                    </label>
                     <Input
                       type="email"
                       placeholder="nama@email.com"
@@ -124,7 +129,9 @@ export default function RegisterPage() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold uppercase tracking-wider text-slate-700">Nomor WhatsApp / HP</label>
+                    <label className="text-xs font-semibold uppercase tracking-wider text-slate-700">
+                      Nomor WhatsApp / HP <span className="text-red-500">*</span>
+                    </label>
                     <Input
                       type="tel"
                       placeholder="081234567890"
@@ -136,35 +143,52 @@ export default function RegisterPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold uppercase tracking-wider text-slate-700">Kata Sandi (Password)</label>
-                  <Input
-                    type="password"
-                    placeholder="Minimal 6 karakter"
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    required
-                  />
+                  <label className="text-xs font-semibold uppercase tracking-wider text-slate-700">
+                    Kata Sandi (Password) <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <Input
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder="Minimal 6 karakter"
+                      className="pr-10"
+                      value={formData.password}
+                      onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-3 text-slate-400 hover:text-slate-600 focus:outline-none transition-colors"
+                      aria-label={showPassword ? 'Sembunyikan password' : 'Lihat password'}
+                    >
+                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </button>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold uppercase tracking-wider text-slate-700">Kategori Pemohon</label>
+                    <label className="text-xs font-semibold uppercase tracking-wider text-slate-700">
+                      Kategori Pemohon <span className="text-red-500">*</span>
+                    </label>
                     <select
                       className="flex h-10 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#034275]"
                       value={formData.role}
                       onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                       required
                     >
-                      <option value="Dosen">Dosen Politeknik</option>
-                      <option value="Taruna">Taruna Politeknik</option>
-                      <option value="BPSDM">BPSDM Hukum dan HAM</option>
+                      <option value="Dosen">Dosen</option>
+                      <option value="Taruna">Taruna</option>
+                      <option value="BPSDM">BPSDM Imipas</option>
                       <option value="Kementerian">Instansi Kementerian</option>
                       <option value="Alumni">Ikatan Alumni</option>
                     </select>
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold uppercase tracking-wider text-slate-700">Nomor Identitas</label>
+                    <label className="text-xs font-semibold uppercase tracking-wider text-slate-700">
+                      Nomor Identitas <span className="text-red-500">*</span>
+                    </label>
                     <Input
                       type="text"
                       placeholder="NIP / NIM / KTP / NIK"
@@ -176,7 +200,9 @@ export default function RegisterPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold uppercase tracking-wider text-slate-700">Jurusan / Unit Kerja / Asal Instansi</label>
+                  <label className="text-xs font-semibold uppercase tracking-wider text-slate-700">
+                    Jurusan / Unit Kerja / Asal Instansi <span className="text-red-500">*</span>
+                  </label>
                   <Input
                     type="text"
                     placeholder="Contoh: Prodi Keimigrasian / Sekretariat Jenderal"

@@ -196,7 +196,7 @@ export default function AdminUsersPage() {
                 Manajemen Pengguna, Hak Akses RBAC & Audit Trail
               </h1>
               <p className="text-xs text-slate-500">
-                Tata kelola 9 peran RBAC, persetujuan aktivasi akun, dan pemantauan forensik keamanan (PRD UC-10 / Seksi 14).
+                Tata kelola 9 peran RBAC, persetujuan aktivasi akun, dan pemantauan forensik keamanan.
               </p>
             </div>
           </div>
@@ -234,7 +234,7 @@ export default function AdminUsersPage() {
         </Alert>
       )}
 
-      {/* Tabs Layout UI-10 */}
+      {/* Tabs Layout */}
       <div className="border-b border-slate-200">
         <nav className="flex space-x-6" aria-label="Tabs">
           <button
@@ -292,7 +292,7 @@ export default function AdminUsersPage() {
           <CardHeader className="py-4 border-b border-slate-100 bg-slate-50/50">
             <CardTitle className="text-base text-slate-800">Antrean Persetujuan Aktivasi Akun</CardTitle>
             <CardDescription className="text-xs">
-              Tinjau identitas calon pemohon sarpras sebelum mengaktifkan hak akses login ke sistem (PRD UC-01 & UC-10).
+              Tinjau identitas calon pemohon sarpras sebelum mengaktifkan hak akses login ke sistem.
             </CardDescription>
           </CardHeader>
           <CardContent className="p-0">

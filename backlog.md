@@ -360,11 +360,11 @@ Setiap tugas/item backlog dinyatakan **selesai (Done)** hanya jika memenuhi krit
 
 ### FASE 10: Persiapan Rilis, Skrip Deployment cPanel & Dokumentasi Operasional
 
-- [ ] **TASK-10.1: Konfigurasi Entry Point Phusion Passenger (`server.js`)**
+- [x] **TASK-10.1: Konfigurasi Entry Point Phusion Passenger (`server.js`)**
   * **Deskripsi:** Memastikan berkas `server.js` mengenali port lingkungan cPanel Passenger (`process.env.PORT`) dan memuat Next.js standalone build secara efisien.
   * **Kriteria Keberhasilan:** Aplikasi dapat dijalankan dengan `node server.js` secara mandiri.
 
-- [ ] **TASK-10.2: Pembuatan Skrip Otomasi Deployment (`deploy.sh`)**
+- [x] **TASK-10.2: Pembuatan Skrip Otomasi Deployment (`deploy.sh`)**
   * **Deskripsi:** Membangun skrip deployment yang mengeksekusi urutan rilis terstandarisasi untuk cPanel:
     1. `npm install --production=false`
     2. `npx prisma migrate deploy`
@@ -373,13 +373,13 @@ Setiap tugas/item backlog dinyatakan **selesai (Done)** hanya jika memenuhi krit
     5. `touch tmp/restart.txt` (memicu restart proses Node.js pada Passenger)
   * **Kriteria Keberhasilan:** Deployment dapat diulang secara deterministik dan minim downtime.
 
-- [ ] **TASK-10.3: Setup Skrip Terjadwal cPanel Cron Jobs (Pembersihan Slot & Pengingat)**
+- [x] **TASK-10.3: Setup Skrip Terjadwal cPanel Cron Jobs (Pembersihan Slot & Pengingat)**
   * **Deskripsi:** Membuat skrip node ringan `scripts/cron-maintenance.js` yang dapat dipanggil oleh cPanel Cron Jobs untuk:
     * Membersihkan pengajuan kadaluarsa yang tidak kunjung diproses.
     * Mengirim email pengingat H-1 jadwal pengembalian sarpras ke peminjam.
   * **Kriteria Keberhasilan:** Skrip berjalan aman dari CLI/cron dengan proteksi secret token.
 
-- [ ] **TASK-10.4: Penyusunan Panduan Operasional & Serah Terima Admin IT**
+- [x] **TASK-10.4: Penyusunan Panduan Operasional & Serah Terima Admin IT**
   * **Deskripsi:** Menyusun dokumen panduan operasional konfigurasi database MySQL cPanel, setup Node.js Selector di cPanel, backup harian, dan troubleshooting restart aplikasi.
   * **Kriteria Keberhasilan:** Panduan siap pakai untuk Unit IT Poltekimipas.
 
@@ -395,26 +395,26 @@ gantt
     Setup Next.js Standalone & Tailwind shadcn/ui :done, f0_1, 2026-10-01, 3d
     Prisma Schema MySQL & Database Seeding        :done, f0_2, after f0_1, 3d
     section Fase 1: Auth & User
-    Auth.js v5 Credentials & RBAC Middleware      :active, f1_1, after f0_2, 4d
-    Registrasi Pemohon & Admin User Approval     :f1_2, after f1_1, 4d
+    Auth.js v5 Credentials & RBAC Middleware      :done, f1_1, after f0_2, 4d
+    Registrasi Pemohon & Admin User Approval     :done, f1_2, after f1_1, 4d
     section Fase 2: Master & Katalog
-    CRUD Master Sarpras & Status Maintenance     :f2_1, after f1_2, 4d
-    Katalog & Kalender Ketersediaan Real-Time    :f2_2, after f2_1, 4d
+    CRUD Master Sarpras & Status Maintenance     :done, f2_1, after f1_2, 4d
+    Katalog & Kalender Ketersediaan Real-Time    :done, f2_2, after f2_1, 4d
     section Fase 3: Booking Engine
-    Form Pengajuan & ACID Slot Locking           :f3_1, after f2_2, 5d
-    Riwayat & Pembatalan Mandiri                 :f3_2, after f3_1, 3d
+    Form Pengajuan & ACID Slot Locking           :done, f3_1, after f2_2, 5d
+    Riwayat & Pembatalan Mandiri                 :done, f3_2, after f3_1, 3d
     section Fase 4 & 5: Verifikasi & Approval
-    Dasbor Verifikasi Fisik Staf Umum            :f4_1, after f3_2, 4d
-    Dasbor Persetujuan Kasubag & Tiket QR        :f5_1, after f4_1, 4d
+    Dasbor Verifikasi Fisik Staf Umum            :done, f4_1, after f3_2, 4d
+    Dasbor Persetujuan Kasubag & Tiket QR        :done, f5_1, after f4_1, 4d
     section Fase 6: BAST Digital
-    Verifikasi Pasca-Pakai & PDF BAST Generator  :f6_1, after f5_1, 5d
-    Konfirmasi Serah Terima Kasubag              :f6_2, after f6_1, 3d
+    Verifikasi Pasca-Pakai & PDF BAST Generator  :done, f6_1, after f5_1, 5d
+    Konfirmasi Serah Terima Kasubag              :done, f6_2, after f6_1, 3d
     section Fase 7 & 8: Eksekutif & Admin
-    Dashboard Eksekutif & Ekspor PDF/Excel       :f7_1, after f6_2, 4d
-    RBAC Management, Audit Trail & Notifikasi    :f8_1, after f7_1, 4d
+    Dashboard Eksekutif & Ekspor PDF/Excel       :done, f7_1, after f6_2, 4d
+    RBAC Management, Audit Trail & Notifikasi    :done, f8_1, after f7_1, 4d
     section Fase 9 & 10: Rilis & cPanel
-    Testing Otomatis, Security Hardening & UAT   :f9_1, after f8_1, 5d
-    cPanel Standalone Build & Skrip Deploy       :f10_1, after f9_1, 3d
+    Testing Otomatis, Security Hardening & UAT   :done, f9_1, after f8_1, 5d
+    cPanel Standalone Build & Skrip Deploy       :done, f10_1, after f9_1, 3d
 ```
 
 ---
@@ -429,7 +429,14 @@ Bagian ini diperbarui secara berkala setiap kali ada tugas yang dimulai, diseles
 | 2026-09-26 | FASE-0 | Setup Next.js Standalone, Tailwind CSS, shadcn/ui, skema Prisma MySQL, seeding akun awal & aset | **Selesai** | AI & User |
 | 2026-09-26 | FASE-1 | Implementasi JWT Auth, Login Gateway (UI-01), Registrasi Pemohon, Admin Aktivasi (UI-10 Tab 1), dan Middleware RBAC 9 Peran | **Selesai** | AI & User |
 | 2026-09-26 | FASE-2 | CRUD Master Sarpras Admin (UI-09), Soft-Delete Transaksi Aktif, Toggle Maintenance, API Ketersediaan & Katalog Real-Time (UI-02) | **Selesai** | AI & User |
-| - | FASE-3 | Form Pengajuan Digital, Pakta Integritas, Penguncian Slot Atomik (ACID) & Pembatalan Mandiri (UC-03, UC-04) | *Selanjutnya* | - |
+| 2026-09-27 | FASE-3 | Form Pengajuan Digital, Pakta Integritas, Penguncian Slot Atomik (ACID) & Pembatalan Mandiri (UC-03, UC-04) | **Selesai** | AI & User |
+| 2026-09-27 | FASE-4 | Dasbor Verifikasi Staf Umum: Inspeksi Fisik Pra-Approval & Pemindai QR Kamera / Input Manual (UC-06) | **Selesai** | AI & User |
+| 2026-09-27 | FASE-5 | Dasbor Persetujuan Kasubag Umum: Evaluasi Permohonan, Catatan Teknis Staf & Penerbitan Tiket QR Digital (UC-05) | **Selesai** | AI & User |
+| 2026-09-27 | FASE-6 | Verifikasi Fisik Pasca-Pengembalian Staf, Penerbitan BAST Digital PDF Otomatis (@react-pdf), & QR Signature (UC-07) | **Selesai** | AI & User |
+| 2026-09-28 | FASE-7 | Dasbor Eksekutif Kabag Keuangan & Umum (Metrik Utilisasi, Top Fasilitas, Tren Bulanan) & Ekspor Laporan Excel/PDF (UC-08) | **Selesai** | AI & User |
+| 2026-09-28 | FASE-8 | Tata Kelola Pengguna RBAC (UC-10), Log Audit Trail Forensik Keamanan, & Simulasi Notifikasi Email Nodemailer | **Selesai** | AI & User |
+| 2026-09-28 | FASE-9 | Otomasi Pengujian Sistem (62/62 Vitest Unit/Integration/Security Tests) & Rate Limiting Brute Force Protection | **Selesai** | AI & User |
+| 2026-09-28 | FASE-10 | Entry point Phusion Passenger (`server.js`), Skrip Deploy Standalone (`deploy.sh`), cPanel Cron Maintenance (`scripts/cron-maintenance.js` & `/api/cron/maintenance`), serta Panduan Operasional Admin IT | **Selesai** | AI & User |
 
 ---
 

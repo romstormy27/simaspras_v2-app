@@ -82,7 +82,7 @@ export default function RiwayatPeminjamanPage() {
   // Selected booking for detail modal
   const [selectedDetail, setSelectedDetail] = useState<Peminjaman | null>(null);
 
-  // Cancellation modal states (UC-04)
+  // Cancellation modal states
   const [cancellingBooking, setCancellingBooking] = useState<Peminjaman | null>(null);
   const [alasanBatal, setAlasanBatal] = useState('');
   const [cancelLoading, setCancelLoading] = useState(false);
@@ -216,7 +216,7 @@ export default function RiwayatPeminjamanPage() {
             Riwayat Peminjaman Fasilitas
           </h1>
           <p className="text-sm text-slate-500">
-            Pantau status transaksi, tiket QR digital, serta pembatalan mandiri peminjaman (PRD UC-04 / UI-04).
+            Pantau status transaksi, tiket QR digital, serta pembatalan mandiri peminjaman.
           </p>
         </div>
 
@@ -231,8 +231,7 @@ export default function RiwayatPeminjamanPage() {
 
       {/* Success / Feedback Alert */}
       {feedbackMessage && (
-        <Alert className="border-emerald-300 bg-emerald-50 text-emerald-900 animate-in fade-in">
-          <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+        <Alert variant="success" className="border-emerald-300 bg-emerald-50 text-emerald-900 animate-in fade-in">
           <AlertTitle className="text-xs font-bold">Sukses</AlertTitle>
           <AlertDescription className="text-xs">{feedbackMessage}</AlertDescription>
         </Alert>
@@ -668,7 +667,7 @@ export default function RiwayatPeminjamanPage() {
         </div>
       )}
 
-      {/* Modal Dialog Pembatalan Mandiri (UC-04 / SD-04) */}
+      {/* Modal Dialog Pembatalan Mandiri */}
       {cancellingBooking && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in">
           <div className="w-full max-w-lg rounded-2xl bg-white shadow-2xl border border-slate-200 overflow-hidden">
@@ -685,7 +684,6 @@ export default function RiwayatPeminjamanPage() {
             <form onSubmit={handleConfirmCancel} className="p-6 space-y-4">
               {cancelError && (
                 <Alert variant="destructive">
-                  <AlertCircle className="h-4 w-4" />
                   <AlertTitle>Gagal</AlertTitle>
                   <AlertDescription className="text-xs">{cancelError}</AlertDescription>
                 </Alert>

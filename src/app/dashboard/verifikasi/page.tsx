@@ -16,7 +16,6 @@ import {
   Search,
   Clock,
   CheckCircle2,
-  AlertCircle,
   AlertTriangle,
   History,
   FileCheck2,
@@ -97,7 +96,7 @@ export default function StafVerifikasiPage() {
   const [serahTerimaLoading, setSerahTerimaLoading] = useState(false);
   const [isCameraScannerOpen, setIsCameraScannerOpen] = useState(false);
 
-  // Inspection modal states (UC-06 / SD-06)
+  // Inspection modal states
   const [selectedBooking, setSelectedBooking] = useState<BookingTransaction | null>(null);
   const [modalJenis, setModalJenis] = useState<'Pra_Approval' | 'Pasca_Pengembalian'>('Pra_Approval');
   const [modalKondisi, setModalKondisi] = useState<'Baik_Sesuai' | 'Ada_Catatan_Khusus'>('Baik_Sesuai');
@@ -303,14 +302,13 @@ export default function StafVerifikasiPage() {
           Dasbor Verifikasi Fisik & Pindai Tiket Sarpras
         </h1>
         <p className="text-sm text-slate-500">
-          Staf Bagian Umum — Verifikasi kelayakan teknis pra-approval, pemindaian tiket QR serah terima aset, dan inspeksi fisik pasca-pengembalian (PRD UC-06 / UI-06).
+          Staf Bagian Umum — Verifikasi kelayakan teknis pra-approval, pemindaian tiket QR serah terima aset, dan inspeksi fisik pasca-pengembalian.
         </p>
       </div>
 
       {/* Success Feedback Alert */}
       {feedbackMessage && (
-        <Alert className="border-emerald-300 bg-emerald-50 text-emerald-900 animate-in fade-in">
-          <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+        <Alert variant="success" className="animate-in fade-in">
           <AlertTitle className="text-xs font-bold">Sukses</AlertTitle>
           <AlertDescription className="text-xs">{feedbackMessage}</AlertDescription>
         </Alert>
@@ -626,7 +624,6 @@ export default function StafVerifikasiPage() {
 
               {ticketCheckError && (
                 <Alert variant="destructive">
-                  <AlertCircle className="h-4 w-4" />
                   <AlertTitle>Pemeriksaan Gagal</AlertTitle>
                   <AlertDescription className="text-xs">{ticketCheckError}</AlertDescription>
                 </Alert>
@@ -1011,7 +1008,7 @@ export default function StafVerifikasiPage() {
         </Card>
       )}
 
-      {/* MODAL FORMULIR INSPEKSI FISIK LAPANGAN (UC-06 / SD-06) */}
+      {/* MODAL FORMULIR INSPEKSI FISIK LAPANGAN */}
       {selectedBooking && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in">
           <div className="w-full max-w-xl rounded-2xl bg-white shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]">
@@ -1036,7 +1033,6 @@ export default function StafVerifikasiPage() {
             <form onSubmit={handleSubmitVerification} className="p-6 space-y-4 overflow-y-auto">
               {formError && (
                 <Alert variant="destructive">
-                  <AlertCircle className="h-4 w-4" />
                   <AlertTitle>Perhatian</AlertTitle>
                   <AlertDescription className="text-xs">{formError}</AlertDescription>
                 </Alert>

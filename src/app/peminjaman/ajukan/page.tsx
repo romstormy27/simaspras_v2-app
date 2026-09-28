@@ -14,7 +14,6 @@ import {
   Building2,
   Car,
   Laptop,
-  AlertCircle,
   CheckCircle2,
   ShieldAlert,
   ArrowLeft,
@@ -278,10 +277,10 @@ function FormPengajuanContent() {
                 Langkah Selanjutnya:
               </div>
               <p>
-                1. Staf Bagian Umum akan memverifikasi kesiapan teknis sarpras (UC-06).
+                1. Staf Bagian Umum akan memverifikasi kesiapan teknis sarpras.
               </p>
               <p>
-                2. Kasubag Bagian Umum akan meninjau dan menyetujui permohonan Anda (UC-05).
+                2. Kasubag Bagian Umum akan meninjau dan menyetujui permohonan Anda.
               </p>
               <p>
                 3. Begitu disetujui, Tiket Digital QR Code akan diterbitkan otomatis pada menu Riwayat Peminjaman.
@@ -324,7 +323,7 @@ function FormPengajuanContent() {
             Formulir Pengajuan Peminjaman Digital
           </h1>
           <p className="text-sm text-slate-500">
-            Layanan peminjaman fasilitas sarana & prasarana Poltekim / Poltekip 100% paperless (PRD UC-03 / UI-03).
+            Layanan peminjaman fasilitas sarana & prasarana Poltekim / Poltekip 100% paperless.
           </p>
         </div>
       </div>
@@ -346,16 +345,15 @@ function FormPengajuanContent() {
 
             <CardContent>
               <form onSubmit={handleSubmit} id="booking-form" className="space-y-5">
-                {/* Error Banner */}
-                {errorMessage && (
+                {/* Error Banner (hanya jika bukan kasus bentrok yang sudah ditangani card khusus) */}
+                {errorMessage && conflicts.length === 0 && (
                   <Alert variant="destructive" className="animate-in fade-in">
-                    <AlertCircle className="h-4 w-4" />
                     <AlertTitle>Perhatian</AlertTitle>
                     <AlertDescription className="text-xs">{errorMessage}</AlertDescription>
                   </Alert>
                 )}
 
-                {/* Conflict Card with Alternatives (PRD UC-03 Skenario Alternatif 2a) */}
+                {/* Conflict Card with Alternatives */}
                 {conflicts.length > 0 && (
                   <div className="rounded-xl border border-amber-300 bg-amber-50 p-4 space-y-3 animate-in fade-in">
                     <div className="flex items-center gap-2 text-amber-900 font-semibold text-sm">
@@ -510,7 +508,7 @@ function FormPengajuanContent() {
                   </div>
                 </div>
 
-                {/* Pakta Integritas Peminjaman Digital (PRD UC-03) */}
+                {/* Pakta Integritas Peminjaman Digital */}
                 <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-4 space-y-3">
                   <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider">
                     <ShieldAlert className="h-4 w-4 text-[#034275]" />

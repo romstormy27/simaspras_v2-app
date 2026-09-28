@@ -213,7 +213,7 @@ export default function AdminSarprasPage() {
             Kelola Master Data Sarpras
           </h1>
           <p className="text-sm text-slate-500">
-            Administrator — Pengelolaan fasilitas inventaris kampus: Ruangan, Mobil Operasional, dan Perangkat Kerja (PRD UC-09 / UI-09).
+            Administrator — Pengelolaan fasilitas inventaris kampus: Ruangan, Mobil Operasional, dan Perangkat Kerja.
           </p>
         </div>
 

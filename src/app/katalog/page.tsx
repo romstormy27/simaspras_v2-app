@@ -21,6 +21,9 @@ import {
   X,
   Info,
   CalendarDays,
+  ChevronLeft,
+  ChevronRight,
+  List,
 } from 'lucide-react';
 
 interface SarprasItem {
@@ -62,6 +65,9 @@ export default function KatalogPage() {
   const [selectedSarpras, setSelectedSarpras] = useState<SarprasItem | null>(null);
   const [availability, setAvailability] = useState<AvailabilityData | null>(null);
   const [loadingAvailability, setLoadingAvailability] = useState(false);
+  const [calendarViewMode, setCalendarViewMode] = useState<'calendar' | 'list'>('calendar');
+  const [currentMonthDate, setCurrentMonthDate] = useState<Date>(new Date());
+  const [selectedDateDay, setSelectedDateDay] = useState<number | null>(null);
 
   const fetchSarpras = async () => {
     try {
@@ -86,6 +92,8 @@ export default function KatalogPage() {
     setSelectedSarpras(item);
     setLoadingAvailability(true);
     setAvailability(null);
+    setSelectedDateDay(null);
+    setCurrentMonthDate(new Date());
 
     try {
       const res = await fetch(`/api/sarpras/${item.id_sarpras}/ketersediaan`);
@@ -98,6 +106,33 @@ export default function KatalogPage() {
     } finally {
       setLoadingAvailability(false);
     }
+  };
+
+  const prevMonth = () => {
+    setCurrentMonthDate(new Date(currentMonthDate.getFullYear(), currentMonthDate.getMonth() - 1, 1));
+    setSelectedDateDay(null);
+  };
+
+  const nextMonth = () => {
+    setCurrentMonthDate(new Date(currentMonthDate.getFullYear(), currentMonthDate.getMonth() + 1, 1));
+    setSelectedDateDay(null);
+  };
+
+  const currentYear = currentMonthDate.getFullYear();
+  const currentMonth = currentMonthDate.getMonth();
+  const monthName = new Intl.DateTimeFormat('id-ID', { month: 'long', year: 'numeric' }).format(currentMonthDate);
+  const firstDayIndex = new Date(currentYear, currentMonth, 1).getDay();
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+  const getBookingsForDay = (day: number) => {
+    if (!availability?.jadwal_terisi) return [];
+    const dayStart = new Date(currentYear, currentMonth, day, 0, 0, 0);
+    const dayEnd = new Date(currentYear, currentMonth, day, 23, 59, 59, 999);
+    return availability.jadwal_terisi.filter((slot) => {
+      const slotStart = new Date(slot.tgl_mulai);
+      const slotEnd = new Date(slot.tgl_selesai);
+      return slotStart <= dayEnd && slotEnd >= dayStart;
+    });
   };
 
   const getIcon = (kategori: string) => {
@@ -143,13 +178,13 @@ export default function KatalogPage() {
             Katalog Fasilitas & Jadwal Ketersediaan
           </h1>
           <p className="text-sm text-slate-200 max-w-2xl">
-            Tinjau spesifikasi fisik dan kalender ketersediaan <em>real-time</em> sarpras sebelum mengajukan permohonan digital (PRD UC-02 / UI-02).
+            Tinjau spesifikasi fisik dan kalender ketersediaan <em>real-time</em> sarpras sebelum mengajukan permohonan digital.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           <Link href="/peminjaman/riwayat">
-            <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 text-sm">
+            <Button className="bg-white text-[#034275] hover:bg-slate-100 font-semibold shadow-sm text-sm border-0">
               Riwayat Peminjaman Saya
             </Button>
           </Link>
@@ -310,10 +345,10 @@ export default function KatalogPage() {
         )}
       </div>
 
-      {/* Modal Kalender Ketersediaan Real-Time (UC-02 / SD-02) */}
+      {/* Modal Kalender Ketersediaan Real-Time */}
       {selectedSarpras && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in">
-          <div className="w-full max-w-2xl rounded-2xl bg-white shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[85vh]">
+          <div className="w-full max-w-2xl rounded-2xl bg-white shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]">
             <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4 bg-slate-50">
               <div>
                 <div className="flex items-center gap-2">
@@ -333,7 +368,7 @@ export default function KatalogPage() {
               </button>
             </div>
 
-            <div className="p-6 overflow-y-auto space-y-5 flex-1">
+            <div className="p-6 overflow-y-auto space-y-4 flex-1">
               {/* Asset Status Banner */}
               <div className="p-3.5 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between text-xs">
                 <div>
@@ -355,11 +390,246 @@ export default function KatalogPage() {
                 </div>
               </div>
 
+              {/* View Mode Selector Switch */}
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-600">
+                  Tampilan Jadwal
+                </span>
+                <div className="inline-flex rounded-lg bg-slate-100 p-1 border border-slate-200">
+                  <button
+                    type="button"
+                    onClick={() => setCalendarViewMode('calendar')}
+                    className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
+                      calendarViewMode === 'calendar'
+                        ? 'bg-white text-[#034275] shadow-sm'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    <CalendarDays className="h-3.5 w-3.5" />
+                    Kalender Visual
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCalendarViewMode('list')}
+                    className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
+                      calendarViewMode === 'list'
+                        ? 'bg-white text-[#034275] shadow-sm'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    <List className="h-3.5 w-3.5" />
+                    Daftar Jadwal ({availability?.total_terisi || 0})
+                  </button>
+                </div>
+              </div>
+
               {loadingAvailability ? (
                 <div className="py-12 text-center text-slate-500 text-sm">
                   Memeriksa jadwal transaksi terbaru...
                 </div>
+              ) : calendarViewMode === 'calendar' ? (
+                /* Mode 1: Kalender Visual Sesungguhnya */
+                <div className="space-y-3">
+                  {/* Navigator Bulan */}
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm font-bold text-slate-800 capitalize">
+                      {monthName}
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={prevMonth}
+                        className="h-7 w-7 p-0"
+                      >
+                        <ChevronLeft className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          setCurrentMonthDate(new Date());
+                          setSelectedDateDay(null);
+                        }}
+                        className="h-7 px-2.5 text-xs text-slate-600"
+                      >
+                        Bulan Ini
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={nextMonth}
+                        className="h-7 w-7 p-0"
+                      >
+                        <ChevronRight className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Header Nama Hari */}
+                  <div className="grid grid-cols-7 gap-1 text-center text-[11px] font-bold text-slate-500">
+                    {['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'].map((d) => (
+                      <div key={d} className="py-1">
+                        {d}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Grid Tanggal Kalender */}
+                  <div className="grid grid-cols-7 gap-1">
+                    {Array.from({ length: firstDayIndex }).map((_, i) => (
+                      <div key={`empty-${i}`} className="h-14 rounded-lg bg-slate-50/50 border border-transparent" />
+                    ))}
+                    {Array.from({ length: daysInMonth }).map((_, i) => {
+                      const day = i + 1;
+                      const dayBookings = getBookingsForDay(day);
+                      const hasInUse = dayBookings.some((b) => b.status_slot === 'In Use');
+                      const hasReserved = dayBookings.some((b) => b.status_slot === 'Reserved');
+                      const isSelected = selectedDateDay === day;
+                      const isToday =
+                        new Date().getDate() === day &&
+                        new Date().getMonth() === currentMonth &&
+                        new Date().getFullYear() === currentYear;
+
+                      return (
+                        <button
+                          key={day}
+                          type="button"
+                          onClick={() => setSelectedDateDay(day === selectedDateDay ? null : day)}
+                          className={`h-14 p-1.5 rounded-lg border text-left flex flex-col justify-between transition-all ${
+                            isSelected
+                              ? 'border-[#034275] ring-2 ring-[#034275]/25 bg-blue-50/60'
+                              : isToday
+                              ? 'border-blue-400 bg-blue-50/30'
+                              : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50 bg-white'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between w-full">
+                            <span
+                              className={`text-xs font-semibold leading-none rounded-full w-5 h-5 flex items-center justify-center ${
+                                isToday
+                                  ? 'bg-[#034275] text-white font-bold'
+                                  : 'text-slate-700'
+                              }`}
+                            >
+                              {day}
+                            </span>
+                            {dayBookings.length > 0 && (
+                              <span className="text-[10px] font-mono px-1 rounded bg-slate-100 text-slate-700 font-bold">
+                                {dayBookings.length}
+                              </span>
+                            )}
+                          </div>
+                          <div className="w-full">
+                            {dayBookings.length === 0 ? (
+                              <div className="text-[9px] text-emerald-600 flex items-center gap-1 font-medium">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
+                                <span>Tersedia</span>
+                              </div>
+                            ) : (
+                              <div className="flex flex-col gap-0.5">
+                                {hasInUse && (
+                                  <div className="text-[9px] text-blue-700 font-semibold truncate flex items-center gap-1">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-blue-600 inline-block shrink-0" />
+                                    <span className="truncate">In Use</span>
+                                  </div>
+                                )}
+                                {hasReserved && (
+                                  <div className="text-[9px] text-amber-700 font-semibold truncate flex items-center gap-1">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 inline-block shrink-0" />
+                                    <span className="truncate">Reserved</span>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Kalender Legenda */}
+                  <div className="flex flex-wrap items-center gap-3 pt-2 text-[11px] text-slate-500 border-t border-slate-100">
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block" />
+                      <span>Tersedia Bebas</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block" />
+                      <span>Reserved</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2.5 h-2.5 rounded-full bg-blue-600 inline-block" />
+                      <span>In Use</span>
+                    </div>
+                    <span className="text-slate-400 ml-auto italic">Klik tanggal untuk melihat rincian</span>
+                  </div>
+
+                  {/* Detail Tanggal Terpilih */}
+                  {selectedDateDay && (
+                    <div className="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-3.5 space-y-2.5 animate-in fade-in">
+                      <div className="flex items-center justify-between border-b border-slate-200/70 pb-2">
+                        <span className="text-xs font-bold text-slate-800">
+                          Rincian Jadwal: {selectedDateDay} {monthName}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setSelectedDateDay(null)}
+                          className="text-[11px] text-slate-500 hover:text-slate-700 underline"
+                        >
+                          Tutup Rincian
+                        </button>
+                      </div>
+
+                      {getBookingsForDay(selectedDateDay).length === 0 ? (
+                        <div className="py-3 text-center text-xs text-emerald-600 font-medium flex items-center justify-center gap-1.5">
+                          <CheckCircle2 className="h-4 w-4" />
+                          Tidak ada peminjaman pada tanggal ini. Aset dapat diajukan secara bebas.
+                        </div>
+                      ) : (
+                        <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                          {getBookingsForDay(selectedDateDay).map((slot) => (
+                            <div
+                              key={slot.id_peminjaman}
+                              className="rounded-lg border border-slate-200 bg-white p-2.5 text-xs shadow-sm space-y-1.5"
+                            >
+                              <div className="flex items-center justify-between">
+                                <span className="font-mono font-bold text-slate-800 text-[11px]">
+                                  {slot.kode_transaksi}
+                                </span>
+                                <Badge
+                                  variant={slot.status_slot === 'In Use' ? 'disetujui' : 'pending'}
+                                  className="text-[9px] px-1.5 py-0"
+                                >
+                                  {slot.status_slot === 'In Use' ? 'In Use (Disetujui)' : 'Reserved (Menunggu Kasubag)'}
+                                </Badge>
+                              </div>
+                              <div className="flex items-center gap-1.5 text-slate-700 font-semibold text-[11px]">
+                                <Clock className="h-3 w-3 text-slate-400" />
+                                <span>
+                                  {formatDateTime(slot.tgl_mulai)} s/d {formatDateTime(slot.tgl_selesai)}
+                                </span>
+                              </div>
+                              <div className="text-[11px] text-slate-500 flex items-center justify-between pt-1 border-t border-slate-100">
+                                <span className="truncate max-w-[280px]">
+                                  <strong>Agenda:</strong> {slot.maksud_kegiatan}
+                                </span>
+                                <span className="text-[10px] bg-slate-100 px-1.5 py-0.5 rounded text-slate-600 font-medium">
+                                  {slot.pemohon_nama} ({slot.pemohon_kategori})
+                                </span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
               ) : availability?.total_terisi === 0 ? (
+                /* Mode 2: Daftar Jadwal Kosong */
                 <div className="py-10 text-center space-y-2">
                   <CheckCircle2 className="mx-auto h-12 w-12 text-emerald-500" />
                   <div className="font-bold text-slate-800">Jadwal Sepenuhnya Kosong (Tersedia)</div>
@@ -368,6 +638,7 @@ export default function KatalogPage() {
                   </p>
                 </div>
               ) : (
+                /* Mode 2: Daftar Jadwal Terisi */
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700">
@@ -408,7 +679,7 @@ export default function KatalogPage() {
                             <strong>Agenda:</strong> {slot.maksud_kegiatan}
                           </span>
                           <span className="text-[11px] bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-medium">
-                            {slot.pemohon_kategori}
+                            {slot.pemohon_nama} ({slot.pemohon_kategori})
                           </span>
                         </div>
                       </div>

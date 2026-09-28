@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Html5Qrcode, Html5QrcodeCameraScanConfig } from 'html5-qrcode';
-import { Camera, X, AlertCircle, RefreshCw, Upload, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Camera, X, RefreshCw, Upload, Sparkles, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
@@ -245,7 +245,6 @@ export default function CameraQrScanner({
           {/* Error notice if camera fails */}
           {errorMsg && (
             <Alert variant="destructive">
-              <AlertCircle className="h-4 w-4" />
               <AlertTitle>Perhatian Akses Kamera</AlertTitle>
               <AlertDescription className="text-xs leading-relaxed">
                 {errorMsg}

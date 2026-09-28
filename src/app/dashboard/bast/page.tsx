@@ -11,7 +11,6 @@ import {
   FileCheck,
   CheckCircle2,
   Clock,
-  AlertCircle,
   Search,
   Download,
   Eye,
@@ -260,7 +259,7 @@ export default function KasubagBastDashboardPage() {
                 Penerbitan Berita Acara Serah Terima (BAST) Digital
               </h1>
               <p className="text-xs text-slate-500">
-                Konfirmasi serah-terima pengembalian fasilitas kampus dengan penandatanganan elektronik QR Signature (PRD UC-07).
+                Konfirmasi serah-terima pengembalian fasilitas kampus dengan penandatanganan elektronik QR Signature.
               </p>
             </div>
           </div>
@@ -285,7 +284,6 @@ export default function KasubagBastDashboardPage() {
 
       {feedbackSuccess && (
         <Alert variant="success" className="bg-emerald-50 border-emerald-300 text-emerald-900">
-          <CheckCheck className="h-4 w-4 text-emerald-600" />
           <AlertTitle>Penerbitan Sukses</AlertTitle>
           <AlertDescription className="text-xs flex items-center justify-between">
             <span>{feedbackSuccess}</span>
@@ -517,7 +515,7 @@ export default function KasubagBastDashboardPage() {
               Fasilitas Sedang Dipakai / Menunggu Verifikasi Staf Teknis
             </CardTitle>
             <CardDescription className="text-xs">
-              Transaksi berikut belum dapat diterbitkan BAST karena staf teknis Bagian Umum belum menginput hasil inspeksi fisik pasca-pengembalian (PRD UC-07).
+              Transaksi berikut belum dapat diterbitkan BAST karena staf teknis Bagian Umum belum menginput hasil inspeksi fisik pasca-pengembalian.
             </CardDescription>
           </CardHeader>
 
@@ -716,7 +714,6 @@ export default function KasubagBastDashboardPage() {
             <div className="p-6 overflow-y-auto space-y-4 text-xs text-slate-700 flex-1">
               {bastError && (
                 <Alert variant="destructive">
-                  <AlertCircle className="h-4 w-4" />
                   <AlertTitle>Gagal Menerbitkan BAST</AlertTitle>
                   <AlertDescription className="text-xs">{bastError}</AlertDescription>
                 </Alert>
@@ -771,11 +768,11 @@ export default function KasubagBastDashboardPage() {
                   )}
               </div>
 
-              {/* Klausul Tanpa Denda Finansial (PRD §3.2) */}
+              {/* Klausul Tanpa Denda Finansial */}
               <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 text-blue-900 space-y-1">
                 <div className="font-semibold text-xs flex items-center gap-1.5">
                   <Sparkles className="h-3.5 w-3.5 text-blue-600" />
-                  Klausul Bebas Denda Finansial (PRD §3.2):
+                  Klausul Bebas Denda Finansial:
                 </div>
                 <p className="text-[11px] text-blue-800 leading-relaxed">
                   Sesuai ketentuan SIMASPRAS Poltekimipas, penyelesaian pengembalian sarpras dikelola secara tertib
