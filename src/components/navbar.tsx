@@ -20,6 +20,7 @@ import {
   LogOut,
   Menu,
   X,
+  User,
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -226,12 +227,16 @@ export function Navbar({ user }: NavbarProps) {
               <div className="flex items-center gap-1.5 sm:gap-3">
                 <NotificationBell />
 
-                <div className="hidden sm:flex flex-col items-end">
-                  <span className="text-sm font-semibold text-slate-800 leading-tight">
+                <Link
+                  href="/profil"
+                  className="hidden sm:flex flex-col items-end group hover:opacity-90 transition-opacity cursor-pointer text-right"
+                  title="Lihat & Edit Profil Akun"
+                >
+                  <span className="text-sm font-semibold text-slate-800 leading-tight group-hover:text-[#034275] transition-colors">
                     {user.nama_lengkap}
                   </span>
-                  <span className="text-xs text-slate-500">{user.email}</span>
-                </div>
+                  <span className="text-xs text-slate-500 group-hover:text-slate-700 transition-colors">{user.email}</span>
+                </Link>
 
                 <Badge variant="default" className="text-[10px] sm:text-[11px] py-0.5 px-2 bg-[#034275]">
                   {user.role}
@@ -328,12 +333,22 @@ export function Navbar({ user }: NavbarProps) {
                 <div className="flex-1 min-w-0">
                   <div className="font-bold text-sm text-slate-900 truncate">{user.nama_lengkap}</div>
                   <div className="text-xs text-slate-500 truncate">{user.email}</div>
-                  <div className="mt-1">
+                  <div className="mt-1 flex items-center justify-between">
                     <Badge className="bg-[#034275] text-[10px] py-0 px-2 font-medium">
                       Peran: {user.role}
                     </Badge>
                   </div>
                 </div>
+              </div>
+              <div className="mt-2.5 pt-2 border-t border-slate-200/60">
+                <Link
+                  href="/profil"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-xs font-semibold text-[#034275] bg-blue-50/80 hover:bg-blue-100/80 transition-colors"
+                >
+                  <User className="h-3.5 w-3.5" />
+                  <span>Lihat & Edit Profil Akun</span>
+                </Link>
               </div>
             </div>
 
@@ -504,6 +519,21 @@ export function Navbar({ user }: NavbarProps) {
                 </>
               )}
 
+              <div className="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                Pengaturan Akun
+              </div>
+              <Link
+                href="/profil"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all duration-150 ${
+                  pathname === '/profil'
+                    ? 'bg-[#034275] text-white shadow-xs font-semibold'
+                    : 'text-slate-700 hover:bg-slate-100 active:scale-[0.98]'
+                }`}
+              >
+                <User className="h-4 w-4 shrink-0" />
+                <span>Profil & Pengaturan Akun</span>
+              </Link>
             </nav>
 
             {/* Drawer Footer */}

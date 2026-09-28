@@ -17,6 +17,10 @@ import {
   History,
   FileSpreadsheet,
   Shield,
+  Edit2,
+  X,
+  KeyRound,
+  Save,
 } from 'lucide-react';
 
 interface UserRecord {
@@ -53,6 +57,21 @@ export default function AdminUsersPage() {
   const [userSearch, setUserSearch] = useState('');
   const [userStatusFilter, setUserStatusFilter] = useState<string>('Semua');
   const [userRoleFilter, setUserRoleFilter] = useState<string>('Semua');
+
+  // Edit User Modal States
+  const [editingUser, setEditingUser] = useState<UserRecord | null>(null);
+  const [editForm, setEditForm] = useState({
+    nama_lengkap: '',
+    email: '',
+    no_hp: '',
+    role: 'Dosen',
+    status_aktivasi: 'Aktif' as 'Pending' | 'Aktif' | 'Ditolak',
+    nomor_identitas: '',
+    instansi_kategori: '',
+    new_password: '',
+  });
+  const [editModalLoading, setEditModalLoading] = useState(false);
+  const [editModalError, setEditModalError] = useState<string | null>(null);
 
   // Audit Logs Filter States
   const [auditSearch, setAuditSearch] = useState('');
@@ -158,6 +177,77 @@ export default function AdminUsersPage() {
       setMessage({ type: 'destructive', text: 'Terjadi kesalahan jaringan' });
     } finally {
       setActionLoading(null);
+    }
+  };
+
+  const openEditModal = (u: UserRecord) => {
+    setEditingUser(u);
+    setEditForm({
+      nama_lengkap: u.nama_lengkap || '',
+      email: u.email || '',
+      no_hp: u.no_hp || '',
+      role: u.role || 'Dosen',
+      status_aktivasi: u.status_aktivasi || 'Aktif',
+      nomor_identitas: u.nomor_identitas || '',
+      instansi_kategori: u.instansi_kategori || '',
+      new_password: '',
+    });
+    setEditModalError(null);
+  };
+
+  const handleSaveEditUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingUser) return;
+    setEditModalError(null);
+
+    if (!editForm.nama_lengkap.trim() || editForm.nama_lengkap.trim().length < 3) {
+      setEditModalError('Nama lengkap minimal 3 karakter');
+      return;
+    }
+    if (!editForm.email.trim() || !editForm.email.includes('@')) {
+      setEditModalError('Format alamat email tidak valid');
+      return;
+    }
+    if (!editForm.no_hp.trim() || editForm.no_hp.trim().length < 10) {
+      setEditModalError('Nomor HP minimal 10 digit');
+      return;
+    }
+    if (editForm.new_password && editForm.new_password.length < 6) {
+      setEditModalError('Kata sandi baru minimal 6 karakter');
+      return;
+    }
+
+    try {
+      setEditModalLoading(true);
+      const res = await fetch(`/api/admin/users/${editingUser.id_user}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nama_lengkap: editForm.nama_lengkap.trim(),
+          email: editForm.email.trim(),
+          no_hp: editForm.no_hp.trim(),
+          role: editForm.role,
+          status_aktivasi: editForm.status_aktivasi,
+          nomor_identitas: editForm.nomor_identitas.trim(),
+          instansi_kategori: editForm.instansi_kategori.trim(),
+          ...(editForm.new_password ? { new_password: editForm.new_password } : {}),
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setMessage({ type: 'success', text: data.message || 'Data pengguna berhasil diperbarui' });
+        setEditingUser(null);
+        fetchUsers();
+        fetchAuditLogs();
+      } else {
+        setEditModalError(data.message || 'Gagal memperbarui data pengguna');
+      }
+    } catch (err) {
+      console.error('Update user error:', err);
+      setEditModalError('Terjadi kesalahan jaringan saat memperbarui pengguna');
+    } finally {
+      setEditModalLoading(false);
     }
   };
 
@@ -428,7 +518,7 @@ export default function AdminUsersPage() {
                     <th className="px-4 py-3">Status Aktivasi</th>
                     <th className="px-4 py-3">Role RBAC Saat Ini</th>
                     <th className="px-4 py-3">No. Identitas & Unit</th>
-                    <th className="px-4 py-3 text-right">Ubah Hak Akses (RBAC)</th>
+                    <th className="px-4 py-3 text-right">Ubah Hak Akses & Data</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
@@ -469,22 +559,36 @@ export default function AdminUsersPage() {
                           <div className="text-slate-500 truncate max-w-[200px]">{u.instansi_kategori || '-'}</div>
                         </td>
                         <td className="px-4 py-3 text-right whitespace-nowrap">
-                          <select
-                            className="h-9 sm:h-8 rounded-lg border border-slate-300 bg-white px-2.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#034275]"
-                            value={u.role}
-                            disabled={actionLoading === u.id_user}
-                            onChange={(e) => handleRoleChange(u.id_user, e.target.value)}
-                          >
-                            <option value="Dosen">Dosen</option>
-                            <option value="Taruna">Taruna</option>
-                            <option value="BPSDM">BPSDM</option>
-                            <option value="Kementerian">Kementerian</option>
-                            <option value="Alumni">Alumni</option>
-                            <option value="Staf">Staf Umum</option>
-                            <option value="Kasubag">Kasubag Umum</option>
-                            <option value="Kabag">Kabag Keuangan</option>
-                            <option value="Admin">Administrator</option>
-                          </select>
+                          <div className="flex items-center justify-end gap-2">
+                            <select
+                              className="h-9 sm:h-8 rounded-lg border border-slate-300 bg-white px-2 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#034275]"
+                              value={u.role}
+                              disabled={actionLoading === u.id_user}
+                              onChange={(e) => handleRoleChange(u.id_user, e.target.value)}
+                              title="Ubah Role Langsung"
+                            >
+                              <option value="Dosen">Dosen</option>
+                              <option value="Taruna">Taruna</option>
+                              <option value="BPSDM">BPSDM</option>
+                              <option value="Kementerian">Kementerian</option>
+                              <option value="Alumni">Alumni</option>
+                              <option value="Staf">Staf Umum</option>
+                              <option value="Kasubag">Kasubag Umum</option>
+                              <option value="Kabag">Kabag Keuangan</option>
+                              <option value="Admin">Administrator</option>
+                            </select>
+
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => openEditModal(u)}
+                              className="h-9 sm:h-8 px-2.5 text-xs text-[#034275] border-blue-200 hover:bg-blue-50 flex items-center gap-1.5"
+                              title="Edit Data Pengguna Lengkap"
+                            >
+                              <Edit2 className="h-3.5 w-3.5" />
+                              <span className="hidden sm:inline">Edit Data</span>
+                            </Button>
+                          </div>
                         </td>
                       </tr>
                     ))
@@ -639,6 +743,198 @@ export default function AdminUsersPage() {
             </div>
           </CardContent>
         </Card>
+      )}
+
+      {/* Edit User Modal Dialog (Administrator) */}
+      {editingUser && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in">
+          <div className="relative w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden my-auto max-h-[92vh] flex flex-col">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 bg-slate-50/80 shrink-0">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-xl bg-[#034275] text-white">
+                  <Edit2 className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-slate-900">
+                    Edit Data Pengguna (Administrator)
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    ID: <span className="font-mono">{editingUser.id_user}</span>
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setEditingUser(null)}
+                className="h-8 w-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors"
+                title="Tutup Modal"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            {/* Modal Body / Form */}
+            <form onSubmit={handleSaveEditUser} className="flex-1 overflow-y-auto p-5 space-y-4">
+              {editModalError && (
+                <Alert variant="destructive" className="py-2.5 px-3 text-xs">
+                  {editModalError}
+                </Alert>
+              )}
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div className="sm:col-span-2">
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Nama Lengkap <span className="text-red-500">*</span>
+                  </label>
+                  <Input
+                    type="text"
+                    value={editForm.nama_lengkap}
+                    onChange={(e) => setEditForm({ ...editForm, nama_lengkap: e.target.value })}
+                    required
+                    placeholder="Nama lengkap pengguna"
+                    className="h-9 text-xs"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Email Akun <span className="text-red-500">*</span>
+                  </label>
+                  <Input
+                    type="email"
+                    value={editForm.email}
+                    onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
+                    required
+                    placeholder="email@kemenkumham.go.id"
+                    className="h-9 text-xs font-mono"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Nomor WhatsApp / HP <span className="text-red-500">*</span>
+                  </label>
+                  <Input
+                    type="tel"
+                    value={editForm.no_hp}
+                    onChange={(e) => setEditForm({ ...editForm, no_hp: e.target.value })}
+                    required
+                    placeholder="081234567890"
+                    className="h-9 text-xs font-mono"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Peran Hak Akses (RBAC) <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    value={editForm.role}
+                    onChange={(e) => setEditForm({ ...editForm, role: e.target.value })}
+                    className="w-full h-9 rounded-lg border border-slate-300 bg-white px-2.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#034275]"
+                  >
+                    <option value="Dosen">Dosen</option>
+                    <option value="Taruna">Taruna</option>
+                    <option value="BPSDM">BPSDM</option>
+                    <option value="Kementerian">Kementerian</option>
+                    <option value="Alumni">Alumni</option>
+                    <option value="Staf">Staf Umum</option>
+                    <option value="Kasubag">Kasubag Umum</option>
+                    <option value="Kabag">Kabag Keuangan</option>
+                    <option value="Admin">Administrator</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Status Aktivasi Akun <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    value={editForm.status_aktivasi}
+                    onChange={(e) =>
+                      setEditForm({
+                        ...editForm,
+                        status_aktivasi: e.target.value as 'Pending' | 'Aktif' | 'Ditolak',
+                      })
+                    }
+                    className="w-full h-9 rounded-lg border border-slate-300 bg-white px-2.5 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#034275]"
+                  >
+                    <option value="Aktif">Aktif (Dapat Login)</option>
+                    <option value="Pending">Pending (Menunggu Verifikasi)</option>
+                    <option value="Ditolak">Ditolak (Akses Dinonaktifkan)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Nomor Identitas (NIP/NIM/NIK)
+                  </label>
+                  <Input
+                    type="text"
+                    value={editForm.nomor_identitas}
+                    onChange={(e) => setEditForm({ ...editForm, nomor_identitas: e.target.value })}
+                    placeholder="Contoh: 198501012010121001"
+                    className="h-9 text-xs font-mono"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Instansi / Unit Kerja
+                  </label>
+                  <Input
+                    type="text"
+                    value={editForm.instansi_kategori}
+                    onChange={(e) => setEditForm({ ...editForm, instansi_kategori: e.target.value })}
+                    placeholder="Contoh: Prodi Keimigrasian"
+                    className="h-9 text-xs"
+                  />
+                </div>
+
+                <div className="sm:col-span-2 pt-2 border-t border-slate-100">
+                  <label className="block text-xs font-semibold text-slate-700 mb-1 flex items-center gap-1.5">
+                    <KeyRound className="h-3.5 w-3.5 text-amber-600" />
+                    <span>Reset Kata Sandi Akun Pengguna (Opsi Admin)</span>
+                  </label>
+                  <Input
+                    type="text"
+                    value={editForm.new_password}
+                    onChange={(e) => setEditForm({ ...editForm, new_password: e.target.value })}
+                    placeholder="Kosongkan jika tidak ingin mereset password pengguna"
+                    className="h-9 text-xs"
+                  />
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    Jika diisi, kata sandi pengguna langsung diperbarui tanpa verifikasi sandi lama.
+                  </p>
+                </div>
+              </div>
+
+              {/* Modal Footer Buttons */}
+              <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-100">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setEditingUser(null)}
+                  disabled={editModalLoading}
+                  className="h-9 text-xs"
+                >
+                  Batal
+                </Button>
+                <Button
+                  type="submit"
+                  size="sm"
+                  disabled={editModalLoading}
+                  className="h-9 text-xs bg-[#034275] hover:bg-[#023157] text-white flex items-center gap-1.5"
+                >
+                  <Save className={`h-3.5 w-3.5 ${editModalLoading ? 'animate-spin' : ''}`} />
+                  <span>{editModalLoading ? 'Menyimpan...' : 'Simpan Perubahan'}</span>
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
       )}
     </div>
   );

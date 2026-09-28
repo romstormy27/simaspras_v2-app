@@ -690,4 +690,56 @@ export const NotificationService = {
       console.warn('NotificationService.notifyAutoCancelled failed:', e);
     }
   },
+
+  /**
+   * Skenario 13: Pembaruan Profil Pengguna Mandiri (Penerima: Pengguna Terkait)
+   */
+  async notifyProfileUpdated(data: { id_user: string; nama_lengkap: string }) {
+    try {
+      await createInAppNotification({
+        id_user: data.id_user,
+        judul: 'Profil Akun Berhasil Diperbarui',
+        pesan: `Halo ${data.nama_lengkap}, data profil pribadi dan kontak akun SIMASPRAS Anda telah berhasil diperbarui.`,
+        tipe: 'Info',
+        tautan: '/profil',
+      });
+    } catch (e) {
+      console.warn('NotificationService.notifyProfileUpdated failed:', e);
+    }
+  },
+
+  /**
+   * Skenario 14: Perubahan Kata Sandi Mandiri (Penerima: Pengguna Terkait)
+   */
+  async notifyPasswordChanged(data: { id_user: string }) {
+    try {
+      await createInAppNotification({
+        id_user: data.id_user,
+        judul: 'Kata Sandi Akun Berhasil Diperbarui',
+        pesan: 'Kata sandi akun SIMASPRAS Anda baru saja berhasil diubah. Jika Anda tidak merasa melakukan tindakan ini, segera hubungi Administrator Bagian Umum.',
+        tipe: 'Keamanan',
+        tautan: '/profil',
+      });
+    } catch (e) {
+      console.warn('NotificationService.notifyPasswordChanged failed:', e);
+    }
+  },
+
+  /**
+   * Skenario 15: Pembaruan Data Pengguna oleh Administrator (Penerima: Pengguna Target)
+   */
+  async notifyAdminUpdatedUser(data: { id_user: string; admin_nama: string }) {
+    try {
+      await createInAppNotification({
+        id_user: data.id_user,
+        judul: 'Data Akun Diperbarui oleh Administrator',
+        pesan: `Informasi akun Anda telah diperbarui oleh Administrator Bagian Umum (${data.admin_nama}). Silakan periksa kembali profil Anda.`,
+        tipe: 'Keamanan',
+        tautan: '/profil',
+      });
+    } catch (e) {
+      console.warn('NotificationService.notifyAdminUpdatedUser failed:', e);
+    }
+  },
 };
+
