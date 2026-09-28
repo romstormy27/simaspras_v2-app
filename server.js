@@ -14,7 +14,10 @@ const fs = require('fs');
 // Set environment defaults
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 process.env.PORT = process.env.PORT || '3000';
-process.env.HOSTNAME = process.env.HOSTNAME || '0.0.0.0';
+// Di Linux/cPanel, $HOSTNAME bawaan berisi nama server fisik (misal srv1.host.com).
+// Jika Next.js mencoba bind ke host tersebut, akan gagal EADDRNOTAVAIL.
+// Kita paksa HOSTNAME selalu ke '0.0.0.0'.
+process.env.HOSTNAME = '0.0.0.0';
 
 const standaloneServerPath = path.join(__dirname, '.next', 'standalone', 'server.js');
 
