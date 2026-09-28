@@ -2,6 +2,8 @@
 const nextConfig = {
   output: 'standalone',
   experimental: {
+    cpus: 1,
+    workerThreads: false,
     outputFileTracingIncludes: {
       '/**': [
         './node_modules/pdfkit/js/standard-fonts/**/*',

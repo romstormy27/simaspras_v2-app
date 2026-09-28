@@ -60,9 +60,16 @@ else
 fi
 echo -e "${GREEN}✓ Skema Prisma database berhasil disinkronkan.${NC}"
 
-echo -e "\n${YELLOW}[4/6] Membangun Aplikasi Standalone Next.js...${NC}"
-npm run build
-echo -e "${GREEN}✓ Next.js Standalone build berhasil diselesaikan.${NC}"
+echo -e "\n${YELLOW}[4/6] Memeriksa & Menyiapkan Bundle Produksi Standalone Next.js...${NC}"
+if [ -f ".next/standalone/server.js" ] && [ -d ".next/static" ]; then
+    echo -e "${GREEN}✓ Bundle produksi pre-built (.next/standalone) sudah tersedia.${NC}"
+    echo -e "  Melewati kompilasi ulang (skip build) untuk mencegah limit proses CloudLinux cPanel (EAGAIN)."
+    echo -e "  (Jika ingin memaksa kompilasi ulang, hapus folder .next/ lalu jalankan kembali skrip ini)"
+else
+    echo -e "Menjalankan kompilasi Next.js Standalone (mode hemat proses CloudLinux)..."
+    NODE_OPTIONS="--max-old-space-size=1024" npm run build
+    echo -e "${GREEN}✓ Next.js Standalone build berhasil diselesaikan.${NC}"
+fi
 
 echo -e "\n${YELLOW}[5/6] Menyalin Aset Statis ke Direktori Standalone...${NC}"
 if [ -d ".next/standalone" ]; then
